@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  full_name: MyString
+  password: MyString
+  email: MyString
+  foursquare_access_token: MyString
+  twitter_access_token: MyString
+  twitter_access_secret: MyString
+  image_url: MyString
+  admin: false
+
+two:
+  full_name: MyString
+  password: MyString
+  email: MyString
+  foursquare_access_token: MyString
+  twitter_access_token: MyString
+  twitter_access_secret: MyString
+  image_url: MyString
+  admin: false
