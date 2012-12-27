@@ -1,12 +1,15 @@
 WhatdididrinkApi::Application.routes.draw do
+  resources :authentications do
+    collection do 
+      get :logout
+    end
+  end
+  
   resources :wishlists
-
-
   resources :users
-
-
   resources :drinks
 
+  match '/auth/:provider/callback' => 'authentications#create'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

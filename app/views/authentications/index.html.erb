@@ -1,0 +1,30 @@
+<h1>Listing authentications</h1>
+
+<% if @authentications -%>
+<table>
+  <tr>
+    <th>User</th>
+    <th>Provider</th>
+    <th>Uid</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @authentications.each do |authentication| %>
+  <tr>
+    <td><%= authentication.user_id %></td>
+    <td><%= authentication.provider %></td>
+    <td><%= authentication.uid %></td>
+    <td><%= link_to 'Destroy', authentication, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<a href="/authentications/logout">Logout</a><br/>
+<% end -%>
+
+<a href="/auth/twitter">Login with Twitter</a><br/>
+<a href="/auth/foursquare">Login with Foursquare</a>

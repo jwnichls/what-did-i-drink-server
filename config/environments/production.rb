@@ -64,4 +64,11 @@ WhatdididrinkApi::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  
+  
+  # Configure Foursquare
+  ENV['FOURSQUARE_AUTH_URL'] = "http://whatdididrink.com/auth/foursquare"
+  ENV['FOURSQUARE_APP_ID'] = "5LLQOLNBF115BBOX1MB5WFPXAJTG3C2YKF0C3GUKPVGMSQV5"
+  ENV['FOURSQUARE_APP_SECRET'] = "TPCNZULCDS2SK0QHRLHJSUYH5GOFFNQMSGMNDQXQ4LICVSBZ"
+  ENV['FOURSQUARE_REDIRECT_URI'] = "http://whatdididrink.com/auth/foursquare/callback"
 end

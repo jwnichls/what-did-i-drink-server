@@ -1,13 +1,21 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.9'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'mysql2'
-
 gem 'json'
+
+# Authentication
+gem 'omniauth-identity'
+gem 'omniauth-foursquare'
+gem 'omniauth-twitter'
+# gem 'omniauth-facebook'
+
+# OAuth Provider gem
+gem 'doorkeeper', '~> 0.6.5'
+
+# Social Media APIs
+gem 'twitter'
+gem 'quimby'
 
 # Gems used only for assets and not required
 # in production environments by default.

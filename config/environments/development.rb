@@ -34,4 +34,10 @@ WhatdididrinkApi::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+  
+  # Configure Foursquare
+  ENV['FOURSQUARE_AUTH_URL'] = "http://localhost.com:3000/auth/foursquare"
+  ENV['FOURSQUARE_APP_ID'] = "5HWSVRUTZCW3EQLHO2GSRAZE4TXGJJWTN2UALZQOU2XP1AYE"
+  ENV['FOURSQUARE_APP_SECRET'] = "0PFKWD2RN23W1WEYLGKPIFL2HLVKIQSFJBU0LIOGACXROZ5U"
+  ENV['FOURSQUARE_REDIRECT_URI'] = "http://localhost.com:3000/auth/foursquare/callback"
 end
