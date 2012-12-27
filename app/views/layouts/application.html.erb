@@ -1,12 +1,29 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>WhatdididrinkApi</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>What Did I Drink?</title>
+
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<%= stylesheet_link_tag 'whatdididrink' %>
+	<%= javascript_include_tag :defaults %>
 </head>
 <body>
+
+<h2>What Did I Drink?</h2>
+
+<% if logged_in? -%>
+<p>
+	<%= link_to 'home', :controller => :front, :action => :main %> - 
+	<%= link_to 'new drink', new_drink_path %> - 
+	<%= link_to current_user.image_url != nil ? image_tag(current_user.image_url) : current_user.full_name, current_user %> -
+	<%= link_to 'logout', logout_path %> - 
+</p>
+<% end -%>
+
+<p style="color: green"><%= notice %></p>
 
 <%= yield %>
 

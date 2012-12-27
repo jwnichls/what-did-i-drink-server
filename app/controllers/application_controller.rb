@@ -1,13 +1,27 @@
 class ApplicationController < ActionController::Base
+  layout "application"
+  helper_method :logged_in?, :current_user
   protect_from_forgery
+  
+  before_filter :adjust_format_for_mobile
+
+  def logged_in_redirect
+    if logged_in?
+      parse_user
+    else
+      redirect_to :controller => :front, :action => :index
+    end
+  end
+
+  def parse_user
+    @user = session[:user]
+  end
   
   def logged_in?
     session[:user] != nil
   end
   
   def login_user(user)
-    puts "User: " + user.to_s
-    
     session[:user] = user
   end
   
@@ -29,4 +43,57 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  private
+
+  # Set iPhone format if request to m.whatdididrink.com
+  def adjust_format_for_mobile
+    request.format = :mobile if mobile_request?
+  end
+  
+  # Return true for requests to iphone.myserver.com
+  def mobile_request?
+    return (request.host.match(/^m\./) || params[:format] == "mobile")
+  end
+
+  def mobile_redirect?
+    puts "Test: " + request.host + " : " + mobile_user_agent?.to_s + " : " + (session[:mobile_param] ? session[:mobile_param].to_s : "")
+    
+    if not request.host.match(/^m\./)
+      if session[:mobile_param] != nil
+        puts "mobile param not null!" + session[:mobile_param]
+        session[:mobile_param] == "1"
+      else
+        puts "checking user agent!"
+        mobile_user_agent?
+      end
+    else
+      false
+    end
+  end
+
+  def redirect_to_mobile(request)
+    session[:mobile_param] = "1"
+    
+    redirect_to mobilize_request_url(request)
+  end
+
+  def redirect_to_desktop(request)
+    session[:mobile_param] = "0"
+    
+    redirect_to demobilize_request_url(request)
+  end
+
+  # Request from a mobile browser
+  def mobile_user_agent?
+    # extend this to work with Android and whatever else
+    request.env["HTTP_USER_AGENT"] && request.env["HTTP_USER_AGENT"][/Mobile|webOS/]
+  end
+
+  def mobilize_request_url(request)    
+    "http://" + (request.host.match(/^m\./) ? "" : "m.") + request.host.sub(/^www./,"") + (request.port != 80 ? ":" + request.port.to_s : "")  + request.path
+  end
+  
+  def demobilize_request_url(request)
+    "http://" + request.host.sub(/^m\./,"") + (request.port != 80 ? ":" + request.port.to_s : "") + request.path
+  end
 end

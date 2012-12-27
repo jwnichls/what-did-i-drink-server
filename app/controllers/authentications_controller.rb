@@ -1,4 +1,5 @@
 class AuthenticationsController < ApplicationController
+  
   # GET /authentications
   # GET /authentications.json
   def index
@@ -108,7 +109,7 @@ class AuthenticationsController < ApplicationController
   end
   
   def get_and_save_twitter_token(credentials)    
-    if current_user != nil and credentials != nil
+    if current_user != nil and credentials != nil and current_user.twitter_access_token == nil
       puts "Twitter Token: " + credentials.to_s
       
       current_user.twitter_access_token = credentials.token
