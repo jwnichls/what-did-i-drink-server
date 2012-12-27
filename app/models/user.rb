@@ -12,6 +12,6 @@ class User < ActiveRecord::Base
   end
   
   def foursquare
-    Foursquare::Base.new(current_user.foursquare_access_token)
+    Foursquare::Base.new(foursquare_access_token)
   end
 end

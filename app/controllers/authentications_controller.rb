@@ -98,7 +98,7 @@ class AuthenticationsController < ApplicationController
   end
   
   def get_and_save_foursquare_token(code)  
-    if current_user != nil and code != nil
+    if current_user != nil and code != nil and current_user.foursquare_access_token == nil
       token = foursquare.access_token(code, ENV['FOURSQUARE_REDIRECT_URI'])
       puts "Foursquare token: " + token
 
