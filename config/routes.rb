@@ -15,13 +15,14 @@ WhatdididrinkApi::Application.routes.draw do
   match '/auth/:provider/callback' => 'authentications#create'
 
   # A global logout path
-  match 'logout' => 'authentications#logout', :as => :logout
+  match 'logout' => 'front#logout', :as => :logout
 
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do
     collection do
       get :main
       get :finddrink
+      get :logout
     end
   end
 

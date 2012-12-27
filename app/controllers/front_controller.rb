@@ -8,6 +8,8 @@ class FrontController < ApplicationController
     elsif logged_in?
       redirect_to :action => :main
     else
+      session[:redirect] = "/front/main"
+      
       respond_to do |format|
         format.html # index.html.erb
         format.mobile # index.iphone.erb
@@ -40,6 +42,15 @@ class FrontController < ApplicationController
       redirect_to @drinks[0]
     else
       redirect_to :controller => :drinks, :action => :index, :query => @query
+    end
+  end
+  
+  def logout
+    logout_user
+    
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
     end
   end
 end

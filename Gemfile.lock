@@ -44,6 +44,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.4.0)
+    doorkeeper (0.6.5)
+      railties (~> 3.1)
     erubis (2.7.0)
     ethon (0.5.7)
       ffi (~> 1.2.0)
@@ -168,6 +170,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   capistrano
   coffee-rails (~> 3.2.1)
+  doorkeeper (~> 0.6.5)
   jquery-rails
   json
   mysql2

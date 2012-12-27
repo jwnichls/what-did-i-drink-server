@@ -4,6 +4,7 @@ class AuthenticationsController < ApplicationController
   # GET /authentications.json
   def index
     @authentications = current_user.authentications if current_user
+    session[:redirect] = "/authentications"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,8 +43,14 @@ class AuthenticationsController < ApplicationController
     puts "This is a test ***************************"
     puts "User: " + current_user.to_s
 
+    if session[:redirect] == nil
+      @redirect = authentications_url
+    else
+      @redirect = session[:redirect]
+    end
+
     respond_to do |format|
-      format.html { redirect_to authentications_url }
+      format.html { redirect_to @redirect }
       format.json { render json: current_user }
     end
   end
@@ -54,15 +61,6 @@ class AuthenticationsController < ApplicationController
     @authentication = current_user.authentications.find(params[:id])
     @authentication.destroy
     flash[:notice] = "Successfully destroyed authentication."
-    
-    respond_to do |format|
-      format.html { redirect_to authentications_url }
-      format.json { head :no_content }
-    end
-  end
-  
-  def logout
-    logout_user
     
     respond_to do |format|
       format.html { redirect_to authentications_url }
