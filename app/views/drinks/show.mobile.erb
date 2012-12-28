@@ -7,12 +7,12 @@
 
 <% if @user != nil -%>
 <p>
-	<% form_tag :controller => :users, :id => @user.id, :action => :checkin do |f1| -%>
+	<% form_tag :controller => :users, :id => @user.id, :action => :checkin do |f| -%>
 	<%= hidden_field_tag :drink_id, @drink.id %>
 	<%= submit_tag 'Checkin' %> 
 	<% end -%>
 	- 
-	<% form_tag :controller => :users, :id => @user.id, :action => :wishfor do |f2| -%>
+	<% form_tag :controller => :users, :id => @user.id, :action => :wishfor do |f| -%>
 	<%= hidden_field_tag :drink_id, @drink.id %>
 	<%= submit_tag 'Add To Wish List' %> 
 	<% end -%>
@@ -30,5 +30,8 @@
 </p>
 
 <ul>
-  <%= render :partial => 'url', :collection => @drink.urls_array %>
+  <% @drink.urls_array.each { |url| -%>
+	<li><%= link_to h(url), h(url) %></li>
+  <% } -%>
 </ul>
+<% end -%>

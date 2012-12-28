@@ -7,9 +7,23 @@ WhatdididrinkApi::Application.routes.draw do
     end
   end
 
-  resources :wishlists
   resources :users
-  resources :drinks
+  
+  resources :drinks do
+    member do
+      post :checkin
+    end
+    
+    resources :wish, :only => [:create] do
+      collection do
+        delete :destroy
+      end
+    end
+  end
+
+  # Wishlist Routes
+  resources :wishes, :only => [:index]
+  match 'wishlist' => 'wishes#index', :as => :wishlist
 
   # Authentication URLs for Omniauth
   match '/auth/:provider/callback' => 'authentications#create'

@@ -22,6 +22,7 @@ class DrinksController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.mobile # show.mobile.erb
       format.json { render json: @drink }
     end
   end
@@ -33,6 +34,7 @@ class DrinksController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
+      format.mobile # new.mobile.erb
       format.json { render json: @drink }
     end
   end
@@ -50,9 +52,11 @@ class DrinksController < ApplicationController
     respond_to do |format|
       if @drink.save
         format.html { redirect_to @drink, notice: 'Drink was successfully created.' }
+        format.mobile { redirect_to @drink, notice: 'Drink was successfully created.' }
         format.json { render json: @drink, status: :created, location: @drink }
       else
         format.html { render action: "new" }
+        format.mobile { render action: "new" }
         format.json { render json: @drink.errors, status: :unprocessable_entity }
       end
     end
@@ -66,9 +70,11 @@ class DrinksController < ApplicationController
     respond_to do |format|
       if @drink.update_attributes(params[:drink])
         format.html { redirect_to @drink, notice: 'Drink was successfully updated.' }
+        format.mobile { redirect_to @drink, notice: 'Drink was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
+        format.mobile { render action: "edit" }
         format.json { render json: @drink.errors, status: :unprocessable_entity }
       end
     end
@@ -82,7 +88,32 @@ class DrinksController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to drinks_url }
+      format.mobile { redirect_to drinks_url }
       format.json { head :no_content }
     end
+  end
+  
+  def checkin
+    @drink = Drink.find(params[:id])
+    @user = current_user
+    
+    respond_to do |format|
+      format.html # checkin.html.erb
+      format.mobile # checkin.mobile.erb
+      format.json { render :xml => @user.errors, :status => :unprocessable_entity }
+    end
+  end
+  
+  def wish_create
+    puts "wish created called"
+    
+    @drink = Drink.find(params[:id])
+    @user = current_user
+    
+    # TODO redirect somewhere
+  end
+  
+  def wish_destroy
+    puts "wish destroy called"
   end
 end
