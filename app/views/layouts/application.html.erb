@@ -16,7 +16,7 @@
 
 <% if logged_in? -%>
 <p>
-	<%= link_to 'home', :controller => :front, :action => :main %> - 
+	<%= link_to 'home', root_path %> - 
 	<%= link_to 'new drink', new_drink_path %> - 
 	<%= link_to current_user.image_url != nil ? image_tag(current_user.image_url) : current_user.full_name, current_user %> -
 	<%= link_to 'logout', logout_path %> - 
