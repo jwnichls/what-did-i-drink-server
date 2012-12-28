@@ -7,6 +7,8 @@
 
 <% if @user != nil -%>
 <p>
+	<%= link_to 'Edit', edit_drink_path(@drink) %>
+	- 
 	<%= form_tag :controller => :users, :id => @user.id, :action => :checkin do |f| -%>
 	<%= hidden_field_tag :drink_id, @drink.id %>
 	<%= submit_tag 'Checkin' %> 

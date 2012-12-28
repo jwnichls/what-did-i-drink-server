@@ -1,8 +1,12 @@
 class WishesController < ApplicationController
+  before_filter :parse_user
+
   # GET /wishlists
   # GET /wishlists.json
   def index
     @wishes = current_user.wishes
+
+    session[:redirect] = wishlist_path
 
     respond_to do |format|
       format.html # index.html.erb
@@ -11,8 +15,6 @@ class WishesController < ApplicationController
   end
   
   def create
-    puts "wish created called"
-    
     @drink = Drink.find(params[:drink_id])
     current_user.addToWishList(@drink)
 
@@ -25,9 +27,12 @@ class WishesController < ApplicationController
   end
   
   def destroy
-    puts "wish destroy called"
-
-    @drink = Drink.find(params[:drink_id])
+    if params[:drink_id]
+      @drink = Drink.find(params[:drink_id])
+    elsif params[:id]
+      @drink = Wish.find(params[:id]).drink
+    end
+    
     current_user.removeFromWishList(@drink)
     
     @redirect = @drink

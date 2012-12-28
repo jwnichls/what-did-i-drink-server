@@ -7,6 +7,8 @@
 
 <% if @user != nil -%>
 <p>
+	<%= link_to 'Edit', edit_drink_path(@drink) %>
+	- 
 	<%= form_tag checkin_drink_path(@drink) do |f1| %>
 	<%= submit_tag 'Checkin' %> 
 	<% end %>
