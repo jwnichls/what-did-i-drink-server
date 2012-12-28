@@ -7,14 +7,21 @@
 
 <% if @user != nil -%>
 <p>
-	<% form_tag :controller => :users, :id => @user.id, :action => :checkin do |f| -%>
+	<%= form_tag :controller => :users, :id => @user.id, :action => :checkin do |f| -%>
 	<%= hidden_field_tag :drink_id, @drink.id %>
 	<%= submit_tag 'Checkin' %> 
 	<% end -%>
 	- 
-	<% form_tag :controller => :users, :id => @user.id, :action => :wishfor do |f| -%>
-	<%= hidden_field_tag :drink_id, @drink.id %>
-	<%= submit_tag 'Add To Wish List' %> 
+	<% if current_user.wishedFor?(@drink) -%>
+		<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
+		<%= hidden_field_tag :drink_id, @drink.id %>
+		<%= submit_tag 'Remove From Wish List' %> 
+		<% end -%>
+	<% else -%>
+		<%= form_tag :controller => :wishes, :action => :create do |f2| %>
+		<%= hidden_field_tag :drink_id, @drink.id %>
+		<%= submit_tag 'Add To Wish List' %> 
+		<% end -%>
 	<% end -%>
 </p>
 <% end -%>

@@ -1,4 +1,6 @@
 class DrinksController < ApplicationController
+  before_filter :parse_user
+
   # GET /drinks
   # GET /drinks.json
   def index
@@ -19,6 +21,8 @@ class DrinksController < ApplicationController
   # GET /drinks/1.json
   def show
     @drink = Drink.find(params[:id])
+
+    session[:redirect] = @drink
 
     respond_to do |format|
       format.html # show.html.erb
@@ -102,18 +106,5 @@ class DrinksController < ApplicationController
       format.mobile # checkin.mobile.erb
       format.json { render :xml => @user.errors, :status => :unprocessable_entity }
     end
-  end
-  
-  def wish_create
-    puts "wish created called"
-    
-    @drink = Drink.find(params[:id])
-    @user = current_user
-    
-    # TODO redirect somewhere
-  end
-  
-  def wish_destroy
-    puts "wish destroy called"
   end
 end

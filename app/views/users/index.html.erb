@@ -3,35 +3,15 @@
 <table>
   <tr>
     <th>Full name</th>
-    <th>Password</th>
     <th>Email</th>
-    <th>Foursquare access token</th>
-    <th>Twitter access token</th>
-    <th>Twitter access secret</th>
-    <th>Image url</th>
-    <th>Admin</th>
-    <th></th>
-    <th></th>
-    <th></th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.full_name %></td>
-    <td><%= user.password %></td>
-    <td><%= user.email %></td>
-    <td><%= user.foursquare_access_token %></td>
-    <td><%= user.twitter_access_token %></td>
-    <td><%= user.twitter_access_secret %></td>
-    <td><%= user.image_url %></td>
-    <td><%= user.admin %></td>
+    <td><%=h user.full_name %></td>
+    <td><%=h user.email %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>

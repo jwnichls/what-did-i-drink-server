@@ -7,7 +7,7 @@ WhatdididrinkApi::Application.routes.draw do
     end
   end
 
-  resources :users
+  resources :users, :only => [:index,:show,:edit,:update]
   
   resources :drinks do
     member do
@@ -22,7 +22,7 @@ WhatdididrinkApi::Application.routes.draw do
   end
 
   # Wishlist Routes
-  resources :wishes, :only => [:index]
+  resources :wishes, :only => [:index,:create, :destroy]
   match 'wishlist' => 'wishes#index', :as => :wishlist
 
   # Authentication URLs for Omniauth
