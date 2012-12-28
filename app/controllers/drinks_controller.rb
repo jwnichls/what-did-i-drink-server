@@ -2,10 +2,15 @@ class DrinksController < ApplicationController
   # GET /drinks
   # GET /drinks.json
   def index
-    @drinks = Drink.all
+    if (params[:query] != nil)
+      @drinks = Drink.search(:all, :query => params[:query], :order => 'name')
+    else
+      @drinks = Drink.all(:order => 'name')
+    end    
 
     respond_to do |format|
       format.html # index.html.erb
+      format.mobile # index.mobile.erb
       format.json { render json: @drinks }
     end
   end

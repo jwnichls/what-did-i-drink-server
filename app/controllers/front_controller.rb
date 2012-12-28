@@ -5,27 +5,16 @@ class FrontController < ApplicationController
   def index
     if mobile_redirect?
       redirect_to_mobile(request)
-    elsif logged_in?
-      redirect_to :action => :main
     else
-      session[:redirect] = "/front/main"
+      session[:redirect] = "/"
+
+      if logged_in?
+        @drinks = Drink.all(:order => "name")
+      end
       
       respond_to do |format|
         format.html # index.html.erb
-        format.mobile # index.iphone.erb
-      end
-    end
-  end
-
-  def main
-    if !logged_in?
-      redirect_to :action => :index
-    else    
-      @drinks = Drink.all(:order => "name")
-    
-      respond_to do |format|
-        format.html # index.html.erb
-        format.mobile # index.iphone.erb
+        format.mobile # index.mobile.erb
       end
     end
   end
@@ -50,6 +39,7 @@ class FrontController < ApplicationController
     
     respond_to do |format|
       format.html { redirect_to root_path }
+      format.mobile { redirect_to root_path }
       format.json { head :no_content }
     end
   end
