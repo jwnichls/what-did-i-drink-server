@@ -1,0 +1,17 @@
+<h1>Checkins</h1>
+
+<table>
+  <tr>
+    <th>Drink</th>
+	<th>Time</th>
+	<th></th>
+  </tr>
+
+<% @checkins.each do |checkin| %>
+  <tr>
+    <td><%= link_to h(checkin.drink.name), checkin.drink %></td>
+	<td><%= checkin.created_at %></td>
+	<td><%= link_to "Show", checkin %>
+  </tr>
+<% end %>
+</table>

@@ -96,15 +96,4 @@ class DrinksController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def checkin
-    @drink = Drink.find(params[:id])
-    @user = current_user
-    
-    respond_to do |format|
-      format.html # checkin.html.erb
-      format.mobile # checkin.mobile.erb
-      format.json { render :xml => @user.errors, :status => :unprocessable_entity }
-    end
-  end
 end

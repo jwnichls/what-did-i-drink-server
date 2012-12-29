@@ -10,16 +10,19 @@ WhatdididrinkApi::Application.routes.draw do
   resources :users, :only => [:index,:show,:edit,:update]
   
   resources :drinks do
-    member do
-      post :checkin
-    end
+    # member do
+    #  post :checkin
+    # end
     
-    resources :wish, :only => [:create] do
-      collection do
-        delete :destroy
-      end
-    end
+    # resources :wish, :only => [:create] do
+    #   collection do
+    #     delete :destroy
+    #   end
+    # end
   end
+
+  # Checkin Routes
+  resources :checkins, :only => [:index,:new,:create,:show]
 
   # Wishlist Routes
   resources :wishes, :only => [:index,:create, :destroy]

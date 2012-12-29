@@ -9,9 +9,7 @@
 <p>
 	<%= link_to 'Edit', edit_drink_path(@drink) %>
 	- 
-	<%= form_tag checkin_drink_path(@drink) do |f1| %>
-	<%= submit_tag 'Checkin' %> 
-	<% end %>
+	<%= link_to 'Checkin', :controller => :checkins, :action => :new, :drink_id => @drink.id %>
 	- 
 	<% if current_user.wishedFor?(@drink) -%>
 		<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>

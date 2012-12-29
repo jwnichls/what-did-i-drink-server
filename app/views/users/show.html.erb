@@ -6,7 +6,9 @@
 
 		<ul>
 		<% @user.checkins.each { |c| -%>
-			<li><%= link_to h(c.drink.name), c.drink %><br/><small><%= c.created_at %></small></li>
+			<li><%= link_to h(c.drink.name), c.drink %><br/>
+			<% if c.notes and c.notes != "" -%><small><%= link_to "Notes", c %></small><br/><% end -%>
+			<small><%= c.created_at %></small></li>
 		<% } -%>
 		</ul>
 	</td><td valign="top">

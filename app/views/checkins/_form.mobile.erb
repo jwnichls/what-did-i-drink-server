@@ -1,0 +1,28 @@
+<%= form_for(@checkin) do |f| %>
+  <% if @checkin.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@checkin.errors.count, "error") %> prohibited this drink from being saved:</h2>
+
+      <ul>
+      <% @checkin.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :drink_id, :value => @checkin.drink.id %>
+
+  <p>
+	<b>Drink:</b> <%= h(@checkin.drink.name) %>
+  </p>
+
+  <p>
+    <b><%= f.label :notes %></b><br />
+    <%= f.text_area :notes %>
+  </p>
+
+  <p>
+    <%= f.submit "Checkin" %>
+  </p>
+<% end %>

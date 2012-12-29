@@ -1,0 +1,14 @@
+<h2>Checkin</h2>
+
+<p>
+	<b>Drink: </b> <%= link_to h(@checkin.drink.name), @checkin.drink %>
+</p>
+
+<p>
+	<b>Time: </b> <%= @checkin.created_at %>
+</p>
+
+<p>
+	<b>Notes</b><br/>
+	<%= h(@checkin.notes) %>
+</p>
