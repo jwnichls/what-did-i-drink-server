@@ -19,21 +19,6 @@ class FrontController < ApplicationController
     end
   end
   
-  def finddrink
-    if (params[:drink][:name] == "")
-      redirect_to :controller => :drinks, :action => :index
-    end
-    
-    @query = params[:drink][:name]
-    @drinks = Drink.search(:all, :query => @query)
-    
-    if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == params[:drink][:name])
-      redirect_to @drinks[0]
-    else
-      redirect_to :controller => :drinks, :action => :index, :query => @query
-    end
-  end
-  
   def logout
     logout_user
     

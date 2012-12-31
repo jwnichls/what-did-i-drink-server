@@ -1,11 +1,14 @@
 class DrinksController < ApplicationController
   before_filter :parse_user
+  autocomplete :drink, :name, :full => true
+  autocomplete :drink, :created_by
 
   # GET /drinks
   # GET /drinks.json
   def index
-    if (params[:query] != nil)
-      @drinks = Drink.search(:all, :query => params[:query], :order => 'name')
+    @query = params[:query]
+    if @query
+      @drinks = Drink.search(:all, :query => @query, :order => 'name')
     else
       @drinks = Drink.all(:order => 'name')
     end    
@@ -94,6 +97,22 @@ class DrinksController < ApplicationController
       format.html { redirect_to drinks_url }
       format.mobile { redirect_to drinks_url }
       format.json { head :no_content }
+    end
+  end
+  
+  
+  def search
+    if (params[:drink][:name] == "")
+      redirect_to :controller => :drinks, :action => :index
+    end
+    
+    @query = params[:drink][:name]
+    @drinks = Drink.search(:all, :query => @query)
+    
+    if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == params[:drink][:name])
+      redirect_to @drinks[0]
+    else
+      redirect_to :controller => :drinks, :action => :index, :query => @query
     end
   end
 end

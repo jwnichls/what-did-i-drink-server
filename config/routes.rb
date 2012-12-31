@@ -10,6 +10,12 @@ WhatdididrinkApi::Application.routes.draw do
   resources :users, :only => [:index,:show,:edit,:update]
   
   resources :drinks do
+    collection do
+      get :autocomplete_drink_name
+      get :autocomplete_drink_created_by
+      post :search
+    end
+
     # member do
     #  post :checkin
     # end
@@ -23,6 +29,7 @@ WhatdididrinkApi::Application.routes.draw do
 
   # Checkin Routes
   resources :checkins, :only => [:index,:new,:create,:show]
+  match 'checkin' => 'checkins#create', :as => :checkin
 
   # Wishlist Routes
   resources :wishes, :only => [:index,:create, :destroy]
@@ -37,8 +44,6 @@ WhatdididrinkApi::Application.routes.draw do
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do
     collection do
-      get :main
-      get :finddrink
       get :logout
     end
   end

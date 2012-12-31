@@ -1,4 +1,8 @@
-<h1>Listing drinks</h1>
+<% if @query -%>
+<h3>Searching for drinks: "<%= h(@query) %>"</h3>
+<% else -%>
+<h3>Listing all drinks</h3>
+<% end -%>
 
 <table>
   <tr>

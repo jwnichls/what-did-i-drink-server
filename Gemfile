@@ -19,6 +19,7 @@ gem 'quimby' #foursquare
 
 # jQuery
 gem 'jquery-rails'
+gem 'rails3-jquery-autocomplete'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

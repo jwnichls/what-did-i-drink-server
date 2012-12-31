@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :created_by %><br />
-    <%= f.text_field :created_by %>
+    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path %>
   </div>
   <div class="field">
     <%= f.label :urls %><br />
