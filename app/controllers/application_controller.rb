@@ -14,23 +14,25 @@ class ApplicationController < ActionController::Base
   end
 
   def parse_user
-    @user = session[:user]
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+    end
   end
   
   def logged_in?
-    session[:user] != nil
+    session[:user_id] != nil
   end
   
   def login_user(user)
-    session[:user] = user
+    session[:user_id] = user.id
   end
   
   def current_user
-    session[:user]
+    User.find(session[:user_id])
   end
   
   def logout_user
-    session[:user] = nil
+    session[:user_id] = nil
   end
   
   def foursquare

@@ -18,7 +18,7 @@ class CheckinsController < ApplicationController
   def show
     @checkin = Checkin.find(params[:id])
 
-    session[:redirect] = @checkin
+    session[:redirect] = checkin_path(@checkin)
 
     respond_to do |format|
       format.html # show.html.erb

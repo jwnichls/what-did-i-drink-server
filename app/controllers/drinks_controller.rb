@@ -25,7 +25,7 @@ class DrinksController < ApplicationController
   def show
     @drink = Drink.find(params[:id])
 
-    session[:redirect] = @drink
+    session[:redirect] = drink_path(@drink)
 
     respond_to do |format|
       format.html # show.html.erb
