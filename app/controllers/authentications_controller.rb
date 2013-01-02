@@ -51,6 +51,7 @@ class AuthenticationsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to @redirect }
+      format.mobile { redirect_to @redirect }
       format.json { render json: current_user }
     end
   end
