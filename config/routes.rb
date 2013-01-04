@@ -1,5 +1,23 @@
 WhatdididrinkApi::Application.routes.draw do
 
+  #******************
+  # API
+  #******************
+
+  constraints :subdomain => "api" do
+    namespace :v1 do
+      resources :drinks, :only => [:index,:create,:show,:update,:destroy] do
+        collection do
+          post :search
+        end
+      end
+    end
+  end
+
+  #******************
+  # Web UI
+  #******************
+
   # Resources
   resources :authentications, :only => [:index,:create,:destroy] do
     collection do 
