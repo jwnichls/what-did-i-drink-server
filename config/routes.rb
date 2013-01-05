@@ -5,7 +5,7 @@ WhatdididrinkApi::Application.routes.draw do
   #******************
 
   constraints :subdomain => "api" do
-    namespace :v1 do
+    namespace :v1, defaults: {format: 'json'} do
       resources :drinks, :only => [:index,:create,:show,:update,:destroy] do
         collection do
           post :search
