@@ -1,3 +1,5 @@
+require 'api_constraints'
+
 WhatdididrinkApi::Application.routes.draw do
 
   #******************
@@ -5,7 +7,7 @@ WhatdididrinkApi::Application.routes.draw do
   #******************
 
   constraints :subdomain => "api" do
-    namespace :v1, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true), defaults: {format: 'json'} do
       resources :drinks, :only => [:index,:create,:show,:update,:destroy] do
         collection do
           post :search
