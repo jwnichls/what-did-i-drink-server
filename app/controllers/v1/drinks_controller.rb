@@ -15,12 +15,12 @@ module V1
 
     # POST /drinks.json
     def create
-      respond_with Drink.create(params[:drink])
+      respond_with Drink.create(Drink.from_params(params))
     end
 
     # PUT /drinks/1.json
     def update
-      respond_with Drink.update(params[:id], params[:drink])
+      respond_with Drink.update(params[:id], Drink.from_params(params))
     end
 
     # DELETE /drinks/1.json
