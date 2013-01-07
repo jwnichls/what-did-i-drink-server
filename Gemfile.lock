@@ -147,6 +147,7 @@ GEM
     typhoeus (0.5.3)
       ethon (~> 0.5.3)
     tzinfo (0.3.35)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -165,3 +166,4 @@ DEPENDENCIES
   rails (= 3.2.9)
   rails3-jquery-autocomplete
   twitter
+  yajl-ruby

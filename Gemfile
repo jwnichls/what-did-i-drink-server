@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'mysql2'
 gem 'json'
+gem 'yajl-ruby'
 
 # Authentication
 gem 'omniauth-identity'

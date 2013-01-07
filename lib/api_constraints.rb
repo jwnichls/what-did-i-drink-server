@@ -1,3 +1,6 @@
+# API String:
+# application/vnd.drink.v1
+
 class ApiConstraints
   def initialize(options)
     @version = options[:version]
