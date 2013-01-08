@@ -5,7 +5,7 @@
   <% end -%>
 </p>
 
-<% if @user != nil -%>
+<% if current_user != nil -%>
 <p>
 	<%= link_to 'Edit', edit_drink_path(@drink) %>
 	- 

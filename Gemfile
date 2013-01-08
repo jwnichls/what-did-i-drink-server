@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.9'
 gem 'mysql2'
 gem 'json'
-gem 'yajl-ruby'
+gem 'yajl-ruby' # apparently necessary to parse JSON post data
 
 # Authentication
 gem 'omniauth-identity'

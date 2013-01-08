@@ -1,6 +1,4 @@
 class CheckinsController < ApplicationController
-  before_filter :parse_user
-
   # GET /checkins
   # GET /checkins.json
   def index

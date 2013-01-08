@@ -1,6 +1,5 @@
 class FrontController < ApplicationController
   layout "application"
-  before_filter :parse_user
 
   def index
     if mobile_redirect?

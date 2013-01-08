@@ -13,12 +13,24 @@ WhatdididrinkApi::Application.routes.draw do
           post :search
         end
       end
+      
+      resources :checkins, :only => [:index,:create,:show]
+
+      # Wishlist Routes
+      resources :wishlist, :only => [:index,:create,:destroy]
+      match '/wishlist' => 'wishlist#destroy', :via => :delete
+      
+      # need to add some kind of route to test users
+      resources :users, :only => [:index,:show,:update]
     end
   end
 
   #******************
   # Web UI
   #******************
+
+  # TEMP TEMP TEMP
+  resources :temp_access_tokens, :only => [:index, :create]
 
   # Resources
   resources :authentications, :only => [:index,:create,:destroy] do
@@ -49,11 +61,9 @@ WhatdididrinkApi::Application.routes.draw do
 
   # Checkin Routes
   resources :checkins, :only => [:index,:new,:create,:show]
-  match 'checkin' => 'checkins#create', :as => :checkin
 
   # Wishlist Routes
   resources :wishes, :only => [:index,:create, :destroy]
-  match 'wishlist' => 'wishes#index', :as => :wishlist
 
   # Authentication URLs for Omniauth
   match '/auth/:provider/callback' => 'authentications#create'

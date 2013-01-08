@@ -1,6 +1,4 @@
 class WishesController < ApplicationController
-  before_filter :parse_user
-
   # GET /wishlists
   # GET /wishlists.json
   def index
@@ -30,7 +28,7 @@ class WishesController < ApplicationController
     if params[:drink_id]
       @drink = Drink.find(params[:drink_id])
     elsif params[:id]
-      @drink = Wish.find(params[:id]).drink
+      @drink = current_user.wishes.find(params[:id]).drink
     end
     
     current_user.removeFromWishList(@drink)

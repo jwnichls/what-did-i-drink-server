@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_many :authentications
   has_many :checkins
   has_many :wishes
+  has_many :temp_access_tokens
 
   def twitter?
     twitter_access_token != nil and twitter_access_secret != nil
@@ -42,4 +43,24 @@ class User < ActiveRecord::Base
   def wishedFor?(drink)
     Wish.find_by_drink_id_and_user_id(drink.id, self.id) != nil
   end
+  
+  
+  def self.from_params(params)
+    userparams = {}
+    
+    if params[:full_name]
+      userparams[:full_name] = params[:full_name]
+    end
+
+    if params[:email]
+      userparams[:email] = params[:email]
+    end
+
+    if params[:image_url]
+      userparams[:image_url] = params[:image_url]
+    end
+    
+    userparams
+  end
+
 end

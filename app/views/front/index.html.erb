@@ -9,7 +9,7 @@
 </p>
 <% else -%>
 <p>
-  Logged in as <%= link_to h(@user.full_name), @user %>
+  Logged in as <%= link_to h(current_user.full_name), current_user %>
 </p>
 
 <table>

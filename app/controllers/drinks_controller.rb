@@ -1,5 +1,4 @@
 class DrinksController < ApplicationController
-  before_filter :parse_user
   autocomplete :drink, :name, :full => true
   autocomplete :drink, :created_by
 

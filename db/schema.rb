@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121228013624) do
+ActiveRecord::Schema.define(:version => 20130108055318) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -33,10 +33,10 @@ ActiveRecord::Schema.define(:version => 20121228013624) do
   create_table "drinks", :force => true do |t|
     t.string   "name"
     t.text     "recipe"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "created_by"
     t.text     "urls"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   add_index "drinks", ["name", "recipe", "created_by"], :name => "fulltext_drinks"
@@ -97,6 +97,13 @@ ActiveRecord::Schema.define(:version => 20121228013624) do
 
   add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
+  create_table "temp_access_tokens", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "token"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "full_name"

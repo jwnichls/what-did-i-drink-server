@@ -5,17 +5,18 @@ class ApplicationController < ActionController::Base
   
   before_filter :adjust_format_for_mobile
 
-  def logged_in_redirect
-    if logged_in?
-      parse_user
-    else
-      redirect_to :controller => :front, :action => :index
-    end
+  def restrict_access
+    head :unauthorized unless current_user
   end
-
-  def parse_user
+  
+  def current_user
     if session[:user_id]
-      @user = User.find(session[:user_id])
+      User.find(session[:user_id])
+    elsif params[:access_token]
+      token = TempAccessToken.find_by_token(params[:access_token])
+      if token
+        token.user
+      end
     end
   end
   
@@ -25,10 +26,6 @@ class ApplicationController < ActionController::Base
   
   def login_user(user)
     session[:user_id] = user.id
-  end
-  
-  def current_user
-    User.find(session[:user_id])
   end
   
   def logout_user

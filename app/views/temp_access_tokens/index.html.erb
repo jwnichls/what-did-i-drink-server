@@ -1,0 +1,15 @@
+<h1>Temporary Access Token</h1>
+
+<p>
+	This is needed to connect using the JSON API.  Eventually, will be replaced with regular OAuth.
+</p>
+
+<p>
+<% if current_user.temp_access_tokens.size > 0 -%>
+	Your code is: <b><%= current_user.temp_access_tokens[0].token %></b>
+<% else -%>
+	<%= form_tag :controller => :temp_access_tokens, :action => :create do |f| %>
+	    <%= submit_tag 'Generate Temporary Access Token' %>
+	<% end %>
+<% end -%>
+</p>

@@ -1,6 +1,6 @@
 module V1
   class DrinksController < ApplicationController
-    skip_before_filter  :verify_authenticity_token
+    skip_before_filter :verify_authenticity_token
     respond_to :json
     
     # GET /drinks.json
@@ -15,22 +15,28 @@ module V1
 
     # POST /drinks.json
     def create
-      respond_with Drink.create(Drink.from_params(params))
+      unless restrict_access
+        respond_with Drink.create(Drink.from_params(params))
+      end
     end
 
     # PUT /drinks/1.json
     def update
-      respond_with Drink.update(params[:id], Drink.from_params(params))
+      unless restrict_access
+        respond_with Drink.update(params[:id], Drink.from_params(params))
+      end
     end
 
     # DELETE /drinks/1.json
     def destroy
-      respond_with Drink.destroy(params[:id])
+      unless restrict_access
+        respond_with Drink.destroy(params[:id])
+      end
     end
 
     # POST /drinks/search.json
     def search
-      respond_with Drink.search(:all, :query => params[:drink][:name])
+      respond_with Drink.search(:all, :query => params[:query])
     end
   end
 end
