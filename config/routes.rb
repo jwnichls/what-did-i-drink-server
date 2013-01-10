@@ -2,6 +2,9 @@ require 'api_constraints'
 
 WhatdididrinkApi::Application.routes.draw do
 
+  resources :timeline_entries
+
+
   #******************
   # API
   #******************
