@@ -5,7 +5,7 @@ module V1
     
     # GET /drinks.json
     def index
-      respond_with Drink.all(:order => 'name')
+      respond_with Drink.visible.all(:order => 'name')
     end
 
     # GET /drinks/1.json
@@ -30,7 +30,10 @@ module V1
     # DELETE /drinks/1.json
     def destroy
       unless restrict_access
-        respond_with Drink.destroy(params[:id])
+        @drink = Drink.find(params[:id])
+        @drink.hide()
+        
+        respond_with :no_content
       end
     end
 

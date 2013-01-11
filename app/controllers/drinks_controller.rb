@@ -9,7 +9,7 @@ class DrinksController < ApplicationController
     if @query
       @drinks = Drink.search(:all, :query => @query, :order => 'name')
     else
-      @drinks = Drink.all(:order => 'name')
+      @drinks = Drink.visible.all(:order => 'name')
     end    
 
     respond_to do |format|
@@ -90,7 +90,7 @@ class DrinksController < ApplicationController
   # DELETE /drinks/1.json
   def destroy
     @drink = Drink.find(params[:id])
-    @drink.destroy
+    @drink.hide
 
     respond_to do |format|
       format.html { redirect_to drinks_url }

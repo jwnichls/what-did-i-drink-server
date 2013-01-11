@@ -8,7 +8,7 @@ class FrontController < ApplicationController
       session[:redirect] = "/"
 
       if logged_in?
-        @drinks = Drink.all(:order => "name")
+        @drinks = Drink.visible.all(:order => "name")
       end
       
       respond_to do |format|

@@ -3,9 +3,11 @@ class Drink < ActiveRecord::Base
   has_many :checkins
   has_many :waitlists
   
+  scope :visible, where(:deleted => :true)
+  
   def self.search(*args)
     options = args.extract_options!
-    find_by_sql [ "SELECT * FROM drinks WHERE MATCH (name, recipe, created_by) AGAINST (?)", options[:query] ]
+    find_by_sql [ "SELECT * FROM drinks WHERE deleted=true AND MATCH (name, recipe, created_by) AGAINST (?)", options[:query] ]
   end
 
   def self.from_params(params)
@@ -28,6 +30,16 @@ class Drink < ActiveRecord::Base
     end
     
     drinkparams
+  end
+
+  def hide
+    self.deleted = true
+    self.save
+  end
+  
+  def restore
+    self.deleted = false
+    self.save
   end
 
   def urls_array
