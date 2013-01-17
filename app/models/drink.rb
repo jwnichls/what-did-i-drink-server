@@ -7,7 +7,7 @@ class Drink < ActiveRecord::Base
   
   def self.search(*args)
     options = args.extract_options!
-    find_by_sql [ "SELECT * FROM drinks WHERE deleted=true AND MATCH (name, recipe, created_by) AGAINST (?)", options[:query] ]
+    find_by_sql [ "SELECT * FROM drinks WHERE deleted=false AND MATCH (name, recipe, created_by) AGAINST (?)", options[:query] ]
   end
 
   def self.from_params(params)
