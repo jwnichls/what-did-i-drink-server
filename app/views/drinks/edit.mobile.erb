@@ -1,25 +1,3 @@
-<h1>Editing <%=h @drink.name %></h1>
+<h1>Editing <%= h(@drink.name) %></h1>
 
-<% form_for(@drink) do |f| %>
-  <%= f.error_messages %>
-
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :recipe %><br />
-    <%= f.text_area :recipe %>
-  </p>
-  <p>
-    <%= f.label :created_by %><br />
-    <%= f.text_field :created_by %>
-  </p>
-  <p>
-    <%= f.label :urls %><br />
-    <%= f.text_area :urls %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
+<%= render 'form' %>
