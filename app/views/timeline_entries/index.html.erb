@@ -2,6 +2,6 @@
 
 <ul>
 	<% @timeline_entries.each { |entry| -%>
-		<li><%= render :partial => entry %></li>
+		<li><%= render partial: "#{entry.type.underscore}", locals: {entry: entry} %>
 	<% } -%>
 </ul>
