@@ -2,6 +2,7 @@ class Drink < ActiveRecord::Base
   attr_accessible :created_by, :name, :recipe, :urls
   has_many :checkins
   has_many :waitlists
+  has_many :timeline_entries
   
   scope :visible, where(:deleted => :true)
   
@@ -40,6 +41,16 @@ class Drink < ActiveRecord::Base
   def restore
     self.deleted = false
     self.save
+  end
+
+  def on_committed(user)
+    # Create the timeline entry for this creation
+    AddDrinkEntry.create({user: user, drink: self})
+  end
+  
+  def on_updated(user)
+    # Create the timeline entry for this update
+    EditDrinkEntry.create({user: user, drink: self})
   end
 
   def urls_array

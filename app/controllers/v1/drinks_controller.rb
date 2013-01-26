@@ -16,14 +16,28 @@ module V1
     # POST /drinks.json
     def create
       unless restrict_access
-        respond_with Drink.create(Drink.from_params(params))
+        @drink = Drink.create(Drink.from_params(params))
+
+        # TODO: Make sure this actually works
+        if @drink != nil
+          @drink.on_committed(current_user)
+        end
+
+        respond_with @drink
       end
     end
 
     # PUT /drinks/1.json
     def update
       unless restrict_access
-        respond_with Drink.update(params[:id], Drink.from_params(params))
+        @drink = Drink.update(params[:id], Drink.from_params(params))
+
+        # TODO: Make sure this actually works
+        if @drink != nil
+          @drink.on_updated(current_user)
+        end
+
+        respond_with @drink
       end
     end
 

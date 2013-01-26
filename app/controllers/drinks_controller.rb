@@ -55,12 +55,16 @@ class DrinksController < ApplicationController
   def create
     @drink = Drink.new(params[:drink])
 
-    respond_to do |format|
-      if @drink.save
+    if @drink.save
+      @drink.on_committed(current_user)
+      
+      respond_to do |format|
         format.html { redirect_to @drink, notice: 'Drink was successfully created.' }
         format.mobile { redirect_to @drink, notice: 'Drink was successfully created.' }
         format.json { render json: @drink, status: :created, location: @drink }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render action: "new" }
         format.mobile { render action: "new" }
         format.json { render json: @drink.errors, status: :unprocessable_entity }
@@ -73,12 +77,16 @@ class DrinksController < ApplicationController
   def update
     @drink = Drink.find(params[:id])
 
-    respond_to do |format|
-      if @drink.update_attributes(params[:drink])
+    if @drink.update_attributes(params[:drink])
+      @drink.on_updated(current_user)
+      
+      respond_to do |format|
         format.html { redirect_to @drink, notice: 'Drink was successfully updated.' }
         format.mobile { redirect_to @drink, notice: 'Drink was successfully updated.' }
         format.json { head :no_content }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render action: "edit" }
         format.mobile { render action: "edit" }
         format.json { render json: @drink.errors, status: :unprocessable_entity }

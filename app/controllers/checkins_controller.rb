@@ -46,8 +46,7 @@ class CheckinsController < ApplicationController
     @checkin.user = current_user
 
     if @checkin.save
-      # Remove the drink we checked into from the wish list (if it's there)
-      @checkin.user.removeFromWishList(@checkin.drink)
+      @checkin.on_committed()
 
       respond_to do |format|
         format.html { redirect_to @checkin, notice: @checkin.user.full_name.to_s + ' checked in to ' + @checkin.drink.name.to_s }

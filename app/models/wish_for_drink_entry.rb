@@ -1,0 +1,2 @@
+class WishForDrinkEntry < TimelineEntry
+end

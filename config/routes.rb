@@ -2,9 +2,6 @@ require 'api_constraints'
 
 WhatdididrinkApi::Application.routes.draw do
 
-  resources :timeline_entries
-
-
   #******************
   # API
   #******************
@@ -25,6 +22,10 @@ WhatdididrinkApi::Application.routes.draw do
       
       # need to add some kind of route to test users
       resources :users, :only => [:index,:show,:update]
+      
+      # Timeline routes
+      resources :timeline_entries, :only => [:index]
+      match 'timeline' => 'timeline_entries#index', :as => :timeline
     end
   end
 
@@ -50,16 +51,6 @@ WhatdididrinkApi::Application.routes.draw do
       get :autocomplete_drink_created_by
       post :search
     end
-
-    # member do
-    #  post :checkin
-    # end
-    
-    # resources :wish, :only => [:create] do
-    #   collection do
-    #     delete :destroy
-    #   end
-    # end
   end
 
   # Checkin Routes
@@ -73,6 +64,9 @@ WhatdididrinkApi::Application.routes.draw do
 
   # A global logout path
   match 'logout' => 'front#logout', :as => :logout
+
+  resources :timeline_entries, :only => [:index]
+  match 'timeline' => 'timeline_entries#index', :as => :timeline
 
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do

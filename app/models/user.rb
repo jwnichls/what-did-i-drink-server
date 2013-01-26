@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :checkins
   has_many :wishes
   has_many :temp_access_tokens
+  has_many :timeline_entries
 
   def twitter?
     twitter_access_token != nil and twitter_access_secret != nil
@@ -29,7 +30,12 @@ class User < ActiveRecord::Base
   end
   
   def addToWishList(drink)
-    Wish.find_or_create_by_drink_id_and_user_id(drink.id, self.id)
+    if !Wish.find_by_drink_id_and_user_id(drink.id, self.id)
+      Wish.create({drink: drink, user: self})
+      
+      # Create the timeline entry for adding this new drink to the wish list
+      WishForDrinkEntry.create({user: self, drink: drink})
+    end
   end
   
   def removeFromWishList(drink)

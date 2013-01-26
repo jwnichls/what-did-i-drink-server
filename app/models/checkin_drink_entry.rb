@@ -1,0 +1,2 @@
+class CheckinDrinkEntry < TimelineEntry
+end

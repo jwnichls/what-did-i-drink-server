@@ -23,9 +23,8 @@ module V1
       @checkin.user = current_user
 
       if @checkin.save
-        # Remove the drink we checked into from the wish list (if it's there)
-        @checkin.user.removeFromWishList(@checkin.drink)
-
+        @checkin.on_committed()
+        
         respond_to do |format|
           format.json { render json: @checkin, status: :created, location: @checkin }
         end

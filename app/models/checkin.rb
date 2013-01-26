@@ -21,4 +21,11 @@ class Checkin < ActiveRecord::Base
     checkinparams
   end
   
+  def on_committed()
+    # Remove the drink we checked into from the wish list (if it's there)
+    self.user.removeFromWishList(self.drink)
+    
+    # Create the timeline entry for this checkin
+    CheckinDrinkEntry.create({user: self.user, drink: self.drink})
+  end
 end
