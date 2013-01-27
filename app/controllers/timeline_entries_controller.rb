@@ -2,7 +2,12 @@ class TimelineEntriesController < ApplicationController
   # GET /timeline_entries
   # GET /timeline_entries.json
   def index
-    @timeline_entries = TimelineEntry.all(:order => "created_at DESC")
+    @since_date = DateTime.new(0)
+    if params[:since]
+      @since_date = params[:since].to_datetime
+    end
+    
+    @timeline_entries = TimelineEntry.all(:conditions => ["created_at > ?", @since_date], :order => "created_at DESC")
 
     respond_to do |format|
       format.html # index.html.erb
