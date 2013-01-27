@@ -1,0 +1,2 @@
+class EditDrink < TimelineEntry
+end

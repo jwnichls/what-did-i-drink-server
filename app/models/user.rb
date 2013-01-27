@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
       Wish.create({drink: drink, user: self})
       
       # Create the timeline entry for adding this new drink to the wish list
-      WishForDrinkEntry.create({user: self, drink: drink})
+      WishForDrink.create({user: self, drink: drink})
     end
   end
   

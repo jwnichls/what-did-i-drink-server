@@ -26,6 +26,6 @@ class Checkin < ActiveRecord::Base
     self.user.removeFromWishList(self.drink)
     
     # Create the timeline entry for this checkin
-    CheckinDrinkEntry.create({user: self.user, drink: self.drink})
+    CheckinDrink.create({user: self.user, drink: self.drink})
   end
 end

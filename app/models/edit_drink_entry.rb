@@ -1,2 +1,0 @@
-class EditDrinkEntry < TimelineEntry
-end

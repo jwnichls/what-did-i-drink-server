@@ -45,12 +45,12 @@ class Drink < ActiveRecord::Base
 
   def on_committed(user)
     # Create the timeline entry for this creation
-    AddDrinkEntry.create({user: user, drink: self})
+    AddDrink.create({user: user, drink: self})
   end
   
   def on_updated(user)
     # Create the timeline entry for this update
-    EditDrinkEntry.create({user: user, drink: self})
+    EditDrink.create({user: user, drink: self})
   end
 
   def urls_array

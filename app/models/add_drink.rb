@@ -1,0 +1,2 @@
+class AddDrink < TimelineEntry
+end

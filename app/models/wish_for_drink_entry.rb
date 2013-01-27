@@ -1,2 +1,0 @@
-class WishForDrinkEntry < TimelineEntry
-end

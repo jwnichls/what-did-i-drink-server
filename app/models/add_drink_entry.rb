@@ -1,2 +1,0 @@
-class AddDrinkEntry < TimelineEntry
-end

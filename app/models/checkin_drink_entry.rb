@@ -1,2 +1,0 @@
-class CheckinDrinkEntry < TimelineEntry
-end
