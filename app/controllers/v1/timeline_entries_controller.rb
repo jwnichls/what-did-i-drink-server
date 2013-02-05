@@ -11,7 +11,8 @@ module V1
         @since_date = params[:since].to_datetime
       end
       
-      respond_with TimelineEntry.all(:conditions => ["created_at > ?", @since_date], :order => "created_at DESC")
+      #respond_with 
+      @entries = TimelineEntry.all(:conditions => ["created_at > ?", @since_date], :order => "created_at DESC")
     end
   end
 end

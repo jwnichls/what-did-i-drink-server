@@ -11,6 +11,9 @@ gem 'omniauth-foursquare'
 gem 'omniauth-twitter'
 # gem 'omniauth-facebook'
 
+# API gem
+gem 'rabl'
+
 # OAuth Provider gem
 gem 'doorkeeper', '~> 0.6.5'
 

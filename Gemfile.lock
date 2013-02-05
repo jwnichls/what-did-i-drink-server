@@ -102,6 +102,9 @@ GEM
     quimby (0.4.5)
       json
       typhoeus
+    rabl (0.7.9)
+      activesupport (>= 2.3.14)
+      multi_json (~> 1.0)
     rack (1.4.3)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -163,6 +166,7 @@ DEPENDENCIES
   omniauth-identity
   omniauth-twitter
   quimby
+  rabl
   rails (= 3.2.11)
   rails3-jquery-autocomplete
   twitter
