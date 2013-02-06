@@ -31,19 +31,24 @@
 
 <h2>What Did I Drink?</h2>
 
-<% if logged_in? -%>
 <p>
+<% if logged_in? -%>
 	<%= link_to 'home', root_path %> - 
 	<%= link_to 'timeline', timeline_path %> - 
 	<%= link_to 'new drink', new_drink_path %> - 
 	<%= link_to current_user.image_url != nil ? image_tag(current_user.image_url) : current_user.full_name, current_user %> -
 	<%= link_to 'logout', logout_path %> - 
+<% else -%>
+	<%= link_to 'login', root_path %> - 
+	<%= link_to 'timeline', timeline_path %> -
+	<%= link_to 'drinks', drinks_path %> - 
+<% end -%>
 	<%= form_tag :controller => :drinks, :action => :search do |f| %>
 	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path %>
 	    <%= submit_tag 'Search Drinks' %>
 	<% end %>
 </p>
-<% end -%>
+
 
 <p style="color: green"><%= notice %></p>
 
