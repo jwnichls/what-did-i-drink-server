@@ -1,7 +1,7 @@
 <% if @query -%>
 <h3>Searching for drinks: "<%= h(@query) %>"</h3>
 <% else -%>
-<h3>Listing all drinks</h3>
+<h3>All Drinks</h3>
 <% end -%>
 
 <table>
@@ -14,12 +14,6 @@
   <tr>
     <td><%= link_to h(drink.name), drink %></td>
     <td><%=h drink.created_by %></td>
-    <td><%= link_to 'Edit', edit_drink_path(drink) %></td>
-    <td><%= link_to 'Destroy', drink, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New drink', new_drink_path %>
