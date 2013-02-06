@@ -1,0 +1,37 @@
+class ImageUploader < CarrierWave::Uploader::Base
+
+  # Include RMagick support:
+  include CarrierWave::RMagick
+
+  # Choose what kind of storage to use for this uploader:
+  storage :file
+  # storage :fog
+
+  # Override the directory where uploaded files will be stored.
+  # This is a sensible default for uploaders that are meant to be mounted:
+  def store_dir
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  # Process files as they are uploaded into 3 versions
+  #  - small will be used for icons and lists of images on various pages
+  #  - thumb will be used when larger images are needed on some pages
+  #  - the regular image will be limited to 500 pixels max in one dimension
+  
+  version :small do
+    process :resize_to_limit => [64, 64]
+  end
+  
+  version :thumb do
+    process :resize_to_limit => [200, 200]
+  end
+  
+  process :resize_to_limit => [500, 500]
+
+  # Add a white list of extensions which are allowed to be uploaded.
+  # For images you might use something like this:
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
+
+end

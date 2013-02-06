@@ -56,6 +56,9 @@ WhatdididrinkApi::Application.routes.draw do
   # Checkin Routes
   resources :checkins, :only => [:index,:new,:create,:show]
 
+  # Images
+  resources :images, :only => [:create, :show]
+
   # Wishlist Routes
   resources :wishes, :only => [:index,:create, :destroy]
 

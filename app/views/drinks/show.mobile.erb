@@ -25,6 +25,14 @@
 </p>
 <% end -%>
 
+<% if @drink.images.size > 0 -%>
+<p>
+	<% @drink.images.each { |i| -%>
+		<%= link_to image_tag(i.image_url(:small).to_s), i %> 
+	<% } -%>
+</p>
+<% end -%>
+
 <p>
   <b>Recipe:</b>
   <pre><%=h @drink.recipe %></pre>
@@ -38,4 +46,30 @@
 <ul>
   <%= render :partial => 'url', :collection => @drink.urls_array %>
 </ul>
+
+<h3>Upload an image</h3>
+
+<%= form_for(@image, :html => {:multipart => true}) do |f| %>
+  <% if @image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+      <ul>
+      <% @image.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :drink_id %>
+
+  <div class="field">
+    <%= f.file_field :image %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 <% end -%>

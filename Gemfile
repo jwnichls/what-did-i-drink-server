@@ -11,6 +11,10 @@ gem 'omniauth-foursquare'
 gem 'omniauth-twitter'
 # gem 'omniauth-facebook'
 
+# Image Uploads
+gem 'carrierwave'
+gem 'rmagick'
+
 # API gem
 gem 'rabl'
 

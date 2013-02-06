@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :wishes
   has_many :temp_access_tokens
   has_many :timeline_entries
+  has_many :images
 
   def twitter?
     twitter_access_token != nil and twitter_access_secret != nil

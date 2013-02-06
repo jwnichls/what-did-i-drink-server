@@ -8,7 +8,42 @@
 	<b>Time: </b> <%= @checkin.created_at %>
 </p>
 
+<% if @checkin.images.size > 0 -%>
+<p>
+	<% @checkin.images.each { |i| -%>
+		<%= link_to image_tag(i.image_url(:thumb).to_s), i %> 
+	<% } -%>
+</p>
+<% end -%>
+
 <p>
 	<b>Notes</b><br/>
 	<%= h(@checkin.notes) %>
 </p>
+
+<h3>Upload an image</h3>
+
+<%= form_for(@image, :html => {:multipart => true}) do |f| %>
+  <% if @image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+      <ul>
+      <% @image.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :user_id %>
+  <%= f.hidden_field :drink_id %>
+  <%= f.hidden_field :checkin_id %>
+
+  <div class="field">
+    <%= f.file_field :image %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

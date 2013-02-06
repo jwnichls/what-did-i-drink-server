@@ -23,6 +23,9 @@ class DrinksController < ApplicationController
   # GET /drinks/1.json
   def show
     @drink = Drink.find(params[:id])
+    @image = Image.new
+    @image.user = current_user
+    @image.drink = @drink
 
     session[:redirect] = drink_path(@drink)
 

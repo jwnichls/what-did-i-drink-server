@@ -3,6 +3,7 @@ class Drink < ActiveRecord::Base
   has_many :checkins
   has_many :waitlists
   has_many :timeline_entries
+  has_many :images
   
   scope :visible, where(:deleted => :true)
   

@@ -15,6 +15,10 @@ class CheckinsController < ApplicationController
   # GET /checkins/1.json
   def show
     @checkin = Checkin.find(params[:id])
+    @image = Image.new
+    @image.user = current_user
+    @image.drink = @checkin.drink
+    @image.checkin = @checkin
 
     session[:redirect] = checkin_path(@checkin)
 
