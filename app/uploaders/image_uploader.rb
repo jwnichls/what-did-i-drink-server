@@ -19,14 +19,23 @@ class ImageUploader < CarrierWave::Uploader::Base
   #  - the regular image will be limited to 500 pixels max in one dimension
   
   version :small do
+    process :orient
     process :resize_to_limit => [64, 64]
   end
   
   version :thumb do
+    process :orient
     process :resize_to_limit => [200, 200]
   end
   
+  process :orient
   process :resize_to_limit => [500, 500]
+
+  def orient()
+    manipulate! do |img|
+      img.auto_orient!
+    end
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
