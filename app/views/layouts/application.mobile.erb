@@ -44,7 +44,7 @@
 	<%= link_to 'drinks', drinks_path %> - 
 <% end -%>
 	<%= form_tag :controller => :drinks, :action => :search do |f| %>
-	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path %>
+	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :autocorrect => "off" %>
 	    <%= submit_tag 'Search Drinks' %>
 	<% end %>
 </p>
