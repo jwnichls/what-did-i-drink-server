@@ -1,12 +1,27 @@
 <% if !logged_in? -%>
+<p>
+	Login with your favorite social network:
+</p>
 <ul>
 	<li><%= link_to 'Login with Twitter', '/auth/twitter' %></li>
 	<li><%= link_to 'Login with Foursquare', '/auth/foursquare' %></li>
 </ul>
 
 <p>
-	If you'd prefer to not use one of these services, <a href="/auth/identity/register">create an account</a> or <a href="/auth/identity">login</a>.
+	If you'd prefer to not use one of these services, <a href="/auth/identity/register">create an account</a> or login:
 </p>
+
+<%= form_tag "/auth/identity/callback" do %>
+  <div class="field">
+    <%= label_tag :auth_key, "E-mail" %><br>
+    <%= email_field_tag :auth_key %>
+  </div>
+  <div class="field">
+    <%= label_tag :password %><br>
+    <%= password_field_tag :password %>
+  </div>
+  <div class="actions"><%= submit_tag "Login" %></div>
+<% end %>
 <% else -%>
 <p>
   Logged in as <%= link_to h(current_user.full_name), current_user %>
