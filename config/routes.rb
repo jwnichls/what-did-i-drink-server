@@ -65,6 +65,9 @@ WhatdididrinkApi::Application.routes.draw do
   # Authentication URLs for Omniauth
   match '/auth/:provider/callback' => 'authentications#create'
 
+  # username/password account creation routes
+  resources :identities, :only => [:new]
+
   # A global logout path
   match 'logout' => 'front#logout', :as => :logout
 

@@ -1,9 +1,14 @@
 <h1><%=h @user.full_name %></h1>
 
+<p>
+	<%= link_to "Edit Profile", edit_user_path(@user) %>
+</p>
+
 <table>
 	<tr><td valign="top">
 		<h2>Drank</h2>
 
+		<% if @user.checkins.size > 0 -%>
 		<ul>
 		<% @user.checkins.each { |c| -%>
 			<li><%= link_to h(c.drink.name), c.drink %><br/>
@@ -11,9 +16,15 @@
 			<small><%= c.created_at %></small></li>
 		<% } -%>
 		</ul>
+		<% else -%>
+			<p>
+				Nothing yet.
+			</p>
+		<% end -%>
 	</td><td valign="top">
 		<h2>Wish list</h2>
 
+		<% if @user.wishes.size > 0 -%>
 		<ul>
 		<% @user.wishes.each { |c| -%>
 			<li>
@@ -25,5 +36,10 @@
 			</li>
 		<% } -%>
 		</ul>
+		<% else -%>
+			<p>
+				Nothing yet.
+			</p>
+		<% end -%>
 	</td></tr>
 </table>

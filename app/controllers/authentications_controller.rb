@@ -16,6 +16,7 @@ class AuthenticationsController < ApplicationController
   # POST /authentications.json
   def create
     auth = request.env["omniauth.auth"]
+    create_flag = false
     
     puts "Provider: " + auth['provider']
     
@@ -24,6 +25,7 @@ class AuthenticationsController < ApplicationController
       
       if authentication == nil
         create_user(auth, params)
+        create_flag = true
       end
             
       authentication = Authentication.find_by_provider_and_uid(auth['provider'], auth['uid'])
@@ -43,7 +45,9 @@ class AuthenticationsController < ApplicationController
     puts "This is a test ***************************"
     puts "User: " + current_user.to_s
 
-    if session[:redirect] == nil
+    if create_flag 
+      @redirect = edit_user_path(current_user)
+    elsif session[:redirect] == nil
       @redirect = authentications_url
     else
       @redirect = session[:redirect]
@@ -73,10 +77,17 @@ class AuthenticationsController < ApplicationController
 
   def create_user(auth, params)
 
-    @user = User.create
-    @user.full_name = auth['info']['name'];
-    @user.email = auth['info']['email']
-    @user.image_url = auth['info']['image']
+    @user = User.new
+    
+    if auth['provider'] == 'identity'
+      @user.email = Identity.find(auth['uid']).email
+      @user.full_name = @user.email.slice(0,@user.email.index("@"))
+    else
+      @user.full_name = auth['info']['name']
+      @user.image_url = auth['info']['image']
+      @user.email = auth['info']['email']
+    end
+
     @user.save
 
     @authentication = Authentication.create(:provider => auth['provider'], :uid => auth['uid'])
