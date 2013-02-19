@@ -35,7 +35,7 @@
 
 <p>
   <b>Recipe:</b>
-  <pre><%=h @drink.recipe %></pre>
+  <%= render :partial => 'recipe', :object => @drink.recipe %>
 </p>
 
 <% if @drink.urls != nil and @drink.urls != "" -%>
