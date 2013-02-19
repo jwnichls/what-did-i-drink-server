@@ -1,0 +1,52 @@
+<% paragraphs = recipe.split(/[\s\r]*\n[\s\r]*\n/) -%>
+
+<div class="recipe">
+<% paragraphs[0].each_line { |l| -%>
+	<span class="recipe_line">
+	<% l.strip! -%>
+	<% m = l.match(/([\d\.\/\-\s]+)(\w+)\s+(.*)/) -%>
+	<% if m -%>
+		<span class="amount"><%=h m[1] %></span>
+		<span class="unit"><%=h m[2] %></span>
+		<span class="ingredient"><%=h m[3] %></span>
+	<% else -%>
+		<i><%=h l %></i>
+	<% end -%>
+	</span><br/>
+<% } -%>
+</div>
+
+<% paragraphs.slice!(0) -%>
+<% paragraphs.each { |p| -%>
+	<% if p.match(/^\s*\*/) -%>
+		<ul>
+		<% p.each_line { |l| -%>
+			<% l.strip! -%>
+			<% l.slice!(0) -%>
+			<li>
+				<% chunks = l.split(/(http\:\/\/\S+)/) -%>
+				<% chunks.each { |c| -%>
+					<% m = c.match(/(http\:\/\/\S+)/) -%>
+					<% if m -%>
+						<a href="<%=h m[1] %>"><%=h m[1] %></a>
+					<% else -%>
+						<%=h c %>
+					<% end -%>
+				<% } -%>
+			</li>
+		<% } %>
+		</ul>
+	<% else -%>
+	<p>
+		<% chunks = p.split(/(http\:\/\/\S+)/) -%>
+		<% chunks.each { |c| -%>
+			<% m = c.match(/(http\:\/\/\S+)/) -%>
+			<% if m -%>
+				<a href="<%=h m[1] %>"><%=h m[1] %></a>
+			<% else -%>
+				<%=h c %>
+			<% end -%>
+		<% } -%>
+	</p>
+	<% end -%>
+<% } -%>
