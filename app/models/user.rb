@@ -71,4 +71,8 @@ class User < ActiveRecord::Base
     userparams
   end
 
+  def on_committed()
+    # Create the timeline entry for this checkin
+    NewUser.create({user: self})
+  end
 end

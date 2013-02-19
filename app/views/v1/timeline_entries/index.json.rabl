@@ -1,11 +1,11 @@
 collection @entries
 attributes :type, :created_at
 
-child :user do, :if => lambda { |e| e.user }
+child :user, :if => lambda { |e| e.user } do
 	attributes :id, :full_name
 end
 
-child :drink do, :if => lambda { |e| e.drink }
+child :drink, :if => lambda { |e| e.drink } do
 	attributes :id, :name, :created_by
 	child :images do
 		node :small do |i|
