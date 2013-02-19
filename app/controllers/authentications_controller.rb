@@ -88,12 +88,16 @@ class AuthenticationsController < ApplicationController
       @user.email = auth['info']['email']
     end
 
-    @user.save
+    if @user.save
+      @user.on_committed
 
-    @authentication = Authentication.create(:provider => auth['provider'], :uid => auth['uid'])
-    @user.authentications << @authentication
+      @authentication = Authentication.create(:provider => auth['provider'], :uid => auth['uid'])
+      @user.authentications << @authentication
     
-    return @user
+      return @user
+    else
+      return nil
+    end
   end
   
   def process_tokens(auth, params)
