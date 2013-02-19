@@ -62,6 +62,14 @@ WhatdididrinkApi::Application.routes.draw do
   # Wishlist Routes
   resources :wishes, :only => [:index,:create, :destroy]
 
+  # Venues Routes
+  resources :venues do
+    collection do
+      get :autocomplete_venue_name
+      post :search
+    end
+  end
+
   # Authentication URLs for Omniauth
   match '/auth/:provider/callback' => 'authentications#create'
 

@@ -3,5 +3,6 @@ class Image < ActiveRecord::Base
   belongs_to :drink
   belongs_to :checkin
   belongs_to :user
+  belongs_to :venue
   mount_uploader :image, ImageUploader
 end

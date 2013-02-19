@@ -1,0 +1,15 @@
+<h1>New venue</h1>
+
+<%= render 'form' %>
+
+<ul>
+	<% @venues.each do |venue| -%>
+		<li>
+			<%=h venue.name %>
+			<%= form_tag :controller => :venues, :action => :create do |f| %>
+			    <%= hidden_field_tag :foursq_id, venue.id %>
+			    <%= submit_tag 'Create' %>
+			<% end %>
+		</li>
+	<% end -%>
+</ul>

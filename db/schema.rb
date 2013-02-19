@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205151855) do
+ActiveRecord::Schema.define(:version => 20130213073232) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20130205151855) do
     t.text     "notes"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "venue_id"
   end
 
   create_table "drinks", :force => true do |t|
@@ -137,6 +138,23 @@ ActiveRecord::Schema.define(:version => 20130205151855) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
+
+  create_table "venues", :force => true do |t|
+    t.string   "name",                          :null => false
+    t.string   "address"
+    t.string   "postalCode"
+    t.string   "city",                          :null => false
+    t.string   "state"
+    t.float    "lat"
+    t.float    "lng"
+    t.boolean  "verified",   :default => false, :null => false
+    t.boolean  "deleted",    :default => false, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "foursq_id"
+  end
+
+  add_index "venues", ["name"], :name => "fulltext_venues"
 
   create_table "wishes", :force => true do |t|
     t.integer  "user_id"

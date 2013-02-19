@@ -1,0 +1,47 @@
+<script>
+	getLocation(function(success, lat, lng, position) {
+		if (success)
+		{
+			var elem = document.getElementById("link")
+			elem.setAttribute("href", "<%= new_venue_path %>?lat=" + lat + "&lng=" + lng)
+		}
+	});
+</script>
+
+<h1>Listing venues</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>Postalcode</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Lat</th>
+    <th>Lng</th>
+    <th>Verified</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @venues.each do |venue| %>
+  <tr>
+    <td><%= venue.name %></td>
+    <td><%= venue.address %></td>
+    <td><%= venue.postalCode %></td>
+    <td><%= venue.city %></td>
+    <td><%= venue.state %></td>
+    <td><%= venue.lat %></td>
+    <td><%= venue.lng %></td>
+    <td><%= venue.verified %></td>
+    <td><%= link_to 'Show', venue %></td>
+    <td><%= link_to 'Edit', edit_venue_path(venue) %></td>
+    <td><%= link_to 'Destroy', venue, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<a id="link" href="">New Venue</a>

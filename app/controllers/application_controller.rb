@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   end
   
   def foursquare
-    unless current_user.foursquare_access_token != nil and current_user.foursquare_access_token != ""
+    unless current_user != nil and current_user.foursquare_access_token != nil and current_user.foursquare_access_token != ""
       puts "Creating generic Foursquare Access: " + ENV['FOURSQUARE_APP_ID'] + " " + ENV['FOURSQUARE_APP_SECRET']
       @foursquare ||= Foursquare::Base.new(ENV['FOURSQUARE_APP_ID'], ENV['FOURSQUARE_APP_SECRET'])
     else
