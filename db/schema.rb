@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213073232) do
+ActiveRecord::Schema.define(:version => 20130219082457) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(:version => 20130213073232) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "created_by"
-    t.text     "urls"
     t.boolean  "deleted",    :default => false, :null => false
   end
 

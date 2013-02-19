@@ -6,23 +6,23 @@
 </p>
 
 <% if current_user != nil -%>
-<p>
-	<%= link_to 'Edit', edit_drink_path(@drink) %>
-	- 
-	<%= link_to 'Checkin', :controller => :checkins, :action => :new, :drink_id => @drink.id %>
-	- 
-	<% if current_user.wishedFor?(@drink) -%>
-		<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
-		<%= hidden_field_tag :drink_id, @drink.id %>
-		<%= submit_tag 'Remove From Wish List' %> 
+	<p>
+		<%= link_to 'Edit', edit_drink_path(@drink) %>
+		- 
+		<%= link_to 'Checkin', :controller => :checkins, :action => :new, :drink_id => @drink.id %>
+		- 
+		<% if current_user.wishedFor?(@drink) -%>
+			<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
+			<%= hidden_field_tag :drink_id, @drink.id %>
+			<%= submit_tag 'Remove From Wish List' %> 
+			<% end -%>
+		<% else -%>
+			<%= form_tag :controller => :wishes, :action => :create do |f2| %>
+			<%= hidden_field_tag :drink_id, @drink.id %>
+			<%= submit_tag 'Add To Wish List' %> 
+			<% end -%>
 		<% end -%>
-	<% else -%>
-		<%= form_tag :controller => :wishes, :action => :create do |f2| %>
-		<%= hidden_field_tag :drink_id, @drink.id %>
-		<%= submit_tag 'Add To Wish List' %> 
-		<% end -%>
-	<% end -%>
-</p>
+	</p>
 <% end -%>
 
 <% if @drink.images.size > 0 -%>
@@ -37,15 +37,6 @@
   <b>Recipe:</b>
   <%= render :partial => 'recipe', :object => @drink.recipe %>
 </p>
-
-<% if @drink.urls != nil and @drink.urls != "" -%>
-<p>
-  <b>URLs:</b>
-</p>
-
-<ul>
-  <%= render :partial => 'url', :collection => @drink.urls_array %>
-</ul>
 
 <h3>Upload an image</h3>
 
@@ -71,5 +62,4 @@
   <div class="actions">
     <%= f.submit %>
   </div>
-<% end %>
 <% end -%>
