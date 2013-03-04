@@ -1,6 +1,5 @@
 class DrinksController < ApplicationController
   autocomplete :drink, :name, :full => true
-  autocomplete :drink, :created_by
 
   # GET /drinks
   # GET /drinks.json
@@ -124,5 +123,18 @@ class DrinksController < ApplicationController
     else
       redirect_to :controller => :drinks, :action => :index, :query => @query
     end
+  end
+  
+  # autocomplete :drink, :created_by
+  def autocomplete_drink_created_by
+    term = params[:term]
+    if term && !term.empty?
+      items = Drink.select("distinct created_by").
+              where("LOWER(created_by) like ?", term.downcase + '%').
+              limit(10).order(:created_by)
+    else
+      items = {}
+    end
+    render :json => json_for_autocomplete(items, :created_by)
   end
 end
