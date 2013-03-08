@@ -126,6 +126,7 @@ class DrinksController < ApplicationController
   end
   
   # autocomplete :drink, :created_by
+  # This version ensures that the created_by values returned are unique
   def autocomplete_drink_created_by
     term = params[:term]
     if term && !term.empty?
