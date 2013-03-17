@@ -6,13 +6,15 @@ class Drink < ActiveRecord::Base
   has_many :images
   validates_uniqueness_of :name
   
-  scope :visible, where(:deleted => :true)
+  scope :visible, where(:deleted => false)
   
-  def self.search(*args)
-    options = args.extract_options!
-    find_by_sql [ "SELECT * FROM drinks WHERE deleted=false AND MATCH (name, recipe, created_by) AGAINST (?)", options[:query] ]
-  end
-
+  scope :search, lambda{ |*args|
+                        query = *args.first[:query]
+                        {
+                          :conditions => %( MATCH (name, recipe, created_by) AGAINST ("#{query[0]}") )
+                        }
+                      }                    
+  
   def self.from_params(params)
     drinkparams = {}
     

@@ -6,7 +6,7 @@ class DrinksController < ApplicationController
   def index
     @query = params[:query]
     if @query
-      @drinks = Drink.search(:all, :query => @query, :order => 'name')
+      @drinks = Drink.visible.search(:query => @query).all(:order => 'name')
     else
       @drinks = Drink.visible.all(:order => 'name')
     end    
@@ -116,12 +116,12 @@ class DrinksController < ApplicationController
     end
     
     @query = params[:drink][:name]
-    @drinks = Drink.search(:all, :query => @query)
+    @drinks = Drink.search(:query => @query).all(:order => :name)
     
     if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == params[:drink][:name])
       redirect_to @drinks[0]
     else
-      redirect_to :controller => :drinks, :action => :index, :query => @query
+      render :controller => :drinks, :action => :index
     end
   end
   
