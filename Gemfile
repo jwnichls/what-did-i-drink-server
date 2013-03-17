@@ -23,7 +23,7 @@ gem 'doorkeeper', '~> 0.6.5'
 
 # Social Media APIs
 gem 'twitter'
-gem 'quimby' #foursquare
+gem 'quimby', :git => 'git://github.com/jwnichls/quimby.git'
 
 # jQuery
 gem 'jquery-rails'
