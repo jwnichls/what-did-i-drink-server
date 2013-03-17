@@ -64,6 +64,9 @@ WhatdididrinkApi::Application.routes.draw do
 
   # Venues Routes
   resources :venues do
+    member do
+      put :verify
+    end
     collection do
       get :autocomplete_venue_name
       post :search

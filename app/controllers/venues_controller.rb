@@ -1,17 +1,21 @@
 class VenuesController < ApplicationController
-  autocomplete :drink, :name, :full => true
+  autocomplete :venue, :name, :full => true
 
   # Random Questions and To Do Items
   #
-  # * How to do a lat/long distance-based search?
   # * How to do a search that returns both drinks and venues?
   # * Need to implement an "I'm here now" feature
   # * Need to link drinks to locations with some variables
+  # * How to automatically remove people from locations?
 
   # GET /venues
   # GET /venues.json
   def index
-    @venues = Venue.all
+    if params[:lat] and params[:lng]
+      @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'name')
+    else
+      @venues = Venue.visible.verified.all(:order => 'name')
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,6 +27,9 @@ class VenuesController < ApplicationController
   # GET /venues/1.json
   def show
     @venue = Venue.find(params[:id])
+    @image = Image.new
+    @image.user = current_user
+    @image.venue = @venue
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,13 +41,6 @@ class VenuesController < ApplicationController
   # GET /venues/new.json
   def new
     @venue = Venue.new
-    if params[:lat]
-      nearby = foursquare.venues.search(:ll => (params[:lat].to_s + "," + params[:lng].to_s))
-      @venues = nearby["nearby"]
-    else
-      places = foursquare.venues.search(:query => params[:name], :ll => "48.857,2.349")
-      @venues = places["places"]
-    end      
 
     respond_to do |format|
       format.html # new.html.erb
@@ -102,18 +102,70 @@ class VenuesController < ApplicationController
     end
   end
   
+  # POST /venues/1/verify
+  def verify
+    @venue = Venue.find(params[:id])
+    @venue.verified = true
+
+    respond_to do |format|
+      if @venue.save
+        format.html { redirect_to @venue, notice: 'Venue has been verified.' }
+      else
+        format.html { redirect_to @venue, notice: 'Verification failed. Try again!' }
+      end
+    end
+  end
+  
   def search
     if params[:venue][:name] == ""
       redirect_to :controller => :venues, :action => :index
     end
     
     @query = params[:venue][:name]
-    @venues = Venue.search(:all, :query => @query)
+    if params[:lat][0] != ""
+      lat = params[:lat][0]
+    end
+    if params[:lng][0] != ""
+      lng = params[:lng][0]
+    end
+    
+    if lat and lng
+      @venues = Venue.visible.near(:origin => [lat,lng], :within => 5).search(:query => @query).all
+    else
+      @venues = Venue.visible.search(:query => @query).all(:order => "name")
+    end
+    
+    if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)
+      redirect_to @venues[0]
+      return
+    elsif current_user.foursquare? and lat and lng
+      # :categories => "4d4b7105d754a06374d81259,4d4b7105d754a06376d81259"
+      venues = foursquare.venues.search(:query => @query, :ll => "#{lat},#{lng}")
+      
+      puts "Venues: " + venues.to_s
+      
+      if venues
+        @venues = []
+        venues.each { |p|
+          v = Venue.new_from_4sq(p)
+          ve = Venue.find_by_foursq_id(v.foursq_id)
+          if ve
+            @venues.push(ve)
+          elsif v.save
+            @venues.push(v)
+          end
+        }
+      else
+        @venues = Venue.visible.search(:query => @query).all(:order => "name")
+      end
+    else
+      @venues = Venue.visible.search(:query => @query).all(:order => "name")
+    end
     
     if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)
       redirect_to @venues[0]
     else
-      redirect_to :controller => :venues, :action => :index, :query => @query
+      render :controller => :venues, :action => :index
     end
   end
 end

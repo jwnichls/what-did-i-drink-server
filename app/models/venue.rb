@@ -5,12 +5,52 @@ class Venue < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :city
   
-  scope :visible, where(:deleted => :true)
+  scope :visible, where(:deleted => false)
   
-  def self.search(*args)
-    options = args.extract_options!
-    find_by_sql [ "SELECT * FROM drinks WHERE deleted=false AND MATCH (name) AGAINST (?)", options[:query] ]
-  end
+  scope :verified, where(:verified => true)
+  
+  scope :near, lambda{ |*args|
+                        origin = *args.first[:origin]
+                        if (origin).is_a?(Array)
+                          origin_lat, origin_lng = origin
+                        else
+                          origin_lat, origin_lng = origin.lat, origin.lng
+                        end
+                        origin_lat, origin_lng = Venue.deg2rad(origin_lat), Venue.deg2rad(origin_lng)
+                        within = *args.first[:within]
+                        
+                        if within.length > 0
+                          {
+                            :conditions => %(
+                              (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(venues.lat))*COS(RADIANS(venues.lng))+
+                              COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(venues.lat))*SIN(RADIANS(venues.lng))+
+                              SIN(#{origin_lat})*SIN(RADIANS(venues.lat)))*3956.55) <= #{within[0]}
+                            ),
+                            :select => %( venues.*,
+                              (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(venues.lat))*COS(RADIANS(venues.lng))+
+                              COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(venues.lat))*SIN(RADIANS(venues.lng))+
+                              SIN(#{origin_lat})*SIN(RADIANS(venues.lat)))*3956.55) AS distance
+                            ),
+                            :order => :distance
+                          }
+                        else
+                          {
+                            :select => %( venues.*,
+                              (ACOS(COS(#{origin_lat})*COS(#{origin_lng})*COS(RADIANS(venues.lat))*COS(RADIANS(venues.lng))+
+                              COS(#{origin_lat})*SIN(#{origin_lng})*COS(RADIANS(venues.lat))*SIN(RADIANS(venues.lng))+
+                              SIN(#{origin_lat})*SIN(RADIANS(venues.lat)))*3956.55) AS distance
+                            ),
+                            :order => :distance
+                          }
+                        end
+                      }
+  
+  scope :search, lambda{ |*args|
+                        query = *args.first[:query]
+                        {
+                          :conditions => %( MATCH (name) AGAINST ("#{query[0]}") )
+                        }
+                      }                    
 
   def self.new_from_4sq(foursq_venue)
     venue = Venue.new
@@ -22,9 +62,16 @@ class Venue < ActiveRecord::Base
     venue.state = foursq_venue.location.state
     venue.lat = foursq_venue.location.lat
     venue.lng = foursq_venue.location.lng
-    venue.verified = foursq_venue.verified?
     
     venue
+  end
+  
+  def self.deg2rad(degrees)
+    degrees.to_f / 180.0 * Math::PI
+  end
+
+  def self.rad2deg(rad)
+    rad.to_f * 180.0 / Math::PI
   end
 
   def hide
