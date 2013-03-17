@@ -31,25 +31,36 @@
 
 <h2>What Did I Drink?</h2>
 
+<p style="color: green"><%= notice %></p>
+
 <p>
 <% if logged_in? -%>
-	<%= link_to 'home', root_path %> - 
-	<%= link_to 'timeline', timeline_path %> - 
-	<%= link_to 'new drink', new_drink_path %> - 
-	<%= link_to current_user.image_url != nil ? image_tag(current_user.image_url) : current_user.full_name, current_user %> -
-	<%= link_to 'logout', logout_path %> - 
+	<%= link_to current_user.image_url != nil ? image_tag(current_user.image_url) : current_user.full_name, root_path %> -
+	<%= link_to 'drinks', drinks_path %> - 
+	<%= link_to 'venues', venues_path %> - 
+	<%= link_to 'logout', logout_path %>
 <% else -%>
 	<%= link_to 'login', root_path %> - 
-	<%= link_to 'timeline', timeline_path %> -
 	<%= link_to 'drinks', drinks_path %> - 
+	<%= link_to 'venues', venues_path %>
 <% end -%>
+</p>
+
+<p>
+<% if controller.controller_name == 'venues' -%>
+	<%= form_tag :controller => :venues, :action => :search do |f| %>
+	    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path %>
+		<%= hidden_field :lat, "", {:class => "lat_field"} %>
+		<%= hidden_field :lng, "", {:class => "lng_field"} %>
+		<%= submit_tag 'Search Venues', :disabled => true, :class => 'loc_button' %>
+	<% end %>
+<% else -%>
 	<%= form_tag :controller => :drinks, :action => :search do |f| %>
 	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path %>
 	    <%= submit_tag 'Search Drinks' %>
 	<% end %>
+<% end -%>
 </p>
-
-<p style="color: green"><%= notice %></p>
 
 <%= yield %>
 
