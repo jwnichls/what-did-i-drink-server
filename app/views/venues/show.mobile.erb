@@ -10,6 +10,14 @@
 </p>
 <% end -%>
 
+<% if !@venue.verified -%>
+<p>
+	<%= form_tag(verify_venue_path(@venue), {:method => :put}) do |f2| %>
+	<%= submit_tag 'Verify Venue' %>
+	<% end -%>
+</p>
+<% end -%>
+
 <p>
   <i>Address:</i><br/>
   <%= @venue.address %><br/>
