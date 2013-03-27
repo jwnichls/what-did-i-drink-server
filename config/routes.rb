@@ -26,6 +26,16 @@ WhatdididrinkApi::Application.routes.draw do
       # Timeline routes
       resources :timeline_entries, :only => [:index]
       match 'timeline' => 'timeline_entries#index', :as => :timeline
+      
+      # Venues Routes
+      resources :venues do
+        member do
+          put :verify
+        end
+        collection do
+          post :search
+        end
+      end
     end
   end
 

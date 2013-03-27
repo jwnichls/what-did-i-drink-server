@@ -5,12 +5,12 @@ module V1
     
     # GET /drinks.json
     def index
-      respond_with Drink.visible.all(:order => 'name')
+      @drinks = Drink.visible.all(:order => 'name')
     end
 
     # GET /drinks/1.json
     def show
-      respond_with Drink.find(params[:id])
+      @drink = Drink.find(params[:id])
     end
 
     # POST /drinks.json
@@ -22,8 +22,6 @@ module V1
         if @drink != nil
           @drink.on_committed(current_user)
         end
-
-        respond_with @drink
       end
     end
 
@@ -36,8 +34,6 @@ module V1
         if @drink != nil
           @drink.on_updated(current_user)
         end
-
-        respond_with @drink
       end
     end
 
@@ -53,7 +49,7 @@ module V1
 
     # POST /drinks/search.json
     def search
-      respond_with Drink.search(:all, :query => params[:query])
+      @drinks = Drink.search(:query => params[:query]).all(:order => :name)
     end
   end
 end
