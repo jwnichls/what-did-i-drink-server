@@ -62,6 +62,12 @@
 <% end -%>
 </p>
 
+<p>
+<% if controller.controller_name != 'venues' -%>
+	<%= link_to 'New Drink', new_drink_path %> - 
+<% end -%>
+</p>
+
 <%= yield %>
 
 </body>
