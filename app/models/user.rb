@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :temp_access_tokens
   has_many :timeline_entries
   has_many :images
+  belongs_to :venue
   validates_presence_of :full_name
 
   def twitter?
