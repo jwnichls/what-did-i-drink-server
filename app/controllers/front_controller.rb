@@ -9,11 +9,14 @@ class FrontController < ApplicationController
 
       if logged_in?
         @drinks = Drink.visible.all(:order => "name")
-      end
-      
-      respond_to do |format|
-        format.html # index.html.erb
-        format.mobile # index.mobile.erb
+        @user = current_user
+        
+        render "users/show"
+      else      
+        respond_to do |format|
+          format.html # index.html.erb
+          format.mobile # index.mobile.erb
+        end
       end
     end
   end

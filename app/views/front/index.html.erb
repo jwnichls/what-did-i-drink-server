@@ -1,4 +1,3 @@
-<% if !logged_in? -%>
 <p>
 	Login with your favorite social network:
 </p>
@@ -21,52 +20,4 @@
     <%= password_field_tag :password %>
   </div>
   <div class="actions"><%= submit_tag "Login" %></div>
-<% end %>
-<% else -%>
-<h1><%=h current_user.full_name %></h1>
-
-<p>
-	<%= link_to "Edit Profile", edit_user_path(current_user) %>
-</p>
-
-<table>
-	<tr><td valign="top">
-		<h2>Drank</h2>
-
-		<% if current_user.checkins.size > 0 -%>
-		<ul>
-		<% current_user.checkins.each { |c| -%>
-			<li><%= link_to h(c.drink.name), c.drink %><br/>
-			<% if c.notes and c.notes != "" -%><small><%= link_to "Notes", c %></small><br/><% end -%>
-			<small><%= c.created_at %></small></li>
-		<% } -%>
-		</ul>
-		<% else -%>
-			<p>
-				Nothing yet.
-			</p>
-		<% end -%>
-	</td><td valign="top">
-		<h2>Wish list</h2>
-
-		<% if current_user.wishes.size > 0 -%>
-		<ul>
-		<% current_user.wishes.each { |c| -%>
-			<li>
-				<%= link_to h(c.drink.name), c.drink %>
-				<%= form_tag({:controller => :wishes, :id => c.id, :action => :destroy}, :method => :delete) do |f| -%>
-				<%= hidden_field_tag :drink_id, c.drink.id %>
-				<%= submit_tag 'Remove' %> 
-				<% end -%>
-			</li>
-		<% } -%>
-		</ul>
-		<% else -%>
-			<p>
-				Nothing yet.
-			</p>
-		<% end -%>
-	</td></tr>
-</table>
-
 <% end -%>

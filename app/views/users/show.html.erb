@@ -29,7 +29,7 @@
 		<% @user.wishes.each { |c| -%>
 			<li>
 				<%= link_to h(c.drink.name), c.drink %>
-				<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f| -%>
+				<%= form_tag({:controller => :wishes, :id => c.id, :action => :destroy}, :method => :delete) do |f| -%>
 				<%= hidden_field_tag :drink_id, c.drink.id %>
 				<%= submit_tag 'Remove' %> 
 				<% end -%>
