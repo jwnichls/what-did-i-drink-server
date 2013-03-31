@@ -1,12 +1,5 @@
 class VenuesController < ApplicationController
 
-  # Random Questions and To Do Items
-  #
-  # * How to do a search that returns both drinks and venues?
-  # * Need to implement an "I'm here now" feature
-  # * Need to link drinks to locations with some variables
-  # * How to automatically remove people from locations?
-
   # GET /venues
   # GET /venues.json
   def index
