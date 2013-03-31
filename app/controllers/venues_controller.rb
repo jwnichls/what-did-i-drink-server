@@ -1,5 +1,4 @@
 class VenuesController < ApplicationController
-  autocomplete :venue, :name, :full => true
 
   # Random Questions and To Do Items
   #
@@ -167,5 +166,19 @@ class VenuesController < ApplicationController
     else
       render :controller => :venues, :action => :index
     end
+  end
+  
+  # autocomplete :venue, :name, :full => true
+  # This version ensures that names are
+  def autocomplete_venue_name
+    term = params[:term]
+    if term && !term.empty?
+      items = Venue.verified.select("name").
+              where("name like ?", '%' + term.downcase + '%').
+              limit(10).order(:name)
+    else
+      items = {}
+    end
+    render :json => json_for_autocomplete(items, :name)
   end
 end
