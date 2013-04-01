@@ -1,9 +1,9 @@
 set :output, "/home/jwnichls/web/whatdididrink/rails/current/log/crontab.log"
 
 every :day, :at => '3:00am' do
-  runner "Venue.delete_all_unverified"
+  runner "Venue.delete_all_unverified!"
 end
 
 every 2.hours do 
-  runner "User.check_out_old_locations"
+  runner "User.check_out_old_locations!"
 end

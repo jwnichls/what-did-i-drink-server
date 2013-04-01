@@ -85,5 +85,8 @@ class User < ActiveRecord::Base
     
     userparams
   end
-  
+
+  def self.check_out_old_locations!
+    User.update_all({:venue_id => nil, :venue_updated_at => nil}, ["venue_updated_at < ?", 3.hours.ago])
+  end
 end

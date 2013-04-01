@@ -89,4 +89,8 @@ class Venue < ActiveRecord::Base
     self.verified = true
     self.save
   end
+  
+  def self.delete_all_unverified!
+    Venue.delete_all(:verified => false)
+  end
 end
