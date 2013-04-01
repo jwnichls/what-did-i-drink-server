@@ -21,7 +21,11 @@ WhatdididrinkApi::Application.routes.draw do
       match '/wishlist' => 'wishlist#destroy', :via => :delete
       
       # need to add some kind of route to test users
-      resources :users, :only => [:index,:show,:update]
+      resources :users, :only => [:index,:show,:update] do
+        member do
+          post :update_location
+        end
+      end
       
       # Timeline routes
       resources :timeline_entries, :only => [:index]
