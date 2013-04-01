@@ -21,6 +21,10 @@ module V1
     def create
       @checkin = Checkin.new(Checkin.from_params(params))
       @checkin.user = current_user
+      
+      if @checkin.user and @checkin.user.venue
+        @checkin.user.checkin_to_venue!(@checkin.user.venue)
+      end
 
       if @checkin.save
         @checkin.on_committed()

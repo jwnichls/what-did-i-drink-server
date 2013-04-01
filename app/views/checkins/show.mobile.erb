@@ -8,6 +8,12 @@
 	<b>Time: </b> <%= @checkin.created_at %>
 </p>
 
+<% if @checkin.venue -%>
+<p>
+	<b>Venue: </b> <%= link_to h(@checkin.venue.name), @checkin.venue %>
+</p>
+<% end -%>
+
 <% if @checkin.images.size > 0 -%>
 <p>
 	<% @checkin.images.each { |i| -%>

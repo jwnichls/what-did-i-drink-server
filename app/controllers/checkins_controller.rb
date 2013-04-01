@@ -35,6 +35,10 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     @checkin.drink = Drink.find(params[:drink_id])
     @checkin.user = current_user
+    
+    if current_user.venue
+      @checkin.venue = current_user.venue
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,6 +52,10 @@ class CheckinsController < ApplicationController
   def create
     @checkin = Checkin.new(params[:checkin])
     @checkin.user = current_user
+
+    if @checkin.user and @checkin.user.venue
+      @checkin.user.checkin_to_venue!(@checkin.user.venue)
+    end
 
     if @checkin.save
       @checkin.on_committed()

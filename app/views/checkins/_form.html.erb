@@ -17,6 +17,13 @@
 	<b>Drink:</b> <%= h(@checkin.drink.name) %>
   </p>
 
+  <% if @checkin.venue -%>
+	<p>
+		<b>Venue:</b> <%= h(@checkin.venue.name) %>
+    	<%= f.hidden_field :venue_id, {:value => @checkin.venue.id} %>
+	</p>
+  <% end -%>
+
   <p>
     <b><%= f.label :notes %></b><br />
     <%= f.text_area :notes %>

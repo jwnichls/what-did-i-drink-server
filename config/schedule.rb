@@ -4,6 +4,6 @@ every :day, :at => '3:00am' do
   runner "Venue.delete_all_unverified!"
 end
 
-every 2.hours do 
+every 1.hours do 
   runner "User.check_out_old_locations!"
 end
