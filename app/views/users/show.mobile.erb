@@ -4,6 +4,12 @@
 	<%= link_to "Edit Profile", edit_user_path(@user) %>
 </p>
 
+<% if @user.venue -%>
+<p>
+	<b>Current Location:</b> <%= link_to h(@user.venue.name), @user.venue %>
+</p>
+<% end -%>
+
 <table>
 	<tr><td valign="top">
 		<h2>Drank</h2>

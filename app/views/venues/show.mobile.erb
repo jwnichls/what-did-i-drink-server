@@ -18,6 +18,15 @@
 </p>
 <% end -%>
 
+<% if logged_in? -%>
+<p>
+	<%= form_tag(current_location_user_path(current_user), {:method => :post}) do |f2| %>
+		<%= hidden_field_tag :venue_id, @venue.id.to_s %>
+		<%= submit_tag 'I am here' %>
+	<% end -%>
+</p>
+<% end -%>
+
 <p>
   <i>Address:</i><br/>
   <%= @venue.address %><br/>

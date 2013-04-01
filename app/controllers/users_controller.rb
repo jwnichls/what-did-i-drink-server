@@ -49,4 +49,23 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def current_location
+    @user = User.find(params[:id])
+    @venue = Venue.find(params[:venue_id])
+    @user.venue = @venue
+    @user.save
+    
+    if !@venue.verified
+      @venue.verified = true
+      @venue.save
+    end
+    
+    @redirect = @venue
+    if session[:redirect]
+      @redirect = session[:redirect]
+    end
+    
+    redirect_to @redirect
+  end
 end

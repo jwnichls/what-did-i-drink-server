@@ -53,7 +53,11 @@ WhatdididrinkApi::Application.routes.draw do
     end
   end
 
-  resources :users, :only => [:index,:show,:edit,:update]
+  resources :users, :only => [:index,:show,:edit,:update] do
+    member do
+      post :current_location
+    end
+  end
   
   resources :drinks do
     collection do
