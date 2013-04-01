@@ -90,10 +90,9 @@ module V1
     # POST /venues/1/verify
     def verify
       @venue = Venue.find(params[:id])
-      @venue.verified = true
 
       respond_to do |format|
-        if @venue.save
+        if @venue.verify!
           format.html { redirect_to @venue, notice: 'Venue has been verified.' }
         else
           format.html { redirect_to @venue, notice: 'Verification failed. Try again!' }

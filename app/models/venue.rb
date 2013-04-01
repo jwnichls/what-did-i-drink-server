@@ -84,4 +84,9 @@ class Venue < ActiveRecord::Base
     self.deleted = false
     self.save
   end  
+  
+  def verify!
+    self.verified = true
+    self.save
+  end
 end
