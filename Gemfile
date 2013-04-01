@@ -35,5 +35,8 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 # Deploy with Capistrano
 gem 'capistrano'
 
+# Cron tasks written in ruby
+gem 'whenever', :require => false
+
 # To use debugger
 # gem 'debugger'
