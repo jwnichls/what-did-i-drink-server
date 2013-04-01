@@ -53,6 +53,20 @@ class User < ActiveRecord::Base
     Wish.find_by_drink_id_and_user_id(drink.id, self.id) != nil
   end
   
+  def on_committed()
+    # Create the timeline entry for this checkin
+    NewUser.create({user: self})
+  end
+
+  def checkin_to_venue!(venue)
+    self.venue = venue
+    self.venue_updated_at = Time.now
+    self.save
+    
+    if venue.verified
+      venue.verify!
+    end
+  end
   
   def self.from_params(params)
     userparams = {}
@@ -71,9 +85,5 @@ class User < ActiveRecord::Base
     
     userparams
   end
-
-  def on_committed()
-    # Create the timeline entry for this checkin
-    NewUser.create({user: self})
-  end
+  
 end

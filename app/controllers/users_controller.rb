@@ -50,16 +50,11 @@ class UsersController < ApplicationController
     end
   end
   
-  def current_location
+  def update_location
     @user = User.find(params[:id])
     @venue = Venue.find(params[:venue_id])
-    @user.venue = @venue
-    @user.save
     
-    if !@venue.verified
-      @venue.verified = true
-      @venue.save
-    end
+    @user.checkin_to_venue!(@venue)
     
     @redirect = @venue
     if session[:redirect]

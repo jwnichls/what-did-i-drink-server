@@ -55,7 +55,7 @@ WhatdididrinkApi::Application.routes.draw do
 
   resources :users, :only => [:index,:show,:edit,:update] do
     member do
-      post :current_location
+      post :update_location
     end
   end
   

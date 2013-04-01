@@ -18,8 +18,6 @@ module V1
       else
         @user = current_user
       end
-      
-      respond_with @user
     end
 
     # PUT /users/1
@@ -39,5 +37,14 @@ module V1
         end
       end
     end
+  end
+  
+  def update_location
+    @user = User.find(params[:id])
+    @venue = Venue.find(params[:venue_id])
+    
+    @user.checkin_to_venue!(@venue)
+    
+    render :show
   end
 end
