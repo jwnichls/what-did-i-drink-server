@@ -18,6 +18,12 @@ module V1
       else
         @user = current_user
       end
+      
+      if @user == current_user
+        render :show_full
+      else
+        render :show
+      end
     end
 
     # PUT /users/1
