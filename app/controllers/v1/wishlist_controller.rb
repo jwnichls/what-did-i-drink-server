@@ -12,7 +12,7 @@ module V1
     # POST /wishlist.json
     def create
       @drink = Drink.find(params[:drink_id])
-      respond_with current_user.addToWishList(@drink)
+      respond_with current_user.add_to_wish_list(@drink)
     end
 
     # DELETE /wishlist.json?drink_id=
@@ -23,7 +23,7 @@ module V1
         @drink = current_user.wishes.find(params[:id]).drink
       end
     
-      respond_with current_user.removeFromWishList(@drink)
+      respond_with current_user.remove_from_wish_list(@drink)
     end  
   end
 end

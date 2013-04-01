@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  def addToWishList(drink)
+  def add_to_wish_list(drink)
     if !Wish.find_by_drink_id_and_user_id(drink.id, self.id)
       Wish.create({drink: drink, user: self})
       
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  def removeFromWishList(drink)
+  def remove_from_wish_list(drink)
     @wish = Wish.find_by_drink_id_and_user_id(drink.id, self.id)
     
     if @wish
@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  def wishedFor?(drink)
+  def wished_for?(drink)
     Wish.find_by_drink_id_and_user_id(drink.id, self.id) != nil
   end
   

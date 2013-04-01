@@ -14,7 +14,7 @@ class WishesController < ApplicationController
   
   def create
     @drink = Drink.find(params[:drink_id])
-    current_user.addToWishList(@drink)
+    current_user.add_to_wish_list(@drink)
 
     @redirect = @drink
     if session[:redirect]
@@ -31,7 +31,7 @@ class WishesController < ApplicationController
       @drink = current_user.wishes.find(params[:id]).drink
     end
     
-    current_user.removeFromWishList(@drink)
+    current_user.remove_from_wish_list(@drink)
     
     @redirect = @drink
     if session[:redirect]

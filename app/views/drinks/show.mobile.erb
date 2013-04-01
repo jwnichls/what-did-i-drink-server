@@ -11,7 +11,7 @@
 		- 
 		<%= link_to 'Checkin', :controller => :checkins, :action => :new, :drink_id => @drink.id %>
 		- 
-		<% if current_user.wishedFor?(@drink) -%>
+		<% if current_user.wished_for?(@drink) -%>
 			<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
 			<%= hidden_field_tag :drink_id, @drink.id %>
 			<%= submit_tag 'Remove From Wish List' %> 
