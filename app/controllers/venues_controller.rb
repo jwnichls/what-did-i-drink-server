@@ -98,12 +98,10 @@ class VenuesController < ApplicationController
   def verify
     @venue = Venue.find(params[:id])
 
-    respond_to do |format|
-      if @venue.verify!
-        format.html { redirect_to @venue, notice: 'Venue has been verified.' }
-      else
-        format.html { redirect_to @venue, notice: 'Verification failed. Try again!' }
-      end
+    if @venue.verify!
+      redirect_to @venue, notice: 'Venue has been verified.'
+    else
+      redirect_to @venue, notice: 'Verification failed. Try again!'
     end
   end
   
