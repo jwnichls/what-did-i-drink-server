@@ -116,7 +116,7 @@ class DrinksController < ApplicationController
     end
     
     @query = params[:drink][:name]
-    @drinks = Drink.search(:query => @query).all(:order => :name)
+    @drinks = Drink.search(:query => @query).all
     
     if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == params[:drink][:name])
       redirect_to @drinks[0]
