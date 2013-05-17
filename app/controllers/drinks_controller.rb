@@ -38,38 +38,44 @@ class DrinksController < ApplicationController
   # GET /drinks/new
   # GET /drinks/new.json
   def new
-    @drink = Drink.new
+    unless restrict_access
+      @drink = Drink.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.mobile # new.mobile.erb
-      format.json { render json: @drink }
+      respond_to do |format|
+        format.html # new.html.erb
+        format.mobile # new.mobile.erb
+        format.json { render json: @drink }
+      end
     end
   end
 
   # GET /drinks/1/edit
   def edit
-    @drink = Drink.find(params[:id])
+    unless restrict_access
+      @drink = Drink.find(params[:id])
+    end
   end
 
   # POST /drinks
   # POST /drinks.json
   def create
-    @drink = Drink.new(params[:drink])
+    unless restrict_access
+      @drink = Drink.new(params[:drink])
 
-    if @drink.save
-      @drink.on_committed(current_user)
+      if @drink.save
+        @drink.on_committed(current_user)
       
-      respond_to do |format|
-        format.html { redirect_to @drink, notice: 'Drink was successfully created.' }
-        format.mobile { redirect_to @drink, notice: 'Drink was successfully created.' }
-        format.json { render json: @drink, status: :created, location: @drink }
-      end
-    else
-      respond_to do |format|
-        format.html { render action: "new" }
-        format.mobile { render action: "new" }
-        format.json { render json: @drink.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { redirect_to @drink, notice: 'Drink was successfully created.' }
+          format.mobile { redirect_to @drink, notice: 'Drink was successfully created.' }
+          format.json { render json: @drink, status: :created, location: @drink }
+        end
+      else
+        respond_to do |format|
+          format.html { render action: "new" }
+          format.mobile { render action: "new" }
+          format.json { render json: @drink.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -77,21 +83,23 @@ class DrinksController < ApplicationController
   # PUT /drinks/1
   # PUT /drinks/1.json
   def update
-    @drink = Drink.find(params[:id])
+    unless restrict_access
+      @drink = Drink.find(params[:id])
 
-    if @drink.update_attributes(params[:drink])
-      @drink.on_updated(current_user)
+      if @drink.update_attributes(params[:drink])
+        @drink.on_updated(current_user)
       
-      respond_to do |format|
-        format.html { redirect_to @drink, notice: 'Drink was successfully updated.' }
-        format.mobile { redirect_to @drink, notice: 'Drink was successfully updated.' }
-        format.json { head :no_content }
-      end
-    else
-      respond_to do |format|
-        format.html { render action: "edit" }
-        format.mobile { render action: "edit" }
-        format.json { render json: @drink.errors, status: :unprocessable_entity }
+        respond_to do |format|
+          format.html { redirect_to @drink, notice: 'Drink was successfully updated.' }
+          format.mobile { redirect_to @drink, notice: 'Drink was successfully updated.' }
+          format.json { head :no_content }
+        end
+      else
+        respond_to do |format|
+          format.html { render action: "edit" }
+          format.mobile { render action: "edit" }
+          format.json { render json: @drink.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -99,13 +107,15 @@ class DrinksController < ApplicationController
   # DELETE /drinks/1
   # DELETE /drinks/1.json
   def destroy
-    @drink = Drink.find(params[:id])
-    @drink.hide
+    unless restrict_access
+      @drink = Drink.find(params[:id])
+      @drink.hide
 
-    respond_to do |format|
-      format.html { redirect_to drinks_url }
-      format.mobile { redirect_to drinks_url }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to drinks_url }
+        format.mobile { redirect_to drinks_url }
+        format.json { head :no_content }
+      end
     end
   end
   
