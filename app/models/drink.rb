@@ -69,7 +69,7 @@ class Drink < ActiveRecord::Base
   def parse_recipe
     paragraphs = self.recipe.split(/[\s\r]*\n[\s\r]*\n/)
 
-    units = ["oz", "oz.", "ounces", "dash", "dashes", "drop", "drops", "ml", "cl", "gil", "gills", "cup", "cups"]
+    units = ["oz", "oz.", "ounces", "dash", "dashes", "drop", "drops", "ml", "cl", "gil", "gills", "cup", "cups", "teaspoon", "tsp", "tablespoon", "tbsp"]
     glasses = ["rocks", "old fashioned", "cocktail", "collins", "nick and nora"]
 
     if paragraphs.size > 0
@@ -109,7 +109,7 @@ class Drink < ActiveRecord::Base
     	  self.recipe_json[:instructions] = paragraphs[1]
     	  
     	  ng = self.recipe_json[:instructions].match(/no garnish/i)
-    	  g = self.recipe_json[:instructions].match(/garnish with ?a? ([^\.]*)/i)
+    	  g = self.recipe_json[:instructions].match(/garnish with ?a?n? ([^\.]*)/i)
     	  if ng
     	    self.recipe_json[:garnish] = "No garnish"
   	    elsif g
