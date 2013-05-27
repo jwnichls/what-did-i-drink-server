@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330091318) do
+ActiveRecord::Schema.define(:version => 20130526225007) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(:version => 20130330091318) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "created_by"
-    t.boolean  "deleted",    :default => false, :null => false
+    t.boolean  "deleted",     :default => false, :null => false
+    t.text     "recipe_json"
   end
 
   add_index "drinks", ["name", "recipe", "created_by"], :name => "fulltext_drinks"

@@ -1,7 +1,8 @@
+<div class="hrecipe">
 <p>
-  <b>Name:</b> <%=h @drink.name %><br/>
+  <b>Name:</b> <span class="fn"><%=h @drink.name %></span><br/>
   <% if @drink.created_by != nil and @drink.created_by != "" -%>
-	<small>Created by <%=h @drink.created_by %></small>
+	<small>Created by <span class="author"><%=h @drink.created_by %></span></small>
   <% end -%>
 </p>
 
@@ -28,14 +29,14 @@
 <% if @drink.images.size > 0 -%>
 <p>
 	<% @drink.images.each { |i| -%>
-		<%= link_to image_tag(i.image_url(:small).to_s), i %> 
+		<%= link_to image_tag(i.image_url(:small).to_s, :class => "photo"), i %> 
 	<% } -%>
 </p>
 <% end -%>
 
 <p>
   <b>Recipe:</b>
-  <%= render :partial => 'recipe', :object => @drink.recipe %>
+  <%= render :partial => 'recipe', :object => @drink.recipe_json %>
 </p>
 
 <h3>Upload an image</h3>
@@ -63,3 +64,4 @@
     <%= f.submit %>
   </div>
 <% end -%>
+</div>

@@ -1,0 +1,40 @@
+I would like to generate a simple recipe markup language so that I can extract 
+structured recipes from the unstructured recipe text in a drink.  Ultimately,
+a drink creation UI might generate the majority of the unstructured text.
+
+Here's an example recipe from the web site:
+
+Añejo Smash
+-----------
+1.5 oz. añejo tequila
+0.5 oz. Grand Marnier
+0.75 oz. agave syrup
+6-8 fresh mint leaves
+4 lemon wedges
+
+Combine all ingredients in a shaker with ice. Shake, strain into a rocks glass packed with crushed ice and garnish with mint sprig.
+
+http://www.imbibemagazine.com/Anejo-Smash-recipe
+
+http://viktorandspoils.com/
+
+<eor>
+
+
+The formatting rules are as follows:
+
+* All content before the first blank line is the list of ingredients, one per line.
+* Content between the first and second blank lines are the preparation instructions.
+* Everything after the second blank line should be shown as-is with two exceptions.
+   - URLs have links added to them
+   - Blank lines denote paragraph boundaries
+* Rules for each ingredient line
+   - if it doesn't start with a number or the word "dash" or "drop", we assume the whole line is the name of an ingredient
+   - if it starts with "dash" or "drop", this is assumed to be 1 dash or 1 drop and treated accordingly
+   - if it starts with a number, the expected format is Number Unit? Ingredient (Unit is optional)
+   - Number must be a decimal style number, e.g. "1.5" not "1 1/2", or a range, e.g. 6-8 where each side of the - has decimal style number
+   - Unit consists of "oz", "oz.", "ounce", "dash", "dashes", "drop", "drops", "ml", "cl", "gil", "gills", "cup", "cups" (this list will be extended)
+* Rules for preparation instructions
+   - Should contain "No garnish" or "Garnish with <GARNISH>." or "Garnish with a <GARNISH>."  
+     If none of these appear, then "No garnish" will be assumed.
+   - Eventually we may parse out glass type - "rocks glass" "old fashioned glass", "cocktail glass", "coupe", etc.
