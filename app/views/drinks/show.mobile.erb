@@ -35,9 +35,7 @@
 
 <p>
   <b>Recipe:</b>
-  <% if @drink.recipe_json -%>
-  	<%= render :partial => 'recipe', :object => @drink.recipe_json %>
-  <% end -%>
+  <%= render :partial => 'recipe', :object => @drink.recipe_json %>
 </p>
 
 <h3>Upload an image</h3>
