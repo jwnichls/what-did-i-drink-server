@@ -1,5 +1,9 @@
 <p>
-  <b>Drink:</b> <%= @image.drink.name %>
+  <% if @image.drink -%>
+  	<b>Drink:</b> <%=h @image.drink.name %>
+  <% elsif @image.venue -%>
+	<b>Venue:</b> <%=h @image.venue.name %>
+  <% end -%>
 </p>
 
 <p>
