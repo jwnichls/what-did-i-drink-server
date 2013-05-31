@@ -22,6 +22,8 @@ class VenuesController < ApplicationController
     @image = Image.new
     @image.user = current_user
     @image.venue = @venue
+    
+    session[:redirect] = venue_path(@venue)
 
     respond_to do |format|
       format.html # show.html.erb
