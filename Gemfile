@@ -38,5 +38,6 @@ gem 'capistrano'
 # Cron tasks written in ruby
 gem 'whenever', :require => false
 
+gem 'rb-readline'
 # To use debugger
 # gem 'debugger'
