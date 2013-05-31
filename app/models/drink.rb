@@ -69,7 +69,7 @@ class Drink < ActiveRecord::Base
   def parse_recipe
     paragraphs = self.recipe.split(/[\s\r]*\n[\s\r]*\n/)
 
-    units = ["oz", "oz.", "ounces", "dash", "dashes", "drop", "drops", "ml", "cl", "gil", "gills", "cup", "cups", "teaspoon", "tsp", "tablespoon", "tbsp"]
+    units = ["oz", "oz.", "ounces", "dash", "dashes", "drop", "drops", "ml", "cl", "gil", "gills", "cup", "cups", "teaspoon", "tsp", "tablespoon", "tbsp", "barspoon", "barspoons", "pinch", "pinches"]
     glasses = ["rocks", "old fashioned", "cocktail", "collins", "nick and nora"]
 
     if paragraphs.size > 0
