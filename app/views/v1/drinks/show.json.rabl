@@ -6,4 +6,4 @@ extends "v1/drinks/show_small"
 
 object @drink
 attributes :recipe => :recipe_raw
-attributes :recipe_json => :recipe, :if => lambda { |m| m != nil }
+attributes :recipe_json => :recipe, :if => lambda { |m| m.recipe_json != nil }
