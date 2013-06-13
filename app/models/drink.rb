@@ -84,7 +84,7 @@ class Drink < ActiveRecord::Base
       		l.strip!
 
           # TODO: Fix the ingredient line parsing
-      		m = l.match(/^([\d\.\-]+)\s+(\w+)\s+(.*)/)
+      		m = l.match(/^([\d\.\-]+)\s+(\w+\.?)\s+(.*)/)
     		  i = {amount: "", units: "", ingredient: ""}
       		if m
       		  i[:amount] = m[1]
