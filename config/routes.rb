@@ -78,7 +78,7 @@ WhatdididrinkApi::Application.routes.draw do
   resources :images, :only => [:create, :show]
 
   # Wishlist Routes
-  resources :wishes, :only => [:index,:create, :destroy]
+  resources :wishes, :only => [:index,:create,:destroy]
 
   # Venues Routes
   resources :venues do
