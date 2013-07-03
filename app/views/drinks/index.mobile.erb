@@ -1,19 +1,5 @@
-<% if @query -%>
-<h3>Searching for drinks: "<%= h(@query) %>"</h3>
-<% else -%>
-<h3>All Drinks</h3>
-<% end -%>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Created By</th>
-  </tr>
-
-<% @drinks.each do |drink| %>
-  <tr>
-    <td><%= link_to h(drink.name), drink %></td>
-    <td><%=h drink.created_by %></td>
-  </tr>
-<% end %>
-</table>
+<ul data-role="listview" <% if !@query -%>data-autodividers="true"<% end -%>>
+	<% @drinks.each do |drink| %>
+		<li><%= link_to h(drink.name), drink %></li>
+	<% end %>
+</ul>

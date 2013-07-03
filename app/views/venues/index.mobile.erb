@@ -1,21 +1,7 @@
 <%= javascript_include_tag "location" %>
 
-<% if @query -%>
-<h3>Searching for venues: "<%= h(@query) %>"</h3>
-<% else -%>
-<h3>All Venues</h3>
-<% end -%>
-
-<table id="venues_table">
-  <tr>
-    <th>Name</th>
-    <th>City</th>
-  </tr>
-
-<% @venues.each do |venue| %>
-  <tr>
-    <td><%= link_to venue.name, venue %></td>
-    <td><%= venue.city %>, <%= venue.state %></td>
-  </tr>
-<% end %>
-</table>
+<ul data-role="listview" <% if !@query -%>data-autodividers="true"<% end -%>>
+	<% @venues.each do |venue| %>
+		<li><%= link_to venue.name, venue %></li>
+	<% end %>
+</ul>

@@ -83,15 +83,15 @@
 	<% if controller.controller_name == 'venues' -%>
 		<div class="ui-bar ui-bar-d">
 			<%= form_tag :controller => :venues, :action => :search do |f| %>
-			    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off" %>
+			    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off", :value => @query ? @query : "" %>
 				<%= hidden_field :lat, "", {:class => "lat_field"} %>
 				<%= hidden_field :lng, "", {:class => "lng_field"} %>
 			<% end %>
 		</div>
 	<% elsif controller.controller_name == 'drinks' -%>
 		<div class="ui-bar ui-bar-d">
-			<%= form_tag :controller => :drinks, :action => :search do |f| %>
-			    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off" %>
+			<%= form_tag({:controller => :drinks, :action => :search}, :method => :get) do |f| %>
+			    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off", :value => @query ? @query : "" %>
 			<% end %>
 		</div>
 	<% end -%>
@@ -106,8 +106,8 @@
 		<div data-role="footer" data-position="fixed">
 			<div class="footer-nav" data-role="navbar">
 				<ul>
-					<li><%= link_to 'drinks', drinks_path %></li>
-					<li><%= link_to 'venues', venues_path %></li>
+					<li><%= link_to 'drinks', drinks_path, :class => (controller.controller_name == 'drinks' ? 'ui-btn-active' : '')  %></li>
+					<li><%= link_to 'venues', venues_path, :class => (controller.controller_name == 'venues' ? 'ui-btn-active' : '') %></li>
 				</ul>
 			</div>
 		</div>
