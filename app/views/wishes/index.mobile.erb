@@ -1,0 +1,16 @@
+<h1>Wish list</h1>
+
+<table>
+  <tr>
+    <th>Drink</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @wishes.each do |wish| %>
+  <tr>
+    <td><%= link_to h(wish.drink.name), wish.drink %></td>
+  </tr>
+<% end %>
+</table>

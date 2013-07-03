@@ -4,10 +4,11 @@ class WishesController < ApplicationController
   def index
     @wishes = current_user.wishes
 
-    session[:redirect] = wishlist_path
+    session[:redirect] = wishes_path
 
     respond_to do |format|
       format.html # index.html.erb
+      format.mobile
       format.json { render json: @wishes }
     end
   end
