@@ -49,66 +49,70 @@
 <body>
 <div data-role="page">
 
-<header data-role="header" data-position="fixed">
-	<h1>drink<span style="color: #fbb040;">?</span></h1>
-	<% if logged_in? -%>
-		<%= link_to root_path, :class => "ui-btn-right", "data-role" => (current_user.image_url != nil ? "none" : "button") do %>
-			<%= current_user.image_url != nil ? image_tag(current_user.image_url, "class" => "user-image-btn") : "You" %>
+	<header data-role="header" data-position="fixed">
+		<h1>drink<span style="color: #fbb040;">?</span></h1>
+		<% if logged_in? -%>
+			<% if current_user.image_url != nil -%>
+				<%= link_to "#popupProfileMenu", :class => "ui-btn-right", "data-role" => "none", "data-rel" => "popup" do %>
+					<%= image_tag(current_user.image_url, "class" => "user-image-btn") %>
+				<% end -%>
+			<% else -%>
+				<%= link_to "Settings", "#popupProfileMenu", :class => "ui-btn-right", "data-icon" => "gear", "data-iconpos" => "notext", "data-rel" => "popup" %>
+			<% end -%>
+		<% elsif controller.controller_name != 'front' -%>
+			<%= link_to "Login", root_path, :class => "ui-btn-right" %>
 		<% end -%>
-		<%= link_to "Settings", "#popupProfileMenu", :class => "ui-btn-right", "data-icon" => "gear", "data-iconpos" => "notext", "data-rel" => "popup" %>
-	<% elsif controller.controller_name != 'front' -%>
-		<%= link_to "Login", root_path, :class => "ui-btn-right" %>
-	<% end -%>
-</header>
+	</header>
 
-<% if logged_in? -%>
-	<div data-role="popup" id="popupProfileMenu" data-theme="c">
-		<ul data-role="listview" data-inset="true" data-theme="c">
-			<li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
-			<li><%= link_to 'Logout', logout_path %></li>
-		</ul>
-	</div>
-<% end -%>
-
-<% if notice != nil %>
-	<div class="ui-bar ui-bar-e">
-		<p><%= notice %></p>
-	</div>
-<% end -%>
-
-<% if controller.controller_name == 'venues' -%>
-	<div class="ui-bar ui-bar-d">
-		<%= form_tag :controller => :venues, :action => :search do |f| %>
-		    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search" %>
-			<%= hidden_field :lat, "", {:class => "lat_field"} %>
-			<%= hidden_field :lng, "", {:class => "lng_field"} %>
-			<!-- <%= submit_tag 'Search Venues', :disabled => true, :class => 'loc_button ui-btn-right', "data-role" => "button" %> -->
-		<% end %>
-	</div>
-<% elsif controller.controller_name == 'drinks' -%>
-	<div class="ui-bar ui-bar-d">
-		<%= form_tag :controller => :drinks, :action => :search do |f| %>
-		    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search" %>
-		<% end %>
-	</div>
-<% end -%>
-
-<div data-role="content">
-
-<%= yield %>
-
-<% if logged_in? -%>
-	<div data-role="footer" data-position="fixed">
-		<div class="footer-nav" data-role="navbar">
-			<ul>
-				<li><%= link_to 'drinks', drinks_path %></li>
-				<li><%= link_to 'venues', venues_path %></li>
+	<% if logged_in? -%>
+		<div data-role="popup" id="popupProfileMenu" data-theme="c">
+			<ul data-role="listview" data-inset="true" data-theme="c">
+				<li><%= link_to "View Profile", root_path %></li>
+				<li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
+				<li><%= link_to 'Logout', logout_path %></li>
 			</ul>
 		</div>
-	</div>
-<% end -%>
+	<% end -%>
 
-</div>
+	<% if notice != nil %>
+		<div class="ui-bar ui-bar-e">
+			<p><%= notice %></p>
+		</div>
+	<% end -%>
+
+	<% if controller.controller_name == 'venues' -%>
+		<div class="ui-bar ui-bar-d">
+			<%= form_tag :controller => :venues, :action => :search do |f| %>
+			    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off" %>
+				<%= hidden_field :lat, "", {:class => "lat_field"} %>
+				<%= hidden_field :lng, "", {:class => "lng_field"} %>
+			<% end %>
+		</div>
+	<% elsif controller.controller_name == 'drinks' -%>
+		<div class="ui-bar ui-bar-d">
+			<%= form_tag :controller => :drinks, :action => :search do |f| %>
+			    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off" %>
+			<% end %>
+		</div>
+	<% end -%>
+
+	<div data-role="content">
+
+		<%= yield %>
+
+	</div>
+
+	<% if logged_in? -%>
+		<div data-role="footer" data-position="fixed">
+			<div class="footer-nav" data-role="navbar">
+				<ul>
+					<li><%= link_to 'drinks', drinks_path %></li>
+					<li><%= link_to 'venues', venues_path %></li>
+				</ul>
+			</div>
+		</div>
+	<% end -%>
+
 </div>
 
 </body>
