@@ -1,23 +1,28 @@
 <p>
-	Login with your favorite social network:
-</p>
-<ul>
-	<li><%= link_to 'Login with Twitter', '/auth/twitter' %></li>
-	<li><%= link_to 'Login with Foursquare', '/auth/foursquare' %></li>
-</ul>
-
-<p>
-	If you'd prefer to not use one of these services, <%= link_to "create an account", new_identity_path %> or login:
+	If you don't have account, please <%= link_to "create one", new_identity_path %>. You may also login with a social network account.
 </p>
 
 <%= form_tag "/auth/identity/callback" do %>
   <div class="field">
-    <%= label_tag :auth_key, "E-mail" %><br>
-    <%= email_field_tag :auth_key %>
+    <%= label_tag :auth_key, "E-mail", :class => "ui-hidden-accessible" %>
+    <%= email_field_tag :auth_key, nil, "placeholder" => "E-mail address" %>
   </div>
   <div class="field">
-    <%= label_tag :password %><br>
-    <%= password_field_tag :password %>
+    <%= label_tag :password, "Password", :class => "ui-hidden-accessible" %>
+    <%= password_field_tag :password, nil, :placeholder => "Password" %>
   </div>
   <div class="actions"><%= submit_tag "Login" %></div>
 <% end %>
+
+<p align="center">
+	or
+</p>
+
+<div>
+<%= link_to '/auth/twitter', "data-ajax" => false, "data-role" => "button", "class" => "twitter-button" do %>
+<%= image_tag 'twitter-bird-light-bgs.png', :class => "twitter-button-image" %> Sign in with Twitter
+<% end %>
+<%= link_to '/auth/foursquare', "data-ajax" => false, "data-role" => "button", "class" => "foursquare-button" do %>
+Connect with <%= image_tag 'foursquare-logo.png', :class => "foursquare-button-image", "height" => "20px" %>
+<% end %>
+</div>

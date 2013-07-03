@@ -1,51 +1,40 @@
-<h1><%=h @user.full_name %></h1>
+<div>
+	<span class="username"><%=h @user.full_name %></span><br/>
+	<span class="smalllink"><%= link_to "Edit Profile", edit_user_path(@user) %></span>
+</div>
 
-<p>
-	<%= link_to "Edit Profile", edit_user_path(@user) %>
-</p>
-
-<% if @user.venue -%>
-<p>
-	<b>Current Location:</b> <%= link_to h(@user.venue.name), @user.venue %>
-</p>
+<% lc = current_user.last_checkin -%>
+<% if lc != nil -%>
+<div data-role="collapsible" data-content-theme="c" data-collapsed="false">
+	<h3>Last Drink</h3>
+	<table>
+		<tr>
+			<% if lc.drink_images and lc.drink_images.count > 0 -%>
+				<td class="embed-drink-image-cell">
+					<%= link_to lc do %>
+						<%= image_tag lc.drink_images[0].image_url(:thumb), :class => "embed-drink-image" %>
+					<% end -%>
+				</td>
+			<% end -%>
+			<td class="embed-drink-text-cell">
+				<span class="embed-drink-name"><%= link_to lc.drink.name, lc.drink %></span>
+				<% if lc.venue != nil -%>
+					<br/><span class="embed-drink-venue"><%= link_to lc.venue.name, lc.venue %></span>
+				<% end -%>
+				<% if lc.notes and lc.notes != "" -%>
+					<br/><span class="embed-drink-notes"><%= link_to "Notes", lc %></span>
+				<% end -%>
+			</td>
+		</tr>
+	</table>
+</div>
 <% end -%>
 
-<table>
-	<tr><td valign="top">
-		<h2>Drank</h2>
+<div data-role="controlgroup" class="ui-button-l">
+	<%= link_to "Drink History", {:controller => :checkins, :action => :index}, "data-ajax" => false, "data-role" => "button", "data-icon" => "arrow-r", "data-iconpos" => "right", :class => "ui-button-l" %>
+	<%= link_to "Wish List", {:controller => :wishes, :action => :index}, "data-ajax" => false, "data-role" => "button", "data-icon" => "arrow-r", "data-iconpos" => "right", :class => "ui-button-l" %>
+</div>
 
-		<% if @user.checkins.size > 0 -%>
-		<ul>
-		<% @user.checkins.each { |c| -%>
-			<li><%= link_to h(c.drink.name), c.drink %><br/>
-			<% if c.notes and c.notes != "" -%><small><%= link_to "Notes", c %></small><br/><% end -%>
-			<small><%= c.created_at %></small></li>
-		<% } -%>
-		</ul>
-		<% else -%>
-			<p>
-				Nothing yet.
-			</p>
-		<% end -%>
-	</td><td valign="top">
-		<h2>Wish list</h2>
-
-		<% if @user.wishes.size > 0 -%>
-		<ul>
-		<% @user.wishes.each { |c| -%>
-			<li>
-				<%= link_to h(c.drink.name), c.drink %>
-				<%= form_tag({:controller => :wishes, :id => c.id, :action => :destroy}, :method => :delete) do |f| -%>
-				<%= hidden_field_tag :drink_id, c.drink.id %>
-				<%= submit_tag 'Remove' %> 
-				<% end -%>
-			</li>
-		<% } -%>
-		</ul>
-		<% else -%>
-			<p>
-				Nothing yet.
-			</p>
-		<% end -%>
-	</td></tr>
-</table>
+<div>
+	<%= link_to "Social Media Connections", "#",  "data-role" => "button", "data-icon" => "arrow-r", "data-iconpos" => "right", :class => "ui-button-l" %>
+</div>
