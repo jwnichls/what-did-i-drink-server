@@ -53,6 +53,10 @@ class User < ActiveRecord::Base
     Wish.find_by_drink_id_and_user_id(drink.id, self.id) != nil
   end
   
+  def last_checkin
+    self.checkins.order("created_at DESC").limit(1)[0]
+  end
+  
   def on_committed()
     # Create the timeline entry for this checkin
     NewUser.create({user: self})

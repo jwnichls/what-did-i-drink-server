@@ -5,6 +5,14 @@ class Checkin < ActiveRecord::Base
   belongs_to :venue
   has_many :images
   
+  def drink_images
+    if self.images != nil and self.images.count > 0
+      self.images
+    else
+      self.drink.images
+    end
+  end
+  
   def self.from_params(params)
     checkinparams = {}
     
