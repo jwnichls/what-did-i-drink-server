@@ -26,7 +26,7 @@ gem 'twitter'
 gem 'quimby', :git => 'git://github.com/jwnichls/quimby.git'
 
 # jQuery
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 2.2.1'
 gem 'rails3-jquery-autocomplete'
 
 # To use ActiveModel has_secure_password
