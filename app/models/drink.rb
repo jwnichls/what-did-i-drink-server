@@ -129,4 +129,19 @@ class Drink < ActiveRecord::Base
       end
     end
   end
+  
+  def ingredients_string
+    if self.recipe_json == nil
+      nil
+    else
+      ingredient_str = ""
+      self.recipe_json["ingredients"].each { |i| 
+        ingredient_str += i["ingredient"].strip + ", "
+      }
+      ingredient_str.slice!(ingredient_str.length-2)
+      ingredient_str.downcase!
+      
+      ingredient_str.strip
+    end
+  end
 end

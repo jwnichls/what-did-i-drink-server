@@ -1,5 +1,18 @@
 <ul data-role="listview" <% if !@query -%>data-autodividers="true"<% end -%>>
 	<% @drinks.each do |drink| %>
-		<li><%= link_to h(drink.name), drink %></li>
+		<li>
+			<% if drink.images and drink.images.count > 0 -%>
+				<%= image_tag drink.images[0].image_url(:small), :class => "listview-drink-image" %>
+			<% end -%>
+
+			<%= link_to drink do %>
+				<%= drink.name %>
+				<% is = drink.ingredients_string %>
+				<% is_length_limit = (drink.images and drink.images.count > 0) ? 30 : 50 %>
+				<% if is -%>
+					<br/><span class="listview-drink-ingredient-list"><%= is.length > is_length_limit ? is.slice(0..is_length_limit) + "..." : is %></span>
+				<% end -%>
+			<% end -%>
+		</li>
 	<% end %>
 </ul>

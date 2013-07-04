@@ -64,3 +64,14 @@
 .embed-drink-notes {
 	font-size: 0.6em;
 }
+
+.listview-drink-ingredient-list {
+	font-size: 0.6em;
+}
+
+.listview-drink-image {
+	float: left; 
+	margin-top: 0.35em; 
+	margin-left: 0.5em;
+	max-height: 2.75em;
+}
