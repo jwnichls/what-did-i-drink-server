@@ -11,6 +11,7 @@ WhatdididrinkApi::Application.routes.draw do
       resources :drinks, :only => [:index,:create,:show,:update,:destroy] do
         collection do
           post :search
+          get :search
         end
       end
       
@@ -38,6 +39,7 @@ WhatdididrinkApi::Application.routes.draw do
         end
         collection do
           post :search
+          get :search
         end
       end
     end
@@ -68,6 +70,7 @@ WhatdididrinkApi::Application.routes.draw do
       get :autocomplete_drink_name
       get :autocomplete_drink_created_by
       post :search
+      get :search
     end
   end
 
@@ -88,6 +91,7 @@ WhatdididrinkApi::Application.routes.draw do
     collection do
       get :autocomplete_venue_name
       post :search
+      get :search
     end
   end
 

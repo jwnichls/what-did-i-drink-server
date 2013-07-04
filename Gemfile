@@ -29,6 +29,9 @@ gem 'quimby', :git => 'git://github.com/jwnichls/quimby.git'
 gem 'jquery-rails', '~> 2.2.1'
 gem 'rails3-jquery-autocomplete'
 
+# pagination
+gem 'will_paginate'
+
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
 

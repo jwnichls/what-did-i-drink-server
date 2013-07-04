@@ -1,7 +1,9 @@
+<%= will_paginate @drinks %>
+
 <ul data-role="listview" <% if !@query -%>data-autodividers="true"<% end -%>>
 	<% @drinks.each do |drink| %>
 		<li>
-			<%= render :partial => 'drink', :object => @drink %>
+			<%= render :partial => 'drink', :object => drink %>
 		</li>
 	<% end %>
 </ul>

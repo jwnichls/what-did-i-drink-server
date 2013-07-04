@@ -48,14 +48,14 @@
 
 <p>
 <% if controller.controller_name == 'venues' -%>
-	<%= form_tag :controller => :venues, :action => :search do |f| %>
+	<%= form_tag({:controller => :venues, :action => :search}, :method => :get) do |f| %>
 	    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path %>
 		<%= hidden_field :lat, "", {:class => "lat_field"} %>
 		<%= hidden_field :lng, "", {:class => "lng_field"} %>
 		<%= submit_tag 'Search Venues', :disabled => true, :class => 'loc_button' %>
 	<% end %>
 <% else -%>
-	<%= form_tag :controller => :drinks, :action => :search do |f| %>
+	<%= form_tag({:controller => :drinks, :action => :search}, :method => :get) do |f| %>
 	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path %>
 	    <%= submit_tag 'Search Drinks' %>
 	<% end %>

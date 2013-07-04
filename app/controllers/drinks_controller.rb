@@ -1,3 +1,5 @@
+require 'will_paginate/array'
+
 class DrinksController < ApplicationController
   autocomplete :drink, :name, :full => true
 
@@ -6,11 +8,11 @@ class DrinksController < ApplicationController
   def index
     @query = params[:query]
     if @query
-      @drinks = Drink.visible.search(:query => @query).all(:order => 'name')
+      @drinks = Drink.visible.search(:query => @query).paginate(:per_page => 20, :page => params[:page])
     else
-      @drinks = Drink.visible.all(:order => 'name')
-    end    
-
+      @drinks = Drink.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.mobile # index.mobile.erb
@@ -126,9 +128,9 @@ class DrinksController < ApplicationController
     end
     
     @query = params[:drink][:name]
-    @drinks = Drink.search(:query => @query).all
+    @drinks = Drink.visible.search(:query => @query).paginate(:per_page => 20, :page => params[:page])
     
-    if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == params[:drink][:name])
+    if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == @query)
       redirect_to @drinks[0]
     else
       render :controller => :drinks, :action => :index
