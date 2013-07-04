@@ -4,16 +4,23 @@
 <h3>All Drinks</h3>
 <% end -%>
 
-<%= will_paginate @drinks %>
+<script>
+	// see if we can get infinite scrolling to work on the drink list
+	$(function () {
+		$('.infinite-scroll').infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'table.infinite-scroll tr.item', debug: true});
+	});
+</script>
 
-<table>
+<table class="infinite-scroll">
+  <tr><%= will_paginate @drinks %></tr>
+
   <tr>
     <th>Name</th>
     <th>Created By</th>
   </tr>
 
 <% @drinks.each do |drink| %>
-  <tr>
+  <tr class="item">
     <td><%= link_to h(drink.name), drink %></td>
     <td><%=h drink.created_by %></td>
   </tr>
