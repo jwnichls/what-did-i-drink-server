@@ -150,4 +150,11 @@ class DrinksController < ApplicationController
     end
     render :json => json_for_autocomplete(items, :created_by)
   end
+  
+  def format
+    respond_to do |format|
+      format.html # format.html.erb
+      format.mobile {render :layout => "basic_dialog"}# format.mobile.erb
+    end
+  end
 end

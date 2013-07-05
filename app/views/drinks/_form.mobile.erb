@@ -13,15 +13,17 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :placeholder => "e.g., Negroni" %>
   </div>
   <div class="field">
-    <%= f.label :created_by %>
-    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off", :autocapitalize => "off" %>
+    <%= f.label :created_by, "Creator" %>
+    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off", :autocapitalize => "off", :placeholder => "e.g., David Embury" %>
   </div>
   <div class="field">
-    <%= f.label :recipe %>
-    <%= f.text_area :recipe %>
+    <%= f.label :recipe do %> 
+		Recipe - <%= link_to "Format", format_drinks_path, "data-rel" => "dialog", "data-transition" => "pop", :class => "smalllink", "data-inline" => true %>
+	<% end -%>
+    <%= f.text_area :recipe, :placeholder => "Click the format link to see an example" %>
   </div>
   <div class="actions">
     <%= f.submit %>

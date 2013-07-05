@@ -71,6 +71,7 @@ WhatdididrinkApi::Application.routes.draw do
       get :autocomplete_drink_created_by
       post :search
       get :search
+      get :format
     end
   end
 
