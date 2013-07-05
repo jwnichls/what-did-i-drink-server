@@ -53,6 +53,9 @@
 <div data-role="page">
 
 	<header data-role="header" data-position="fixed">
+		<% if logged_in? and controller.controller_name == 'drinks' -%>
+			<%= link_to "New Drink", new_drink_path, :class => 'ui-btn-left', "data-icon" => "plus", "data-iconpos" => "notext" %>
+		<% end -%>
 		<h1>drink<span style="color: #fbb040;">?</span></h1>
 		<% if logged_in? -%>
 			<% if current_user.image_url != nil -%>

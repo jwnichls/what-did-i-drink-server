@@ -12,15 +12,15 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
   <div class="field">
-    <%= f.label :created_by %><br />
-    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off" %>
+    <%= f.label :created_by %>
+    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off", :autocapitalize => "off" %>
   </div>
   <div class="field">
-    <%= f.label :recipe %><br />
+    <%= f.label :recipe %>
     <%= f.text_area :recipe %>
   </div>
   <div class="actions">
