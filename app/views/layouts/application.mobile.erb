@@ -72,7 +72,7 @@
 			<ul data-role="listview" data-inset="true" data-theme="c">
 				<li><%= link_to "View Profile", root_path %></li>
 				<li><%= link_to "Edit Profile", edit_user_path(current_user) %></li>
-				<li><%= link_to 'Logout', logout_path %></li>
+				<li><%= link_to 'Logout', logout_path, "data-ajax" => false %></li>
 			</ul>
 		</div>
 	<% end -%>
