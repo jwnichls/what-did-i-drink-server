@@ -4,9 +4,9 @@ class VenuesController < ApplicationController
   # GET /venues.json
   def index
     if params[:lat] and params[:lng]
-      @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'name')
+      @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'city,name')
     else
-      @venues = Venue.visible.verified.all(:order => 'name')
+      @venues = Venue.visible.verified.all(:order => 'city,name')
     end
 
     respond_to do |format|

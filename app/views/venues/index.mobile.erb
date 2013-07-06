@@ -1,7 +1,27 @@
 <%= javascript_include_tag "location" %>
 
-<ul data-role="listview" <% if !@query -%>data-autodividers="true"<% end -%>>
+<script>
+	var listviewConfig = function() {
+
+		$("#venues-listview").listview({
+		  autodividers: true,
+
+<% if !@query -%>
+		  // the selector function is passed a <li> element from the listview;
+		  // it should return the appropriate divider text for that <li>
+		  // element as a string
+		  autodividersSelector: function ( li ) {
+		    return $(li).attr("city");
+		  }
+<% end -%>
+		});
+	}
+	
+	$(document).bind('pageinit', listviewConfig)
+</script>
+
+<ul id="venues-listview">
 	<% @venues.each do |venue| %>
-		<li><%= link_to venue.name, venue %></li>
+		<li city="<%= venue.city + (venue.state ? ", " + venue.state : "") %>"><%= link_to venue.name, venue %></li>
 	<% end %>
 </ul>
