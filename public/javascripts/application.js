@@ -26,3 +26,11 @@ function getLocation(callback)
 		callback(false);
 	}
 }
+
+
+function set_time_zone_offset() {
+    var current_time = new Date();
+    document.cookie = 'time_zone=' + current_time.getTimezoneOffset();
+}
+
+$(set_time_zone_offset);

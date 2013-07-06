@@ -4,7 +4,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   before_filter :adjust_format_for_mobile
+  before_filter :set_timezone
 
+  def set_timezone  
+    min = request.cookies["time_zone"].to_i
+    if min
+      Time.zone = ActiveSupport::TimeZone[-min.minutes]
+    end
+  end
+  
   def restrict_access
     head :unauthorized unless current_user
   end
