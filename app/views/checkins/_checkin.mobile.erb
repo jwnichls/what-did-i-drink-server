@@ -1,0 +1,8 @@
+<% if checkin.drink_images and checkin.drink_images.count > 0 -%>
+	<%= image_tag checkin.drink_images[0].image_url(:small), :class => "listview-drink-image" %>
+<% end -%>
+
+<%= link_to checkin do %>
+	<%= checkin.drink.name %>
+	<br/><span class="listview-drink-ingredient-list"><%= print_time(checkin.created_at) %></span>
+<% end -%>

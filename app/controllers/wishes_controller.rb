@@ -2,7 +2,7 @@ class WishesController < ApplicationController
   # GET /wishlists
   # GET /wishlists.json
   def index
-    @wishes = current_user.wishes
+    @wishes = current_user.wishes.paginate(:per_page => 20, :page => params[:page])
 
     session[:redirect] = wishes_path
 

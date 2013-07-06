@@ -1,8 +1,10 @@
 <script>
 	// see if we can get infinite scrolling to work on the drink list
-	$(function () {
-		$('.infinite-scroll').infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'ul.infinite-scroll li', debug: true},function(ary) { $('.infinite-scroll').listview('refresh'); });
-	});
+	var infiniteScrollFunc = function () {
+		$('.infinite-scroll').infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'ul.infinite-scroll li', debug: true, donetext: ""},function(ary) { $('.infinite-scroll').listview('refresh'); });
+	};
+	
+	$(document).bind('pageinit', infiniteScrollFunc)
 </script>
 
 <%= will_paginate @drinks %>

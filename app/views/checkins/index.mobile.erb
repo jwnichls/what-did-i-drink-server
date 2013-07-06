@@ -1,5 +1,18 @@
-<ul data-role="listview">
+<script>
+	// see if we can get infinite scrolling to work on the drink list
+	var infiniteScrollFunc = function () {
+		$('.infinite-scroll').infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'ul.infinite-scroll li', debug: true, donetext: ""},function(ary) { $('.infinite-scroll').listview('refresh'); });
+	};
+	
+	$(document).bind('pageinit', infiniteScrollFunc)
+</script>
+
+<%= will_paginate @checkins %>
+
+<ul data-role="listview" class="infinite-scroll">
 	<% @checkins.each do |checkin| %>
-		<li><%= link_to h(checkin.drink.name), checkin %></li>
+		<li>
+			<%= render :partial => 'checkin', :object => checkin %>
+		</li>
 	<% end %>
 </ul>
