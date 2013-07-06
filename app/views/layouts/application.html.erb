@@ -14,6 +14,7 @@
 	<%= javascript_include_tag :defaults %>
 	<%= javascript_include_tag "autocomplete-rails" %>
 	<%= javascript_include_tag "jquery.infinitescroll" %>
+	<%= javascript_include_tag "drink-autocomplete" %>	
 	
 	<script type="text/javascript">
 
@@ -59,7 +60,7 @@
 	<% end %>
 <% else -%>
 	<%= form_tag({:controller => :drinks, :action => :search}, :method => :get) do |f| %>
-	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path %>
+	    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :id => "drinksearch" %>
 	    <%= submit_tag 'Search Drinks' %>
 	<% end %>
 <% end -%>

@@ -42,6 +42,10 @@ class DrinksController < ApplicationController
   def new
     unless restrict_access
       @drink = Drink.new
+      
+      if params[:name]
+        @drink.name = params[:name]
+      end
 
       respond_to do |format|
         format.html # new.html.erb
