@@ -30,13 +30,33 @@
 	text-align: left;
 }
 
-.username {
-	font-size: 1.5em;
+.largetext {
+	font-size: 3em;
+}
+
+.whitetext {
+	color: #eeeeee;
+}
+
+.smalltext {
+	font-size: 0.75em;
 }
 
 .smalllink {
 	font-size: 0.75em;
 	color: #111111;
+}
+
+.drink-image-surround {
+	float: left;
+	width: "100%";
+	overflow: hidden;
+}
+
+.drink-image {
+}
+
+.drink-title-block {
 }
 
 .embed-drink-image-cell {

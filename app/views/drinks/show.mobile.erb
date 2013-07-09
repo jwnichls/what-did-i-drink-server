@@ -1,16 +1,51 @@
-<p>
-  <b>Name:</b> <%=h @drink.name %><br/>
-  <% if @drink.created_by != nil and @drink.created_by != "" -%>
-	<small>Created by <%=h @drink.created_by %></small>
-  <% end -%>
-</p>
+<script>
+	$(document).bind('pageinit', function() {
+	
+		//new image
+		var drinkImg = new Image();
+
+		//bind onload to image object
+		drinkImg.onload = function() {
+
+			// A bunch of hacky garbage to get the header drink image to display properly
+
+			var ratio = 2;
+			var width = $('#main-content').outerWidth();
+			var actualHeight = drinkImg.height / drinkImg.width * width
+			var croppedHeight = width / ratio;
+			var margin = (actualHeight - croppedHeight) / 2
+
+			$('#main-content').before($('div.drink-image-surround'));
+			$('img.drink-image')
+				.width(width + "px")
+				.height(actualHeight + "px")
+				.css("margin-top", "-" + margin + "px")
+				.css("margin-bottom", "-" + margin + "px");
+			$('div.drink-image-surround')
+				.width(width + "px")
+				.height(croppedHeight + "px");
+				
+			//$('#main-content').css("padding-top","0px")
+		};
+		
+		drinkImg.src = "<%= @drink.images[0].image_url %>"
+	});
+</script>
+
+<div class="drink-image-surround">
+	<%= image_tag @drink.images[0].image_url, :class => 'drink-image' %>
+</div>
+
+<div class="drink-title-block">
+	<span class="largetext"><%=h @drink.name %></span>
+	<% if @drink.created_by != nil and @drink.created_by != "" -%>
+		<br/><span class="smalltext">Created by <%=h @drink.created_by %></span>
+	<% end -%>
+</div>
 
 <% if current_user != nil -%>
-	<p>
-		<%= link_to 'Edit', edit_drink_path(@drink) %>
-		- 
-		<%= link_to 'Checkin', :controller => :checkins, :action => :new, :drink_id => @drink.id %>
-		- 
+	<div data-role="controlgroup">
+		<%= link_to 'Checkin', {:controller => :checkins, :action => :new, :drink_id => @drink.id}, "data-role" => "button" %>
 		<% if current_user.wished_for?(@drink) -%>
 			<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
 			<%= hidden_field_tag :drink_id, @drink.id %>
@@ -22,9 +57,11 @@
 			<%= submit_tag 'Add To Wish List' %> 
 			<% end -%>
 		<% end -%>
-	</p>
+		<%= link_to 'Edit', edit_drink_path(@drink), "data-role" => "button" %>
+	</div>
 <% end -%>
 
+<!--
 <% if @drink.images.size > 0 -%>
 <p>
 	<% @drink.images.each { |i| -%>
@@ -32,13 +69,14 @@
 	<% } -%>
 </p>
 <% end -%>
+-->
 
 <p>
   <b>Recipe:</b>
   <%= render :partial => 'recipe', :object => @drink.recipe_json %>
 </p>
 
-<h3>Upload an image</h3>
+<h5>Upload an image</h5>
 
 <%= form_for(@image, :html => {:multipart => true, "data-ajax" => false}) do |f| %>
   <% if @image.errors.any? %>
