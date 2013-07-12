@@ -11,7 +11,7 @@
 		// ensure this is only executed once 
 		var drinkImageLoad = function() {
 
-			if ($("div.drink-image-surround") != null && drinkImageURL != null)
+			if ($($.mobile.activePage).find("div.drink-" + drinkId) != null && drinkImageURL != null)
 			{
 				//new image
 				var drinkImg = new Image();
@@ -26,18 +26,16 @@
 					var croppedHeight = width / ratio;
 					var margin = (actualHeight - croppedHeight) / 4
 
-					$('div.drink-' + drinkId).parent().before($('div.drink-' + drinkId));
-					$('div.drink-' + drinkId + ' .drink-image')
+					$($.mobile.activePage).find('div.drink-' + drinkId).parent().before($($.mobile.activePage).find('div.drink-' + drinkId));
+					$($.mobile.activePage).find('div.drink-' + drinkId + ' .drink-image')
 						.attr("src", drinkImg.src)
 						.width(width + "px")
 						.height(actualHeight + "px")
 						.css("margin-top", "-" + margin + "px")
 						.css("margin-bottom", "-" + (3 * margin) + "px");
-					$('div.drink-' + drinkId)
+					$($.mobile.activePage).find('div.drink-' + drinkId)
 						.width(width + "px")
 						.height(croppedHeight + "px");
-
-					//$('#main-content').css("padding-top","0px")
 					
 					drinkImageURL = null
 				};
