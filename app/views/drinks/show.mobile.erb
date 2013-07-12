@@ -1,39 +1,57 @@
 <script>
-	$(document).bind('pageinit', function() {
-	
-		//new image
-		var drinkImg = new Image();
+	drinkId = <%= @drink.id %>;
+	<% if @drink.images != nil and @drink.images.count > 0 -%>
+		drinkImageURL = "<%= @drink.images[0].image_url %>"
+	<% else -%>
+		drinkImageURL = null;
+	<% end -%>
 
-		//bind onload to image object
-		drinkImg.onload = function() {
+	if (drinkImageLoad == null)
+	{
+		// ensure this is only executed once 
+		var drinkImageLoad = function() {
 
-			// A bunch of hacky garbage to get the header drink image to display properly
+			if ($("div.drink-image-surround") != null && drinkImageURL != null)
+			{
+				//new image
+				var drinkImg = new Image();
 
-			var ratio = 2;
-			var width = $('#main-content').outerWidth();
-			var actualHeight = drinkImg.height / drinkImg.width * width
-			var croppedHeight = width / ratio;
-			var margin = (actualHeight - croppedHeight) / 2
+				//bind onload to image object
+				drinkImg.onload = function() {
 
-			$('#main-content').before($('div.drink-image-surround'));
-			$('img.drink-image')
-				.width(width + "px")
-				.height(actualHeight + "px")
-				.css("margin-top", "-" + margin + "px")
-				.css("margin-bottom", "-" + margin + "px");
-			$('div.drink-image-surround')
-				.width(width + "px")
-				.height(croppedHeight + "px");
-				
-			//$('#main-content').css("padding-top","0px")
+					// A bunch of hacky garbage to get the header drink image to display properly
+					var ratio = 2;
+					var width = $(document).outerWidth();
+					var actualHeight = drinkImg.height / drinkImg.width * width
+					var croppedHeight = width / ratio;
+					var margin = (actualHeight - croppedHeight) / 4
+
+					$('div.drink-' + drinkId).parent().before($('div.drink-' + drinkId));
+					$('div.drink-' + drinkId + ' .drink-image')
+						.attr("src", drinkImg.src)
+						.width(width + "px")
+						.height(actualHeight + "px")
+						.css("margin-top", "-" + margin + "px")
+						.css("margin-bottom", "-" + (3 * margin) + "px");
+					$('div.drink-' + drinkId)
+						.width(width + "px")
+						.height(croppedHeight + "px");
+
+					//$('#main-content').css("padding-top","0px")
+					
+					drinkImageURL = null
+				};
+
+				drinkImg.src = drinkImageURL
+			}
 		};
-		
-		drinkImg.src = "<%= @drink.images[0].image_url %>"
-	});
+
+		$(document).bind('pageinit', drinkImageLoad);
+	}
 </script>
 
-<div class="drink-image-surround">
-	<%= image_tag @drink.images[0].image_url, :class => 'drink-image' %>
+<div class="drink-image-surround drink-<%= @drink.id %>">
+	<%= image_tag "", :class => 'drink-image' %>
 </div>
 
 <div class="drink-title-block">
