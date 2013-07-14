@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name, :placeholder => "e.g., Negroni" %>
+    <%= f.text_field :name, :autocorrect => "off", :placeholder => "e.g., Negroni" %>
   </div>
   <div class="field">
     <%= f.label :created_by, "Creator" %>
-    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off", :autocapitalize => "off", :placeholder => "e.g., David Embury" %>
+    <%= f.autocomplete_field :created_by, autocomplete_drink_created_by_drinks_path, :autocorrect => "off", :placeholder => "e.g., David Embury" %>
   </div>
   <div class="field">
     <%= f.label :recipe do %> 

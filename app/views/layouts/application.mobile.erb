@@ -90,7 +90,7 @@
 	<% if controller.controller_name == 'venues' -%>
 		<div class="ui-bar ui-bar-d">
 			<%= form_tag({:controller => :venues, :action => :search}, :method => :get, "data-ajax" => false) do |f| %>
-			    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off", :value => @query ? @query : "", :id => "venuesearch" %>
+			    <%= autocomplete_field :venue, :name, autocomplete_venue_name_venues_path, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :value => @query ? @query : "", :id => "venuesearch" %>
 				<%= hidden_field :lat, "", {:class => "lat_field"} %>
 				<%= hidden_field :lng, "", {:class => "lng_field"} %>
 			<% end %>
@@ -98,7 +98,7 @@
 	<% elsif controller.controller_name == 'drinks' -%>
 		<div class="ui-bar ui-bar-d">
 			<%= form_tag({:controller => :drinks, :action => :search}, :method => :get, "data-ajax" => false) do |f| %>
-			    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :autocapitalize => "off", :value => @query ? @query : "", :id => "drinksearch" %>
+			    <%= autocomplete_field :drink, :name, autocomplete_drink_name_drinks_path, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :value => @query ? @query : "", :id => "drinksearch" %>
 			<% end %>
 		</div>
 	<% end -%>
