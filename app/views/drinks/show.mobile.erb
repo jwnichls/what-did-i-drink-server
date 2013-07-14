@@ -62,17 +62,13 @@
 <% if current_user != nil -%>
 	<div data-role="controlgroup">
 		<%= link_to 'Checkin', {:controller => :checkins, :action => :new, :drink_id => @drink.id}, "data-role" => "button" %>
+		<div id="drink-wishlist-button">
 		<% if current_user.wished_for?(@drink) -%>
-			<%= form_tag({:controller => :wishes, :action => :destroy}, :method => :delete) do |f2| %>
-			<%= hidden_field_tag :drink_id, @drink.id %>
-			<%= submit_tag 'Remove From Wish List' %> 
-			<% end -%>
+			<%= render partial: "removewish", locals: {drink: @drink} %>
 		<% else -%>
-			<%= form_tag :controller => :wishes, :action => :create do |f2| %>
-			<%= hidden_field_tag :drink_id, @drink.id %>
-			<%= submit_tag 'Add To Wish List' %> 
-			<% end -%>
+			<%= render partial: "addwish", locals: {drink: @drink} %>
 		<% end -%>
+		</div>
 		<%= link_to 'Edit', edit_drink_path(@drink), "data-role" => "button" %>
 	</div>
 <% end -%>

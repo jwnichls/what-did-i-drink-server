@@ -21,7 +21,7 @@ class WishesController < ApplicationController
     if session[:redirect]
       @redirect = session[:redirect]
     end
-    
+
     redirect_to @redirect
   end
   

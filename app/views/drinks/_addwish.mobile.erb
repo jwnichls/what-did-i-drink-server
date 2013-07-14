@@ -1,0 +1,4 @@
+<%= form_tag :controller => :wishes, :action => :create, :remote => true do |f2| %>
+<%= hidden_field_tag :drink_id, drink.id %>
+<%= submit_tag 'Add To Wish List' %> 
+<% end -%>
