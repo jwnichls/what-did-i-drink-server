@@ -2,6 +2,8 @@ require 'api_constraints'
 
 WhatdididrinkApi::Application.routes.draw do
 
+  use_doorkeeper
+
   #******************
   # API
   #******************
@@ -105,12 +107,16 @@ WhatdididrinkApi::Application.routes.draw do
   # A global logout path
   match 'logout' => 'front#logout', :as => :logout
 
+  # oauth login path
+  match 'login' => 'front#login', :as => :login
+
   resources :timeline_entries, :only => [:index]
   match 'timeline' => 'timeline_entries#index', :as => :timeline
 
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do
     collection do
+      get :login
       get :logout
     end
   end

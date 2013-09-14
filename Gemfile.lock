@@ -75,6 +75,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.23)
+    mini_portile (0.5.1)
     multi_json (1.7.7)
     multipart-post (1.2.0)
     mysql2 (0.3.11)
@@ -85,6 +86,8 @@ GEM
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
     oauth (0.4.7)
     oauth2 (0.8.1)
       faraday (~> 0.8)
@@ -141,6 +144,9 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     rmagick (2.13.2)
+    ruby-aws (1.6.0)
+      highline (>= 1.2.7)
+      nokogiri (>= 1.4)
     simple_oauth (0.2.0)
     sprockets (2.2.2)
       hike (~> 1.2)
@@ -176,6 +182,7 @@ DEPENDENCIES
   jquery-rails (~> 2.2.1)
   json
   mysql2
+  oauth2
   omniauth-foursquare
   omniauth-identity
   omniauth-twitter
@@ -184,6 +191,7 @@ DEPENDENCIES
   rails (= 3.2.11)
   rails3-jquery-autocomplete
   rmagick
+  ruby-aws
   twitter
   whenever
   will_paginate

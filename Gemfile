@@ -20,6 +20,7 @@ gem 'rabl'
 
 # OAuth Provider gem
 gem 'doorkeeper', '~> 0.6.5'
+gem 'oauth2'
 
 # Social Media APIs
 gem 'twitter'
@@ -40,6 +41,9 @@ gem 'capistrano'
 
 # Cron tasks written in ruby
 gem 'whenever', :require => false
+
+# Amazon Web Services gem for Mechanical Turk
+gem 'ruby-aws'
 
 # To use debugger
 # gem 'debugger'

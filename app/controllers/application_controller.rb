@@ -20,11 +20,8 @@ class ApplicationController < ActionController::Base
   def current_user
     if session[:user_id]
       User.find(session[:user_id])
-    elsif params[:access_token]
-      token = TempAccessToken.find_by_token(params[:access_token])
-      if token
-        token.user
-      end
+    elsif doorkeeper_token
+      User.find(doorkeeper_token.resource_owner_id)
     end
   end
   

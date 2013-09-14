@@ -2,7 +2,8 @@ module V1
   class UsersController < ApplicationController
     skip_before_filter :verify_authenticity_token
     respond_to :json
-    before_filter :restrict_access
+    doorkeeper_for :all
+    #before_filter :restrict_access
 
     # GET /users/
     # GET /users.json

@@ -12,12 +12,16 @@ class FrontController < ApplicationController
         @user = current_user
         
         render "users/show"
-      else      
-        respond_to do |format|
-          format.html # index.html.erb
-          format.mobile # index.mobile.erb
-        end
+      else
+        render "front/login"
       end
+    end
+  end
+
+  def login
+    respond_to do |format|
+      format.html # login.html.erb
+      format.mobile # login.mobile.erb
     end
   end
   
