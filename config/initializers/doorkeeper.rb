@@ -8,6 +8,8 @@ Doorkeeper.configure do
     # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
+    session[:redirect] = request.url
+    
     User.find_by_id(session[:user_id]) || redirect_to(login_url)
   end
 
@@ -26,7 +28,7 @@ Doorkeeper.configure do
   # access_token_expires_in 2.hours
 
   # Issue access tokens with refresh token (disabled by default)
-  # use_refresh_token
+  use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter :confirmation => true (default false) if you want to enforce ownership of

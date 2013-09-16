@@ -19,7 +19,7 @@ gem 'rmagick'
 gem 'rabl'
 
 # OAuth Provider gem
-gem 'doorkeeper', '~> 0.6.5'
+gem 'doorkeeper', :git => 'git://github.com/jwnichls/doorkeeper.git'
 gem 'oauth2'
 
 # Social Media APIs
