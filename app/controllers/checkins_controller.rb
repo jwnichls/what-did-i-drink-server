@@ -2,7 +2,11 @@ class CheckinsController < ApplicationController
   # GET /checkins
   # GET /checkins.json
   def index
-    @checkins = current_user.checkins.order("created_at DESC").paginate(:per_page => 20, :page => params[:page])
+    if params[:page] && params[:page] == "all"
+      @checkins = current_user.checkins.order("created_at DESC").all
+    else
+      @checkins = current_user.checkins.order("created_at DESC").paginate(:per_page => 20, :page => params[:page])
+    end
 
     respond_to do |format|
       format.html # index.html.erb
