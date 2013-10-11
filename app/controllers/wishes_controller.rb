@@ -2,7 +2,12 @@ class WishesController < ApplicationController
   # GET /wishlists
   # GET /wishlists.json
   def index
-    @wishes = current_user.wishes.paginate(:per_page => 20, :page => params[:page])
+    pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]    
+    if params[:page] && params[:page] == "all"
+      @wishes = current_user.wishes.all
+    else
+      @wishes = current_user.wishes.paginate(:per_page => 20, :page => params[:page])
+    end    
 
     session[:redirect] = wishes_path
 
