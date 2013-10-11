@@ -6,13 +6,20 @@ module V1
     # GET /timeline
     # GET /timeline.json
     def index
-      @since_date = DateTime.new(0)
+      pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]
+      since = DateTime.new(0)
       if params[:since]
-        @since_date = params[:since].to_datetime
+        begin
+          since = params[:since].to_datetime
+        rescue
+        end
       end
       
-      #respond_with 
-      @entries = TimelineEntry.all(:conditions => ["created_at > ?", @since_date], :order => "created_at DESC")
+      if params[:page] && params[:page] == "all"
+        @entries = TimelineEntry.where(["created_at > ?", since]).order("created_at DESC").all
+      else
+        @entries = TimelineEntry.where(["created_at > ?", since]).order("created_at DESC").paginate(:per_page => pagesize, :page => params[:page])
+      end
     end
   end
 end

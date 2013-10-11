@@ -7,7 +7,14 @@ module V1
 
     # GET /wishlist.json
     def index
-      respond_with current_user.wishes
+      pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]    
+      if params[:page] && params[:page] == "all"
+        @wishes = current_user.wishes.all
+      else
+        @wishes = current_user.wishes.paginate(:per_page => 20, :page => params[:page])
+      end    
+
+      respond_with @wishes
     end
   
     # POST /wishlist.json

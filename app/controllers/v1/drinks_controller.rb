@@ -6,7 +6,20 @@ module V1
     
     # GET /drinks.json
     def index
-      @drinks = Drink.visible.all(:order => 'name')
+      pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]
+      since = DateTime.new(0)
+      if params[:since]
+        begin
+          since = params[:since].to_datetime
+        rescue
+        end
+      end
+      
+      if params[:page] && params[:page] == "all"
+        @drinks = Drink.visible.where(["updated_at > ?", since]).order("name DESC").all
+      else
+        @drinks = Drink.visible.where(["updated_at > ?", since]).order("name DESC").paginate(:per_page => pagesize, :page => params[:page])
+      end
     end
 
     # GET /drinks/1.json

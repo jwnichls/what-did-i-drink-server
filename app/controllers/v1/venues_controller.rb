@@ -4,16 +4,27 @@ module V1
     # GET /venues
     # GET /venues.json
     def index
+      pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]
+      since = DateTime.new(0)
+      if params[:since]
+        begin
+          since = params[:since].to_datetime
+        rescue
+        end
+      end
+      
+      
+      
+      
       if params[:lat] and params[:lng]
         @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'name')
+      elsif params[:page] && params[:page] == "all"
+        @venues = Drink.visible.verified.where(["updated_at > ?", since]).order("name DESC").all
       else
-        @venues = Venue.visible.verified.all(:order => 'name')
+        @venues = Drink.visible.verified.where(["updated_at > ?", since]).order("name DESC").paginate(:per_page => pagesize, :page => params[:page])
       end
 
-      respond_to do |format|
-        format.html # index.html.erb
-        format.json { render json: @venues }
-      end
+      respond_with @venues
     end
 
     # GET /venues/1

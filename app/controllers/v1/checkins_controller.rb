@@ -8,7 +8,22 @@ module V1
     # GET /checkins
     # GET /checkins.json
     def index
-      respond_with current_user.checkins
+      pagesize = params[:pagesize].nil? ? 20 : params[:pagesize]
+      since = DateTime.new(0)
+      if params[:since]
+        begin
+          since = params[:since].to_datetime
+        rescue
+        end
+      end
+      
+      if params[:page] && params[:page] == "all"
+        @checkins = current_user.checkins.where(["created_at > ?", since]).order("created_at DESC").all
+      else
+        @checkins = current_user.checkins.where(["created_at > ?", since]).order("created_at DESC").paginate(:per_page => pagesize, :page => params[:page])
+      end
+      
+      respond_with @checkins
     end
 
     # GET /checkins/1
