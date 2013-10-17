@@ -13,15 +13,12 @@ module V1
         end
       end
       
-      
-      
-      
       if params[:lat] and params[:lng]
         @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'name')
       elsif params[:page] && params[:page] == "all"
-        @venues = Drink.visible.verified.where(["updated_at > ?", since]).order("name DESC").all
+        @venues = Venue.visible.verified.where(["updated_at > ?", since]).order("name DESC").all
       else
-        @venues = Drink.visible.verified.where(["updated_at > ?", since]).order("name DESC").paginate(:per_page => pagesize, :page => params[:page])
+        @venues = Venue.visible.verified.where(["updated_at > ?", since]).order("name DESC").paginate(:per_page => pagesize, :page => params[:page])
       end
 
       respond_with @venues
