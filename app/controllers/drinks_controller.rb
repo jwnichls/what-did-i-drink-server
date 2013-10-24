@@ -125,7 +125,6 @@ class DrinksController < ApplicationController
     end
   end
   
-  
   def search
     if (params[:drink][:name] == "")
       redirect_to :controller => :drinks, :action => :index
@@ -137,7 +136,11 @@ class DrinksController < ApplicationController
     if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == @query)
       redirect_to @drinks[0]
     else
-      render :controller => :drinks, :action => :index
+      respond_to do |format|
+        format.html { render :controller => :drinks, :action => :index }
+        format.mobile { render :controller => :drinks, :action => :index }
+        format.json { render json: @drinks }
+      end
     end
   end
   
