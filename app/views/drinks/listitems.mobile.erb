@@ -1,0 +1,16 @@
+<%= will_paginate @drinks %>
+
+<ul class="infinite-scroll" data-role="listview">
+	<% @drinks.each do |drink| %>
+		<li drinkid="<%= drink.id %>" name="<%= drink.name %>" <% if drink.id == @selected_id -%>class="ui-bar-e selected"<% end -%>>
+			<img class="<% if drink.id == @selected_id -%>ui-icon ui-icon-check<% end -%> ui-li-icon"/>
+			
+			<%= drink.name %>
+			<% is = drink.ingredients_string %>
+			<% is_length_limit = (drink.images and drink.images.count > 0) ? 35 : 45 %>
+			<% if is -%>
+				<br/><span class="listview-drink-ingredient-list"><%= is.length > is_length_limit ? is.slice(0..is_length_limit) + "..." : is %></span>
+			<% end -%>
+		</li>
+	<% end %>
+</ul>

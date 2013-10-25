@@ -1,3 +1,278 @@
-<h3>Checkin</h3>
+<script>
+	$(document).bind('pagechange', function(evt, data) {
+		var pagename = $(data.toPage)[0].id;
+		
+		if (pagename == "location")
+		{
+			loadVenuesForQuery();
+		}
+		else if (pagename == "drink")
+		{
+			loadDrinksForQuery();
+		}
+		else if (pagename == "main-checkin")
+		{
+			setEnableOnCheckinButton();
+		}
+	});
 
-<%= render 'form' %>
+	$(document).bind('pageinit', function(evt) {
+		
+		setEnableOnCheckinButton();
+	})
+
+	$("#location").live('pageinit', function(evt) {
+		addTextAreaCallback($("#venuesearch"), loadVenuesForQuery, 1000);
+
+		$("#location .ui-btn-right").click(function (evt) {
+			
+			var selectedItem = $("#loc-content .selected");
+			if (selectedItem.length > 0)
+			{
+				var venueId = $(selectedItem[0]).attr("venueid");
+				var venueName = $(selectedItem[0]).attr("name");
+				
+				updateVenue(venueId, venueName);
+			}
+		});
+	});
+
+	$("#drink").live('pageinit', function(evt) {
+		addTextAreaCallback($("#drinksearch"), loadDrinksForQuery, 1000);
+
+		$("#drink .ui-btn-right").click(function (evt) {
+			
+			var selectedItem = $("#drink-content .selected");
+			if (selectedItem.length > 0)
+			{
+				var drinkId = $(selectedItem[0]).attr("drinkid");
+				var drinkName = $(selectedItem[0]).attr("name");
+				
+				updateDrink(drinkId, drinkName);
+			}
+		});
+	});
+	
+	function addTextAreaCallback(textArea, callback, delay) {
+	    var timer = null;
+		var changefunc = function() {
+	        if (timer) {
+	            window.clearTimeout(timer);
+	        }
+	        timer = window.setTimeout( function() {
+	            timer = null;
+	            callback();
+	        }, delay );
+	    }
+	    $(textArea).keypress(changefunc);
+		$(textArea).change(changefunc);
+	    textArea = null;
+	}
+
+	function loadVenuesForQuery()
+	{
+		var query = $("#venuesearch").val();
+
+		getLocation(function(success, lat, lng, position) {
+			var venueId = $("#checkin_venue_id").val();
+			if (!venueId || venueId == "")
+				venueId = -1;
+
+			var uri = "/venues/listitems?selected=" + venueId;
+			if (query && query != "")
+				uri += "&query=" + encodeURIComponent(query);
+
+			if (success)
+			{
+				uri += "&lat=" + encodeURIComponent(lat) + "&lng=" + encodeURIComponent(lng);
+			}
+			
+			$("#loc-content").load(uri, null, function() {
+				$("#loc-content").trigger("create");
+
+				if ($("#loc-content .selected").length > 0)
+					$("#location .ui-btn-right").removeClass("ui-disabled");
+				else
+					$("#location .ui-btn-right").addClass("ui-disabled");
+
+				$("#loc-content li").click(function(evt) {
+
+					if (!$(this).hasClass("selected"))
+					{
+						// remove any existing selection
+						$("#loc-content .selected img").removeClass("ui-icon ui-icon-check");
+						$("#loc-content .selected").removeClass("ui-bar-e selected");
+
+						// add styles to the new selection
+						$(this).addClass("ui-bar-e selected")
+						$(this).find("img").addClass('ui-icon ui-icon-check')
+
+						// Change the enable on the select button
+						$("#location .ui-btn-right").removeClass("ui-disabled");
+					}
+				});
+			});
+		});
+	}
+	
+	function loadDrinksForQuery()
+	{
+		var query = $("#drinksearch").val();
+		var drinkId = $("#checkin_drink_id").val();
+		if (!drinkId || drinkId == "")
+			drinkId = -1;
+
+		var uri = "/drinks/listitems?selected=" + drinkId;
+		if (query && query != "")
+			uri += "&query=" + encodeURIComponent(query)
+		
+		$("#drink-content").load(uri, null, function() {
+			$("#drink-content").trigger("create");
+			infiniteScrollFunc("#drink-content .infinite-scroll");
+			
+			if ($("#drink-content .selected").length > 0)
+				$("#drink .ui-btn-right").removeClass("ui-disabled");
+			else
+				$("#drink .ui-btn-right").addClass("ui-disabled");
+			
+			$("#drink-content li").click(function(evt) {
+				
+				if (!$(this).hasClass("selected"))
+				{
+					// remove any existing selection
+					$("#drink-content .selected img").removeClass("ui-icon ui-icon-check");
+					$("#drink-content .selected").removeClass("ui-bar-e selected");
+
+					// add styles to the new selection
+					$(this).addClass("ui-bar-e selected")
+					$(this).find("img").addClass('ui-icon ui-icon-check')
+					
+					// Change the enable on the select button
+					$("#drink .ui-btn-right").removeClass("ui-disabled");
+				}
+			});
+		});
+	}
+	
+	// see if we can get infinite scrolling to work on the drink list
+	function infiniteScrollFunc(selector) {
+		$(selector).infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'ul.infinite-scroll li', debug: true, donetext: ""},function(ary) { $(selector).listview('refresh'); });
+	};
+	
+	function updateDrink(id, name) {
+		
+		$("#checkin_drink_id").val(id);
+		$("#drinkname").replaceWith('<span id="drinkname">' + name + '</span>');
+	}
+	
+	function updateVenue(id, name) {
+
+		$("#checkin_venue_id").val(id);
+		$("#venuename").replaceWith('<span id="venuename">' + name + '</span>');		
+	}
+	
+	function setEnableOnCheckinButton()
+	{
+		var drinkId = $("#checkin_drink_id").val();
+		
+		if (!drinkId || drinkId == "")
+			$("#main-content [type=submit]").button("disable");
+		else
+			$("#main-content [type=submit]").button("enable");
+	}
+</script>
+
+<div id="main-checkin" data-role="page">
+	<header data-role="header" data-position="fixed">
+		<% if @checkin.drink %>
+			<%= link_to "Cancel", @checkin.drink, :class => 'ui-btn-left' %>
+		<% else -%>
+			<%= link_to "Cancel", current_user, :class => 'ui-btn-left' %>
+		<% end -%>
+		<h1>check in</h1>
+	</header>
+	
+	<!-- Main Form -->
+	
+	<% if notice != nil %>
+		<div class="ui-bar ui-bar-e">
+			<p><%= notice %></p>
+		</div>
+	<% end -%>
+
+	<div id="main-content" data-role="content">
+		<%= form_for(@checkin) do |f| %>
+		  <% if @checkin.errors.any? %>
+		    <div id="error_explanation">
+		      <h2><%= pluralize(@checkin.errors.count, "error") %> prohibited this checkin from being saved:</h2>
+
+		      <ul>
+		      <% @checkin.errors.full_messages.each do |msg| %>
+		        <li><%= msg %></li>
+		      <% end %>
+		      </ul>
+		    </div>
+		  <% end %>
+
+
+		  <p>
+			<b>Drink:</b> <span id="drinkname"><%= @checkin.drink ? @checkin.drink.name : "none" %></span> <a class="change-link" href="#drink">change</a>
+		  	<%= f.hidden_field :drink_id, :value => (@checkin.drink ? @checkin.drink.id : nil) %>
+		  </p>
+
+		<p>
+			<b>Venue:</b> <span id="venuename"><%= @checkin.venue ? @checkin.venue.name : "none" %></span> <a class="change-link" href="#location">change</a>
+	    	<%= f.hidden_field :venue_id, :value => (@checkin.venue ? @checkin.venue.id : nil) %>
+		</p>
+
+		  <p>
+		    <b><%= f.label :notes, :class => "ui-hidden-accessible" %></b>
+		    <%= f.text_area :notes, "placeholder" => "Notes" %>
+		  </p>
+
+		  <p>
+		    <%= f.submit "check in" %>
+		  </p>
+		<% end %>
+	</div>
+</div>
+
+<div id="location" data-role="page">
+	<header data-role="header" data-position="fixed">
+		<%= link_to "Cancel", "#main-checkin", :class => 'ui-btn-left' %>
+		<h1>choose venue</h1>
+		<%= link_to "Select", "#main-checkin", :class => 'ui-disabled ui-btn-right' %>
+	</header>
+	
+	<!-- Location Choice Dialog -->
+	
+	<div class="ui-bar ui-bar-d">
+		<%= text_field :venue, :name, :placeholder => "Search venues", "data-mini" => "true", "type" => "search", :autocorrect => "off", :value => @checkin.venue ? @checkin.venue.name : "", :id => "venuesearch" %>
+	</div>
+	
+	<div id="loc-content" data-role="content">
+
+	</div>
+	
+	<div data-role="footer" data-position="fixed" style="text-align: center;">
+		<img src="/images/poweredByFoursquare_white.png" width="50%"/>
+	</div>
+</div>
+
+<div id="drink" data-role="page">
+	<header data-role="header" data-position="fixed">
+		<%= link_to "Cancel", "#main-checkin", :class => 'ui-btn-left' %>
+		<h1>choose drink</h1>
+		<%= link_to "Select", "#main-checkin", :class => 'ui-disabled ui-btn-right' %>
+	</header>
+	
+	<!-- Drink Choice Dialog -->
+
+	<div class="ui-bar ui-bar-d">
+		<%= text_field :drink, :name, :placeholder => "Search drinks", "data-mini" => "true", "type" => "search", :autocorrect => "off", :value => @checkin.drink ? @checkin.drink.name : "", :id => "drinksearch" %>
+	</div>
+	
+	<div id="drink-content" data-role="content">
+
+	</div>
+</div>

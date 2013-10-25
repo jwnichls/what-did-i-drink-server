@@ -74,6 +74,7 @@ WhatdididrinkApi::Application.routes.draw do
       post :search
       get :search
       get :format
+      get :listitems
     end
   end
 
@@ -93,6 +94,7 @@ WhatdididrinkApi::Application.routes.draw do
     end
     collection do
       get :autocomplete_venue_name
+      get :listitems
       post :search
       get :search
     end

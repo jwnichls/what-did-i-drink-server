@@ -37,16 +37,20 @@ class CheckinsController < ApplicationController
   # GET /checkins/new.json
   def new
     @checkin = Checkin.new
-    @checkin.drink = Drink.find(params[:drink_id])
+    
     @checkin.user = current_user
     
+    if params[:drink_id]
+      @checkin.drink = Drink.find(params[:drink_id])
+    end
+      
     if current_user.venue
       @checkin.venue = current_user.venue
     end
 
     respond_to do |format|
       format.html # new.html.erb
-      format.mobile # new.mobile.erb
+      format.mobile { render layout: "no_pages" }# new.mobile.erb
       format.json { render json: @checkin }
     end
   end

@@ -131,22 +131,9 @@ class VenuesController < ApplicationController
       return
     elsif current_user.foursquare? and lat and lng
       # :categories => "4d4b7105d754a06374d81259,4d4b7105d754a06376d81259"
-      venues = foursquare.venues.search(:query => @query, :ll => "#{lat},#{lng}")
+      @venues = foursquare_search(@query, lat, lng)
       
-      puts "Venues: " + venues.to_s
-      
-      if venues
-        @venues = []
-        venues.each { |p|
-          v = Venue.new_from_4sq(p)
-          ve = Venue.find_by_foursq_id(v.foursq_id)
-          if ve
-            @venues.push(ve)
-          elsif v.save
-            @venues.push(v)
-          end
-        }
-      else
+      if @venues.nil?
         @venues = Venue.visible.search(:query => @query).all(:order => "name")
       end
     else
@@ -160,6 +147,35 @@ class VenuesController < ApplicationController
     end
   end
   
+  def listitems
+    @selected_id = -1
+    if params[:selected]
+      @selected_id = params[:selected].to_i
+    end
+    
+    if params[:lat] and params[:lng]
+      if current_user.foursquare?
+        @venues = foursquare_search(params[:query], params[:lat], params[:lng])
+      else
+        if params[:query]
+          @venues = Venue.near(:origin => [params[:lat],params[:lng]], :within => 5).search(:query => params[:query]).all
+        else
+          @venues = Venue.near(:origin => [params[:lat],params[:lng]], :within => 5).all
+        end
+      end
+    elsif params[:query]
+      @venues = Venue.search(:query => params[:query]).paginate(:order => "name", :per_page => 20, :page => params[:page])
+    else
+      @venues = Venue.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+    end
+    
+    respond_to do |format|
+      format.mobile { render layout: nil } # listitems.mobile.erb
+      format.json { render json: @drinks }
+    end
+  end
+  
+  
   # autocomplete :venue, :name, :full => true
   # This version ensures that names are
   def autocomplete_venue_name
@@ -172,5 +188,33 @@ class VenuesController < ApplicationController
       items = {}
     end
     render :json => json_for_autocomplete(items, :name)
+  end
+  
+  private
+  
+  def foursquare_search(query, lat, lng)
+    if query
+      fsq_venues = foursquare.venues.search(:query => @query, :ll => "#{lat},#{lng}")
+    else
+      fsq_venues = foursquare.venues.search(:ll => "#{lat},#{lng}")
+    end
+    venues = nil
+    
+    if fsq_venues
+      # puts "Foursquare venue count: " + fsq_venues.length.to_s
+      
+      venues = []
+      fsq_venues.each { |p|
+        v = Venue.new_from_4sq(p)
+        ve = Venue.find_by_foursq_id(v.foursq_id)
+        if ve
+          venues.push(ve)
+        elsif v.save
+          venues.push(v)
+        end
+      }
+    end
+    
+    return venues
   end
 end

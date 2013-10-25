@@ -1,0 +1,10 @@
+<ul data-role="listview">
+	<% @venues.each do |venue| %>
+		<li id="venue<%= venue.id %>" venueid="<%= venue.id %>" name="<%= venue.name %>" <% if venue.id == @selected_id -%>class="ui-bar-e selected"<% end -%>>
+			<img class="<% if venue.id == @selected_id -%>ui-icon ui-icon-check<% end -%> ui-li-icon"/>
+			
+			<% if venue.id == @selected_id -%><img class="ui-icon ui-icon-check ui-li-icon"/><% end -%>
+			<%= venue.name %>
+		</li>
+	<% end %>
+</ul>

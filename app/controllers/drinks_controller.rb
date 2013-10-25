@@ -143,6 +143,24 @@ class DrinksController < ApplicationController
       end
     end
   end
+
+  def listitems
+    @selected_id = -1
+    if params[:selected]
+      @selected_id = params[:selected].to_i
+    end
+    
+    if params[:query]
+      @drinks = Drink.visible.search(:query => params[:query]).paginate(:order => "name", :per_page => 20, :page => params[:page])
+    else
+      @drinks = Drink.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+    end
+    
+    respond_to do |format|
+      format.mobile { render layout: nil } # listitems.mobile.erb
+      format.json { render json: @drinks }
+    end
+  end
   
   # autocomplete :drink, :created_by
   # This version ensures that the created_by values returned are unique
