@@ -216,12 +216,12 @@
 
 
 		  <p>
-			<b>Drink:</b> <span id="drinkname"><%= @checkin.drink ? @checkin.drink.name : "none" %></span> <a class="change-link" href="#drink">change</a>
+			<b>Drink:</b> <span id="drinkname"><%= @checkin.drink ? @checkin.drink.name : "none" %></span> <a href="#drink" class="change-link">change</a>
 		  	<%= f.hidden_field :drink_id, :value => (@checkin.drink ? @checkin.drink.id : nil) %>
 		  </p>
 
 		<p>
-			<b>Venue:</b> <span id="venuename"><%= @checkin.venue ? @checkin.venue.name : "none" %></span> <a class="change-link" href="#location">change</a>
+			<b>Venue:</b> <span id="venuename"><%= @checkin.venue ? @checkin.venue.name : "none" %></span> <a href="#location" class="change-link">change</a>
 	    	<%= f.hidden_field :venue_id, :value => (@checkin.venue ? @checkin.venue.id : nil) %>
 		</p>
 

@@ -61,7 +61,7 @@
 
 <% if current_user != nil -%>
 	<div data-role="controlgroup">
-		<%= link_to 'Checkin', {:controller => :checkins, :action => :new, :drink_id => @drink.id}, "data-role" => "button" %>
+		<%= link_to 'Checkin', {:controller => :checkins, :action => :new, :drink_id => @drink.id}, "data-role" => "button", "data-ajax" => "false" %>
 		<div id="drink-wishlist-button">
 		<% if current_user.wished_for?(@drink) -%>
 			<%= render partial: "removewish", locals: {drink: @drink} %>
