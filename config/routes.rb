@@ -123,6 +123,9 @@ WhatdididrinkApi::Application.routes.draw do
     end
   end
 
+  # Book web page
+  match 'book' => 'front#book'
+
   # Map the root
   root :to => 'front#index'
 end
