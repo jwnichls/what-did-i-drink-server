@@ -5,6 +5,7 @@ class Drink < ActiveRecord::Base
   has_many :waitlists
   has_many :timeline_entries
   has_many :images
+  validates_presence_of :name
   validates_uniqueness_of :name
   
   scope :visible, where(:deleted => false)
