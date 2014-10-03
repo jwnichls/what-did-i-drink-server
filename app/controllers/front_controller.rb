@@ -34,4 +34,15 @@ class FrontController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def book
+    if mobile_redirect?
+      redirect_to_mobile(request)
+    else
+      respond_to do |format|
+        format.html # book.html.erb
+        format.mobile # book.mobile.erb
+      end
+    end
+  end
 end
