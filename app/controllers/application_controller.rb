@@ -50,8 +50,9 @@ class ApplicationController < ActionController::Base
   private
 
   # Set iPhone format if request to m.whatdididrink.com
+  # Don't change format if its a json (or other) format request
   def adjust_format_for_mobile
-    request.format = :mobile if mobile_request?
+    request.format = :mobile if mobile_request? and request.format == :html
   end
   
   # Return true for requests to iphone.myserver.com
