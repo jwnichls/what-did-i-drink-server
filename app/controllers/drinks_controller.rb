@@ -150,6 +150,7 @@ class DrinksController < ApplicationController
       @selected_id = params[:selected].to_i
     end
     
+    @showpage = (params[:page] == nil or params[:page].to_i < 1)
     if params[:query]
       @drinks = Drink.visible.search(:query => params[:query]).paginate(:order => "name", :per_page => 20, :page => params[:page])
     else

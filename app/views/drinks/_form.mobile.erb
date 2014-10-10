@@ -1,7 +1,7 @@
 <%= form_for(@drink) do |f| %>
   <% if @drink.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@drink.errors.count, "error") %> prohibited this drink from being saved:</h2>
+      <h2>This drink could not be saved:</h2>
 
       <ul>
       <% @drink.errors.full_messages.each do |msg| %>
@@ -26,6 +26,6 @@
     <%= f.text_area :recipe, :placeholder => "Click the format link to see an example" %>
   </div>
   <div class="actions">
-    <%= f.submit :id => "drink-submit" %>
+    <%= f.submit :id => "drink-submit", :class => "enabled" %>
   </div>
 <% end %>

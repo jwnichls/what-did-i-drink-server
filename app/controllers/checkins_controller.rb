@@ -39,6 +39,7 @@ class CheckinsController < ApplicationController
     @checkin = Checkin.new
     
     @checkin.user = current_user
+    @drink = Drink.new
     
     if params[:drink_id]
       @checkin.drink = Drink.find(params[:drink_id])

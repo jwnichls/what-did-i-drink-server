@@ -14,6 +14,10 @@
 		{
 			setEnableOnCheckinButton();
 		}
+		else if (pagename == "new-drink")
+		{
+			ajaxifyNewDrinkCreation();
+		}
 	});
 
 	$(document).bind('pageinit', function(evt) {
@@ -180,6 +184,62 @@
 		else
 			$("#main-content [type=submit]").button("enable");
 	}
+	
+	function ajaxifyNewDrinkCreation()
+	{
+		// remove any existing error message
+		$("#error_explanation").remove();
+
+		var drinkSubmitBtn = $("#drink-submit");
+		drinkSubmitBtn.bind("click", function(evt, data) {
+			// don't submit the form in the standard way
+			evt.preventDefault();
+			
+			var data = {};
+			$(".new_drink input").each(function(i, e) { data[$(e).attr("name")] = $(e).attr("value"); });
+			
+			// submit the form via ajax
+			var xhr = $.ajax({url: $(".new_drink").attr("action"), 
+							  data: data, 
+							  dataType: "json", 
+							  type: "POST",
+							  accepts: { text: "application/json" }, 
+							  success: function(responseData) { 
+								// remove the button down style
+								$("#drink-submit").parent().removeClass("ui-btn-active");
+
+								// if no errors, get the id and name
+								var drinkId = responseData.id;
+								var drinkName = responseData.name;
+								
+								// update the drink
+								updateDrink(drinkId, drinkName);
+								
+								// return from the dialog directly to the main checkin page
+								$.mobile.changePage('#main-checkin');
+							  }, 
+							  error: function(xhr) { 
+								// remove any existing error message
+								$("#error_explanation").remove();
+								
+								// parse error data
+								var errorData = $.parseJSON(xhr.responseText);
+								
+								// if there are any errors, show the error message in the dialog
+								var errorContent = '<div id="error_explanation"><h2>Drink could not be saved</h2><ul>';
+								$.each(errorData, function (n, v) {
+									$.each(v, function (n2, v2) {
+										errorContent += '<li><b>' + n + '</b> ' + v2 + '</li>' 
+									}) 
+								});
+								errorContent += '</ul></div>';
+								$(".new_drink").prepend($(errorContent));
+								
+								// remove the button down style
+								$("#drink-submit").parent().removeClass("ui-btn-active");
+							  }});
+		});
+	}
 </script>
 
 <div id="main-checkin" data-role="page">
@@ -274,5 +334,18 @@
 	
 	<div id="drink-content" data-role="content">
 
+	</div>
+</div>
+
+<div id="new-drink" data-role="page">
+	<header data-role="header" data-position="fixed">
+		<%= link_to "Cancel", "#main-checkin", :class => 'ui-btn-left' %>
+		<h1>new drink</h1>
+	</header>
+	
+	<!-- New Drink Dialog -->
+	
+	<div id="new-drink-content" data-role="content">
+		<%= render "drinks/form"%>
 	</div>
 </div>
