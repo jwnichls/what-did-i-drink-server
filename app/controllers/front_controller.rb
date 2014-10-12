@@ -40,8 +40,8 @@ class FrontController < ApplicationController
       redirect_to_mobile(request)
     else
       respond_to do |format|
-        format.html # book.html.erb
-        format.mobile # book.mobile.erb
+        format.html { render "book", :layout => nil }# book.html.erb
+        format.mobile { render "book", :layout => nil }# book.mobile.erb
       end
     end
   end

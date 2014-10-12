@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>What We Drink: A Collection of Cocktail Recipes</title>
+	
+	<!-- jQuery and helpers -->
+	<%= javascript_include_tag :defaults %>
+	
+	<!-- Boostrap -->
+	<%= stylesheet_link_tag 'bootstrap' %>
+	<%= stylesheet_link_tag 'book' %>
+	<%= javascript_include_tag 'bootstrap' %>
+	
+	<%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:url" content="http://whatdididrink.com/book"/>
+    <meta property="og:title" content="What We Drink: A Collection of Cocktail Recipes"/>
+    <meta property="og:description" content="A collection of cocktails in a beautiful coffee style book. Recipes are paired with tips on how to best make them."/>
+    <meta property="og:image" content="images/book-cover-small.png"/>
+  
+</head>
+<body class="title-body">
+
+<div class="jumbotron drink-title">
+
+	<div class="container">
+		<div class="col-xs-11 col-md-offset-3 title-column">
+			<h1 class="h1-title title-color" style="letter-spacing: 3px;">
+				W<span class="lower-title">HAT</span> W<span class="lower-title">E</span> D<span class="lower-title">RINK</span><br/> 
+				<div class="subtitle">a collection of cocktail recipes</div>
+			</h1>
+			<p class="spaced"><%= link_to "Buy Now!", "http://www.blurb.com/b/4908138-what-we-drink-hardcover", :class => "btn btn-primary btn-lg", :role => "button" %></p>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row rowspace50">
+		<div class="col-md-6 col-md-offset-3">
+			<h2 class="text-center">the book</h2>
+	
+			<p class="spaced">
+				What We Drink is a book designed for people who enjoy a good cocktail and are ready to move
+				beyond the typical bar well drinks, like Gin &amp; Tonics and Long Island Ice Teas.  It 
+				introduces the reader to 20 essential cocktails covering the range from classic to modern, 
+				with brilliant photos, recipes, and instructions that will allow you to make them at home. 
+				We hope that you enjoy reading this book as much as we did making it.
+			</p>
+			
+			<p class="spaced">
+				Click on the preview below to view the entire book.
+			</p>
+			
+			<div style='width: 100%; margin-top: 30px;' class="text-center">
+			  <object class='myWidget' data='http://www.blurb.com/assets/embed.swf' height='200' type='application/x-shockwave-flash' width='350'>
+			    <param name='allowFullScreen' value='true' />
+			    <param name='wmode' value='transparent' />
+			    <param name='allowScriptAccess' value='always' />
+			    <param name='movie' value='http://www.blurb.com/assets/embed.swf' />
+			    <param name='FlashVars' value='book_id=4908138&amp;locale=en_US' />
+			    <a href='http://www.blurb.com/books/4908138' target='_new'>
+			      	<img src='http://assets3.blurb.com/images/uploads2/catalog/002/721/821/5290274-3321526b4aea6d4b45327e420147b089.jpg' id="backup-book-image"/>
+			    </a>
+			  </object>
+			</div>
+			
+			<p class="spaced">
+				We wanted to produce a book that would be educational, both in terms of introducing the 
+				reader to some essential cocktail recipes and also teaching proper preparation techniques. 
+				Unlike many cocktail books that spend many pages on preparation tips before introducing a 
+				single recipe, we have chosen to start with recipes and build the reader's knowledge over 
+				the course of the book, especially in the opening Classics section. For this reason, we 
+				suggest readers who want to learn proper technique start at the beginning of the book. 
+				There are only 20 recipes, so it shouldn't take long! 
+			</p>
+			
+			<p class="spaced">
+				The recipes in this book are adapted from a variety of sources and, as is the case in many 
+				cocktail books, tuned to suit our own personal taste. Our goal here is not to be historically 
+				accurate or attempt to give the definitive recipe for a given cocktail. We also discuss at 
+				several points how recipes may be modified to better match your own preferences.
+			</p>
+			
+			<p class="spaced">
+				<b>Cheers!</b>
+			</p>
+			
+			<p class="spaced text-center">
+				<%= link_to "Buy now!", "http://www.blurb.com/b/4908138-what-we-drink-hardcover", :class => "btn btn-primary btn-lg", :role => "button" %>
+			</p>
+		</div>
+	</div>
+</div>
+
+<div class="footer" id="footer">
+	<div class="footer-content container">
+		<div class="col-md-6">
+			<p><small>Copyright &copy; 2014, Snooty Bird, LLC</small></p>
+		</div>
+		<div class="col-md-6 text-right">
+			<p><small>For questions and information, please contact <a href="mailto:jeff@jeffreynichols.com">Jeff</a>.</small></p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37810022-1']);
+  _gaq.push(['_setDomainName', 'whatdididrink.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
