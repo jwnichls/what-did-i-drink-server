@@ -36,13 +36,18 @@ class FrontController < ApplicationController
   end
   
   def book
-    if mobile_redirect?
-      redirect_to_mobile(request)
-    else
-      respond_to do |format|
-        format.html { render "book", :layout => nil }# book.html.erb
-        format.mobile { render "book", :layout => nil }# book.mobile.erb
-      end
+    if params[:email] != nil
+      puts "got an e-mail address #{params[:email]}"
+      @email = MailingListEmail.new
+      @email.email = params[:email]
+      @email.save()
+      
+      @gotemail = true
+    end
+
+    respond_to do |format|
+      format.html { render "book", :layout => nil }# book.html.erb
+      format.mobile { render "book", :layout => nil }# book.mobile.erb
     end
   end
 end

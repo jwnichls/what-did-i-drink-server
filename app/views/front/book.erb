@@ -31,7 +31,7 @@
 				W<span class="lower-title">HAT</span> W<span class="lower-title">E</span> D<span class="lower-title">RINK</span><br/> 
 				<div class="subtitle">a collection of cocktail recipes</div>
 			</h1>
-			<p class="spaced"><%= link_to "Buy Now!", "http://www.blurb.com/b/4908138-what-we-drink-hardcover", :class => "btn btn-primary btn-lg", :role => "button" %></p>
+			<p class="spaced"><%= link_to "Join the Mailing List!", "#mailinglist", :class => "btn btn-primary btn-lg", :role => "button" %></p>
 		</div>
 	</div>
 </div>
@@ -39,18 +39,42 @@
 <div class="container">
 	<div class="row rowspace50">
 		<div class="col-md-6 col-md-offset-3">
-			<h2 class="text-center">the book</h2>
-	
+			<% if @gotemail != nil -%>
+				<p class="spaced text-center"><b>Thanks for submitting your e-mail!</b><br/>We'll alert you when the book is available for purchase.</p>
+			<% end -%>
+			
+			<h2 class="spaced text-center">the book</h2>
+
 			<p class="spaced">
-				What We Drink is a book designed for people who enjoy a good cocktail and are ready to move
-				beyond the typical bar well drinks, like Gin &amp; Tonics and Long Island Ice Teas.  It 
-				introduces the reader to 20 essential cocktails covering the range from classic to modern, 
-				with brilliant photos, recipes, and instructions that will allow you to make them at home. 
-				We hope that you enjoy reading this book as much as we did making it.
+				We've been obsessed with cocktails for a long time. We go out to craft cocktail bars, we make cocktails at home, and of course we throw cocktail parties for our friends.  One of the biggest questions we get from our friends is, 
 			</p>
+
+			<p class="spaced">
+				<em><b>"How can I make a great cocktail at home?"</b></em>
+			</p>
+
+			<p class="spaced">
+				Of course, there are plenty of amazing cocktail books out there already, and in the past we've recommended a variety of them to our friends when we're asked this question.
+			</p>
+
+			<p class="spaced">
+				We found that many of the existing books don't work well for the novice that is just getting started. We spent more than a year testing recipes and instructions with friends, all to put together a book that we think clearly and simply describes the basics of making a great cocktail.
+			</p>
+
+			<ul>
+				<li class="spaced">
+					We chose just 20 recipes, most of which are classics, but collectively demonstrate a broad cross-section of the world of cocktails.
+				</li>
+				<li class="spaced">
+					We introduce cocktail making technique progressively through each recipe, so readers don't have to read through a bunch of text before starting to make a drink.
+				</li>
+				<li class="spaced">
+					We also expose readers to basic cocktail theory through the recipes. For example, many people don't realize that sweetness can be countered with acidity, so if you accidentally put too much sugar in your cocktail, you can easily fix it by adding some lemon juice.
+				</li>
+			</ul>
 			
 			<p class="spaced">
-				Click on the preview below to view the entire book.
+				We also wanted to create a book that was as beautiful as it is functional. Each cocktail is accompanied by a full page high quality photograph. It's a book that looks as good lying on a coffee table in your living room as it will it in the kitchen or on your home bar.  Check out the book preview below:
 			</p>
 			
 			<div style='width: 100%; margin-top: 30px;' class="text-center">
@@ -66,30 +90,37 @@
 			  </object>
 			</div>
 			
+			<h2 class="text-center spaced">kickstarter</h2>
+			
+			<img src="/images/kickstarter-badge-funded.png" width="100" class="spaced" style="float: left; margin-right: 25px;"/>
+			
 			<p class="spaced">
-				We wanted to produce a book that would be educational, both in terms of introducing the 
-				reader to some essential cocktail recipes and also teaching proper preparation techniques. 
-				Unlike many cocktail books that spend many pages on preparation tips before introducing a 
-				single recipe, we have chosen to start with recipes and build the reader's knowledge over 
-				the course of the book, especially in the opening Classics section. For this reason, we 
-				suggest readers who want to learn proper technique start at the beginning of the book. 
-				There are only 20 recipes, so it shouldn't take long! 
+				Initial funding for this project was provided through a <a href="http://bit.ly/whatwedrink-ks">campaign on Kickstarter</a>.  We are hugely indebted to the 57 people who chose to contribute to our cause and help make the book a reality!  We can't thank you enough for your support along the way and we hope that you love the book when you receive it.
+			</p>
+
+			<h2 class="text-center spaced" style="float: clear;">keep in touch</h2>
+			
+			<p class="spaced">
+				We will post our project progress as updates on our <a href="http://bit.ly/whatwedrink-ks">Kickstarter page</a> and <a href="http://blog.whatdididrink.com/">our blog</a>.  The blog also documents our other cocktail adventures beyond the book, as well as our plans for our next book project that will be ramping up once we get this first book sent off to the printers, so please check that out.
 			</p>
 			
 			<p class="spaced">
-				The recipes in this book are adapted from a variety of sources and, as is the case in many 
-				cocktail books, tuned to suit our own personal taste. Our goal here is not to be historically 
-				accurate or attempt to give the definitive recipe for a given cocktail. We also discuss at 
-				several points how recipes may be modified to better match your own preferences.
+				If you didn't get a chance to order a copy of the book through the Kickstarter, you will still be able to order a copy once the bulk printing is complete.  If you'd like us to notify you when books are available for order, please enter your e-mail address in the form below.  We will only use your e-mail address to send you very occassional updates on this and future books that we write.
 			</p>
+
+			<% if @gotemail != nil -%>
+				<p class="spaced text-center"><b>Thanks!</b></p>
+			<% else -%>
+				<%= form_tag('/book', {class: 'spaced form-inline text-center'}) do %>
+				    <%= label_tag :email, "E-mail:", :class => 'control-label' %>
+				    <%= email_field_tag :email, "", {:class => 'form-control'} %>
+				    <%= submit_tag nil, :class => 'btn btn-primary' %>
+				<% end %>
+			<% end -%>
 			
-			<p class="spaced">
-				<b>Cheers!</b>
-			</p>
-			
-			<p class="spaced text-center">
-				<%= link_to "Buy now!", "http://www.blurb.com/b/4908138-what-we-drink-hardcover", :class => "btn btn-primary btn-lg", :role => "button" %>
-			</p>
+			<h2 class="text-center spaced">
+				<b>cheers!</b>
+			</h2>
 		</div>
 	</div>
 </div>
@@ -97,7 +128,7 @@
 <div class="footer" id="footer">
 	<div class="footer-content container">
 		<div class="col-md-6">
-			<p><small>Copyright &copy; 2014, Snooty Bird, LLC</small></p>
+			<p><small>Copyright &copy; 2015, Snooty Bird, LLC</small></p>
 		</div>
 		<div class="col-md-6 text-right">
 			<p><small>For questions and information, please contact <a href="mailto:jeff@jeffreynichols.com">Jeff</a>.</small></p>

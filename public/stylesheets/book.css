@@ -36,6 +36,7 @@ h1.h1-title {
 	font-weight: bold;
 	font-size: 48px;
 	padding-top: 2em;
+	-webkit-text-stroke: 0.5px rgb(66,66,64);
 }
 
 .lower-title {
@@ -45,6 +46,7 @@ h1.h1-title {
 .subtitle {
 	margin-top: 0.5em;
 	font-size: 20px;
+	-webkit-text-stroke: 0px rgb(66,66,64);
 }
 
 p.authors {
