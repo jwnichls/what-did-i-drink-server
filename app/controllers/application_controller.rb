@@ -95,10 +95,10 @@ class ApplicationController < ActionController::Base
   end
 
   def mobilize_request_url(request)    
-    "http://" + (request.host.match(/^m\./) ? "" : "m.") + request.host.sub(/^www./,"") + (request.port != 80 ? ":" + request.port.to_s : "")  + request.path
+    "http://" + (request.host.match(/^m\./) ? "" : "m.") + request.host.sub(/^(www|app)./,"") + (request.port != 80 ? ":" + request.port.to_s : "")  + request.path
   end
   
   def demobilize_request_url(request)
-    "http://" + request.host.sub(/^m\./,"") + (request.port != 80 ? ":" + request.port.to_s : "") + request.path
+    "http://" + request.host.sub(/^m\./,"app.") + (request.port != 80 ? ":" + request.port.to_s : "") + request.path
   end
 end
