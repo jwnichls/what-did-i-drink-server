@@ -1,7 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
-gem 'mysql2'
+gem 'rails', '3.2.22'
+gem 'mysql2', '~> 0.3.10'
+# gem 'activerecord-mysql2-adapter'
+gem 'test-unit'
+
 gem 'json'
 gem 'yajl-ruby' # apparently necessary to parse JSON post data
 
