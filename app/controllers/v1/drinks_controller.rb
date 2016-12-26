@@ -63,7 +63,7 @@ module V1
 
     # POST /drinks/search.json
     def search
-      @drinks = Drink.search(:query => params[:query]).all(:order => :name)
+      @drinks = Drink.search(:query => params[:query]).order("name").all
     end
   end
 end

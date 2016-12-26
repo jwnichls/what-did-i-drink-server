@@ -7,14 +7,10 @@
   <title>What Did I Drink?</title>
 
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<%= stylesheet_link_tag 'whatdididrink' %>
-	<%= stylesheet_link_tag 'ui-lightness/jquery-ui' %>
-	
-	<!-- jQuery and helpers -->
-	<%= javascript_include_tag :defaults %>
-	<%= javascript_include_tag "autocomplete-rails" %>
-	<%= javascript_include_tag "jquery.infinitescroll" %>
-	<%= javascript_include_tag "drink-autocomplete" %>	
+
+	<!-- Asset Pipeline -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 	
 	<script type="text/javascript">
 

@@ -10,7 +10,7 @@ class DrinksController < ApplicationController
     if @query
       @drinks = Drink.visible.search(:query => @query).paginate(:per_page => 20, :page => params[:page])
     else
-      @drinks = Drink.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+      @drinks = Drink.visible.order("name").paginate(:per_page => 20, :page => params[:page])
     end
     
     respond_to do |format|
@@ -152,9 +152,9 @@ class DrinksController < ApplicationController
     
     @showpage = (params[:page] == nil or params[:page].to_i < 1)
     if params[:query]
-      @drinks = Drink.visible.search(:query => params[:query]).paginate(:order => "name", :per_page => 20, :page => params[:page])
+      @drinks = Drink.visible.search(:query => params[:query]).order("name").paginate(:per_page => 20, :page => params[:page])
     else
-      @drinks = Drink.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+      @drinks = Drink.visible.order("name").paginate(:per_page => 20, :page => params[:page])
     end
     
     respond_to do |format|

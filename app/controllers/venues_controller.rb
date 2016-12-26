@@ -4,9 +4,9 @@ class VenuesController < ApplicationController
   # GET /venues.json
   def index
     if params[:lat] and params[:lng]
-      @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'city,name')
+      @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).order('city,name')
     else
-      @venues = Venue.visible.verified.all(:order => 'city,name')
+      @venues = Venue.visible.verified.order('city,name')
     end
 
     respond_to do |format|
@@ -123,7 +123,7 @@ class VenuesController < ApplicationController
     if lat and lng
       @venues = Venue.visible.near(:origin => [lat,lng], :within => 5).search(:query => @query).all
     else
-      @venues = Venue.visible.search(:query => @query).all(:order => "name")
+      @venues = Venue.visible.search(:query => @query).order("name")
     end
     
     if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)
@@ -134,10 +134,10 @@ class VenuesController < ApplicationController
       @venues = foursquare_search(@query, lat, lng)
       
       if @venues.nil?
-        @venues = Venue.visible.search(:query => @query).all(:order => "name")
+        @venues = Venue.visible.search(:query => @query).order("name")
       end
     else
-      @venues = Venue.visible.search(:query => @query).all(:order => "name")
+      @venues = Venue.visible.search(:query => @query).order("name")
     end
     
     if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)
@@ -164,9 +164,9 @@ class VenuesController < ApplicationController
         end
       end
     elsif params[:query]
-      @venues = Venue.search(:query => params[:query]).paginate(:order => "name", :per_page => 20, :page => params[:page])
+      @venues = Venue.search(:query => params[:query]).order("name").paginate(:per_page => 20, :page => params[:page])
     else
-      @venues = Venue.visible.paginate(:order => "name", :per_page => 20, :page => params[:page])
+      @venues = Venue.visible.order("name").paginate(:per_page => 20, :page => params[:page])
     end
     
     respond_to do |format|

@@ -1,14 +1,14 @@
 class Venue < ActiveRecord::Base
-  attr_accessible :address, :city, :lat, :lng, :name, :postalCode, :state, :verified
+  # attr_accessible :address, :city, :lat, :lng, :name, :postalCode, :state, :verified
   has_many :checkins
   has_many :images
   has_many :users
   validates_presence_of :name
   validates_presence_of :city
   
-  scope :visible, where(:deleted => false)
+  scope :visible, lambda{ where(:deleted => false) }
   
-  scope :verified, where(:verified => true)
+  scope :verified, lambda{ where(:verified => true) }
   
   scope :near, lambda{ |*args|
                         origin = *args.first[:origin]

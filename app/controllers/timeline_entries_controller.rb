@@ -7,7 +7,7 @@ class TimelineEntriesController < ApplicationController
       @since_date = params[:since].to_datetime
     end
     
-    @timeline_entries = TimelineEntry.all(:conditions => ["created_at > ?", @since_date], :order => "created_at DESC")
+    @timeline_entries = TimelineEntry.order("created_at DESC").conditions(["created_at > ?", @since_date])
 
     respond_to do |format|
       format.html # index.html.erb

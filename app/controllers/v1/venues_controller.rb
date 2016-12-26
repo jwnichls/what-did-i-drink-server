@@ -16,7 +16,7 @@ module V1
       end
       
       if params[:lat] and params[:lng]
-        @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).all(:order => 'name')
+        @venues = Venue.visible.verified.near(:origin => [params[:lat],params[:lng]], :within => 5).order('name').all
       elsif params[:page] && params[:page] == "all"
         @venues = Venue.visible.verified.where(["updated_at > ?", since]).order("name DESC").all
       else
@@ -126,7 +126,7 @@ module V1
       if lat and lng
         @venues = Venue.visible.near(:origin => [lat,lng], :within => 5).search(:query => @query).all
       else
-        @venues = Venue.visible.search(:query => @query).all(:order => "name")
+        @venues = Venue.visible.search(:query => @query).order("name").all
       end
     
       if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)
@@ -150,10 +150,10 @@ module V1
             end
           }
         else
-          @venues = Venue.visible.search(:query => @query).all(:order => "name")
+          @venues = Venue.visible.search(:query => @query).order("name").all
         end
       else
-        @venues = Venue.visible.search(:query => @query).all(:order => "name")
+        @venues = Venue.visible.search(:query => @query).order("name").all
       end
     
       if @venues.length == 1 or (@venues.length > 0 and @venues[0].name == @query)

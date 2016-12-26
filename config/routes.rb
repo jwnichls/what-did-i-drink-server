@@ -1,6 +1,6 @@
 require 'api_constraints'
 
-WhatdididrinkApi::Application.routes.draw do
+Rails.application.routes.draw do
 
   use_doorkeeper
 
@@ -32,7 +32,7 @@ WhatdididrinkApi::Application.routes.draw do
       
       # Timeline routes
       resources :timeline_entries, :only => [:index]
-      match 'timeline' => 'timeline_entries#index', :as => :timeline
+      match 'timeline' => 'timeline_entries#index', :as => :timeline, :via => :get
       
       # Venues Routes
       resources :venues do
@@ -101,19 +101,19 @@ WhatdididrinkApi::Application.routes.draw do
   end
 
   # Authentication URLs for Omniauth
-  match '/auth/:provider/callback' => 'authentications#create'
+  match '/auth/:provider/callback' => 'authentications#create', :via => [:get, :post]
 
   # username/password account creation routes
   resources :identities, :only => [:new]
 
   # A global logout path
-  match 'logout' => 'front#logout', :as => :logout
+  match 'logout' => 'front#logout', :as => :logout, :via => :get
 
   # oauth login path
-  match 'login' => 'front#login', :as => :login
+  match 'login' => 'front#login', :as => :login, :via => :get
 
   resources :timeline_entries, :only => [:index]
-  match 'timeline' => 'timeline_entries#index', :as => :timeline
+  # match 'timeline' => 'timeline_entries#index', :as => :timeline, :via => :get # apparently the same line above not restricted to sub-domain
 
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do
@@ -122,9 +122,6 @@ WhatdididrinkApi::Application.routes.draw do
       get :logout
     end
   end
-
-  # Book web page
-  match 'book' => 'front#book'
 
   # Map the root
   root :to => 'front#index'

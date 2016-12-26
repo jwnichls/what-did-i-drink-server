@@ -1,5 +1,5 @@
 class Drink < ActiveRecord::Base
-  attr_accessible :created_by, :name, :recipe, :recipe_json, :urls
+  # attr_accessible :created_by, :name, :recipe, :recipe_json, :urls
   serialize :recipe_json, JSON
   has_many :checkins
   has_many :waitlists
@@ -8,7 +8,9 @@ class Drink < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   
-  scope :visible, where(:deleted => false)
+  scope :visible, lambda{
+    where(:deleted => false)
+  }
   
   scope :search, lambda{ |*args|
                         query = *args.first[:query]
