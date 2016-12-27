@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161226004841) do
+ActiveRecord::Schema.define(version: 20161227043534) do
 
   create_table "authentications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
     t.integer  "user_id"
@@ -60,12 +60,12 @@ ActiveRecord::Schema.define(version: 20161226004841) do
   end
 
   create_table "oauth_access_grants", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer  "resource_owner_id", null: false
-    t.integer  "application_id",    null: false
-    t.string   "token",             null: false
-    t.integer  "expires_in",        null: false
-    t.string   "redirect_uri",      null: false
-    t.datetime "created_at",        null: false
+    t.integer  "resource_owner_id",               null: false
+    t.integer  "application_id",                  null: false
+    t.string   "token",                           null: false
+    t.integer  "expires_in",                      null: false
+    t.text     "redirect_uri",      limit: 65535, null: false
+    t.datetime "created_at",                      null: false
     t.datetime "revoked_at"
     t.string   "scopes"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20161226004841) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.boolean  "validated",    default: false
+    t.string   "scopes",       default: "",    null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
@@ -103,13 +104,6 @@ ActiveRecord::Schema.define(version: 20161226004841) do
     t.datetime "updated_at",               null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", using: :btree
     t.index ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-  end
-
-  create_table "temp_access_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "timeline_entries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" do |t|
