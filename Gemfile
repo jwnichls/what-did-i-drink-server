@@ -37,6 +37,9 @@ gem 'rabl'
 gem 'doorkeeper'
 gem 'oauth2'
 
+# Put Twitter config variables into a separate file
+gem 'dotenv-rails', :groups => [:development, :production]
+
 # Social Media APIs
 gem 'twitter'
 gem 'quimby', :git => 'git://github.com/jwnichls/quimby.git'
