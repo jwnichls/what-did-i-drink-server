@@ -1,7 +1,7 @@
 module V1
   class VenuesController < ApplicationController
     respond_to :json
-    doorkeeper_for :all, :except => [:show, :index, :search]
+    before_action :doorkeeper_authorize!, :except => [:show, :index, :search]
 
     # GET /venues
     # GET /venues.json

@@ -2,7 +2,7 @@ module V1
   class DrinksController < ApplicationController
     skip_before_filter :verify_authenticity_token
     respond_to :json
-    doorkeeper_for :all, :except => [:show, :index, :search]
+    before_action :doorkeeper_authorize!, :except => [:show, :index, :search]
     
     # GET /drinks.json
     def index
