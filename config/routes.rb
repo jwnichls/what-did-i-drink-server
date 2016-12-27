@@ -51,9 +51,6 @@ Rails.application.routes.draw do
   # Web UI
   #******************
 
-  # TEMP TEMP TEMP
-  resources :temp_access_tokens, :only => [:index, :create]
-
   # Resources
   resources :authentications, :only => [:index,:create,:destroy] do
     collection do 
