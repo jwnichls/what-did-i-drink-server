@@ -9,6 +9,8 @@ gem 'mysql2'
 gem 'json'
 gem 'yajl-ruby' # apparently necessary to parse JSON post data
 
+gem 'responders'
+
 # Asset Pipeline
 
 # Use SCSS for stylesheets
