@@ -4,7 +4,10 @@
 		$('.infinite-scroll').infinitescroll({navSelector: 'div.pagination', nextSelector: 'div.pagination a.next_page',itemSelector: 'ul.infinite-scroll li', debug: true, donetext: ""},function(ary) { $('.infinite-scroll').listview('refresh'); });
 	};
 	
-	$(document).bind('pageinit', infiniteScrollFunc)
+	$(document).bind('pageinit', infiniteScrollFunc);
+	
+	// JWN: I don't understand this
+	$(function() { $(document).on("smartscroll", function(e) { /* no op */ }); });
 </script>
 
 <%= will_paginate @drinks %>

@@ -5,7 +5,6 @@ Rails 5.0.1 Migration To Do List
 --------------------------------
 
 * Infinite scroll
-  * Pagination
 * Remove before_filter
 * UI autocomplete styling
 * jquery ui ui-lightness theme

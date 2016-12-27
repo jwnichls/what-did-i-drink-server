@@ -8,16 +8,9 @@ class Drink < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   
-  scope :visible, lambda{
-    where(:deleted => false)
-  }
+  scope :visible, -> { where(:deleted => false) }
   
-  scope :search, lambda{ |*args|
-                        query = *args.first[:query]
-                        {
-                          :conditions => %( MATCH (name, recipe, created_by) AGAINST ("#{query[0]}") )
-                        }
-                      }                    
+  scope :search, -> (params) { where("MATCH (name, recipe, created_by) AGAINST (?)", params[:query]) }
 
   before_save :parse_recipe
   

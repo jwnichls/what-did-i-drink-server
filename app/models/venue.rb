@@ -6,9 +6,9 @@ class Venue < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :city
   
-  scope :visible, lambda{ where(:deleted => false) }
+  scope :visible, -> { where(:deleted => false) }
   
-  scope :verified, lambda{ where(:verified => true) }
+  scope :verified, -> { where(:verified => true) }
   
   scope :near, lambda{ |*args|
                         origin = *args.first[:origin]
@@ -46,12 +46,7 @@ class Venue < ActiveRecord::Base
                         end
                       }
   
-  scope :search, lambda{ |*args|
-                        query = *args.first[:query]
-                        {
-                          :conditions => %( MATCH (name) AGAINST ("#{query[0]}") )
-                        }
-                      }                    
+  scope :search, -> (params) { where("MATCH (name) AGAINST (?)", params[:query] ) }
 
   def self.new_from_4sq(foursq_venue)
     venue = Venue.new
