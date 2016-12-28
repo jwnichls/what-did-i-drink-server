@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   helper_method :logged_in?, :current_user
   protect_from_forgery
   
-  before_filter :adjust_format_for_mobile
-  before_filter :set_timezone
+  before_action :adjust_format_for_mobile
+  before_action :set_timezone
 
   def set_timezone  
     min = request.cookies["time_zone"].to_i
