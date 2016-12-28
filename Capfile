@@ -1,4 +1,18 @@
-load 'deploy'
-# Uncomment if you are using Rails' asset pipeline
-    # load 'deploy/assets'
-load 'config/deploy' # remove this line to skip loading any of the default tasks
+# Load DSL and Setup Up Stages
+require 'capistrano/setup'
+
+# Includes default deployment tasks
+require 'capistrano/deploy'
+
+# Includes tasks from other gems included in your Gemfile
+require 'capistrano/rvm'
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+
+# Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
+Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }
+
+# Ensure the git plugin is loaded
+require "capistrano/scm/git"
+install_plugin Capistrano::SCM::Git

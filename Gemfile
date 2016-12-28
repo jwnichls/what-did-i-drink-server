@@ -58,6 +58,9 @@ gem 'bcrypt-ruby'
 
 # Deploy with Capistrano
 gem 'capistrano'
+gem 'capistrano-rvm'
+gem 'capistrano-bundler'
+gem 'capistrano-rails'
 
 # Cron tasks written in ruby
 gem 'whenever', :require => false
