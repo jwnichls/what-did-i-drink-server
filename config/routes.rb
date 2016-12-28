@@ -31,8 +31,7 @@ Rails.application.routes.draw do
       end
       
       # Timeline routes
-      resources :timeline_entries, :only => [:index]
-      match 'timeline' => 'timeline_entries#index', :as => :timeline, :via => :get
+      resources :timeline_entries, :only => [:index], :path => :timeline
       
       # Venues Routes
       resources :venues do
@@ -109,8 +108,7 @@ Rails.application.routes.draw do
   # oauth login path
   match 'login' => 'front#login', :as => :login, :via => :get
 
-  resources :timeline_entries, :only => [:index]
-  # match 'timeline' => 'timeline_entries#index', :as => :timeline, :via => :get # apparently the same line above not restricted to sub-domain
+  resources :timeline_entries, :only => [:index], :path => :timeline
 
   # Hopefully map all of the front UI actions
   resources :front, :only => [:index] do
