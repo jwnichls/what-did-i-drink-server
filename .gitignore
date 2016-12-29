@@ -9,6 +9,7 @@
 
 # Ignore .env variables
 /.env
+/.env-prod
 
 # Ignore the default SQLite database.
 /db/*.sqlite3

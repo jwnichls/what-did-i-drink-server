@@ -15,7 +15,7 @@ role :db,  %w{jwnichls@whatdididrink.com}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'snootybird.net', user: 'jwnichls', roles: %w{web app db}, ssh_options: {
+server 'whatdididrink.com', user: 'jwnichls', roles: %w{web app db}, ssh_options: {
     keys: %w(~/.ssh/id_rsa),
     forward_agent: true,
     auth_methods: %w(publickey)
