@@ -76,3 +76,34 @@ namespace :uploads do
   after "deploy:symlink:release", "uploads:symlink"
 
 end
+
+# ===============================
+# Solr Reindexing with Sunspot
+# ===============================
+
+namespace :deploy do
+  before :updated, :setup_solr_data_dir do
+    on roles(:app) do
+      unless test "[ -d #{shared_path}/solr/data ]"
+        execute :mkdir, "-p #{shared_path}/solr/data"
+      end
+    end
+  end
+end
+
+namespace :solr do
+  
+  desc "reindex the whole solr database"
+  task :reindex do
+    on roles(:app) do
+      within current_path do
+        with rails_env: fetch(:rails_env, 'production') do
+          info "Reindexing Solr database"
+          execute :bundle, 'exec', :rake, 'sunspot:solr:reindex[,,true]'
+        end
+      end
+    end
+  end
+
+  after 'deploy:finished', 'solr:reindex'  
+end
