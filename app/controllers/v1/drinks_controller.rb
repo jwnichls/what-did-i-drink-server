@@ -64,8 +64,9 @@ module V1
     # POST /drinks/search.json
     def search
       search = Drink.search do
-        fulltext @query
+        fulltext params[:query]
         with :deleted, false
+        paginate :page => params[:page], :per_page => 20
       end
       @drinks = search.results
     end
