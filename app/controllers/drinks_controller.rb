@@ -8,7 +8,12 @@ class DrinksController < ApplicationController
   def index
     @query = params[:query]
     if @query
-      @drinks = Drink.visible.search(:query => @query).paginate(:per_page => 20, :page => params[:page])
+      search = Drink.search do
+        fulltext @query
+        with :deleted, false
+        paginate :page => params[:page], :per_page => 20
+      end
+      @drinks = search.results
     else
       @drinks = Drink.visible.order("name").paginate(:per_page => 20, :page => params[:page])
     end
@@ -131,7 +136,12 @@ class DrinksController < ApplicationController
     end
     
     @query = params[:drink][:name]
-    @drinks = Drink.visible.search(:query => @query).paginate(:per_page => 20, :page => params[:page])
+    search = Drink.search do
+      fulltext params[:drink][:name]
+      with :deleted, false
+      paginate :page => params[:page], :per_page => 20
+    end
+    @drinks = search.results
     
     if @drinks.length == 1 or (@drinks.length > 0 and @drinks[0].name == @query)
       redirect_to @drinks[0]

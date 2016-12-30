@@ -6,6 +6,12 @@ gem 'test-unit'
 
 gem 'mysql2'
 
+# Sunspot for full-text searching
+gem 'sunspot_rails'
+group :development do
+  gem 'sunspot_solr'
+end
+
 gem 'json'
 gem 'yajl-ruby' # apparently necessary to parse JSON post data
 

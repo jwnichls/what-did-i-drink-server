@@ -10,7 +10,12 @@ class Drink < ActiveRecord::Base
   
   scope :visible, -> { where(:deleted => false) }
   
-  scope :search, -> (params) { where("MATCH (name, recipe, created_by) AGAINST (?)", params[:query]) }
+  searchable do
+    text :name, boost: 5.0
+    text :recipe, :created_by
+    
+    boolean :deleted
+  end
 
   before_save :parse_recipe
   
