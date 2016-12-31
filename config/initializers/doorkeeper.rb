@@ -11,7 +11,7 @@ Doorkeeper.configure do
   # If you want to restrict access to the web interface for adding oauth authorized applications, you need to declare the block below.
   admin_authenticator do
     # The admin authentication logic here.
-    current_user = User.find_by_id(session[:admin_id])
+    current_user = User.find_by_id(session[:user_id])
     (current_user && current_user.admin) || redirect_to(login_path)
   end
 
