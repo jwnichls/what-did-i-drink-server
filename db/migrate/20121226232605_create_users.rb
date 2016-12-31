@@ -8,7 +8,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :twitter_access_token
       t.string :twitter_access_secret
       t.string :image_url
-      t.boolean :admin
 
       t.timestamps
     end
